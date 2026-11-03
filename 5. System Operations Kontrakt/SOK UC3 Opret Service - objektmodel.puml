@@ -1,0 +1,51 @@
+@startuml
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam usecase {
+  BackgroundColor white
+  BorderColor black
+}
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor white
+}
+skinparam ArrowColor black
+
+rectangle "Kunde" as hK
+rectangle "Reparation" as hR
+rectangle "Udtag" as hU
+rectangle "Reservedel" as hS
+rectangle "Leverandør" as hL
+rectangle "Medarbejder" as hM
+
+usecase "Mette Hansen\n+4512345678" as k1 #dae8fc;line:6c8ebf
+usecase "1001\n02-11-2026\nTrek FX 2\nBremser larmer\n06-11-2026\nÅben" as r1 #white;line:E91E8C
+usecase "03-11-2026\n2" as u1 
+usecase "03-11-2026\n1" as u2 
+usecase "Annette\nAN" as m1 
+usecase "BK-05\nBremseklodser\n(skive)\nstk\n3\n4" as rd1 
+usecase "KO-01\nKædeolie 1L\nstk\n2\n2" as rd2 
+usecase "Nordic Bike\nParts A/S\nVejle" as l1
+
+hK -[hidden]right- hR
+hR -[hidden]right- hU
+hU -[hidden]right- hS
+hS -[hidden]right- hL
+
+hK -[hidden]down- k1
+hR -[hidden]down- r1
+hU -[hidden]down- u1
+hS -[hidden]down- rd1
+hL -[hidden]down- l1
+hM -[hidden]right- m1
+
+k1 -[#E91E8C]right- r1
+r1 -right- u1
+u1 -right- rd1
+rd1 -right- l1
+u1 -down- m1
+m1 -down- u2
+r1 -down- u2
+u2 -right- rd2
+rd2 -up- l1
+@enduml

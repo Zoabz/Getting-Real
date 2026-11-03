@@ -15,17 +15,20 @@
 ## Hovedscenarie
 
 1. Mekanikeren vælger *Reservedele udtag*.
-2. Mekanikeren vælger service (reparationsnummer) og medarbejder fra en dropdown eller via søgning.
+2. Mekanikeren vælger service (reparationsnummer) og medarbejder fra en dropdown eller via søgning. Systemet viser de reservedele, der allerede er registreret på servicen.
 3. Mekanikeren vælger en reservedel og indtaster antal.
-4. Mekanikeren trykker **Tilføj**, og reservedelen kommer på udtagslisten.
+4. Mekanikeren trykker **Tilføj**. Systemet kontrollerer antal og beholdning, og reservedelen kommer på udtagslisten.
 5. Mekanikeren gentager trin 3 og 4 for hver reservedel, der er brugt.
 6. Mekanikeren trykker **Gem**.
-7. Systemet kontrollerer, at beholdningen er tilstrækkelig, gemmer forbruget på reparationsordren, nedskriver lagerbeholdningen og viser en bekræftelse.
+7. Systemet kontrollerer, at beholdningen er tilstrækkelig, gemmer forbruget på reparationsordren, nedskriver lagerbeholdningen og viser en bekræftelse, de registrerede reservedele på servicen og de reservedele, der nu skal bestilles.
 
 ## Udvidelser
 
 - **3a. Antal er ikke et positivt helt tal:** Systemet afviser antallet og beder mekanikeren indtaste et gyldigt antal.
-- **7a. Beholdningen er utilstrækkelig:** Systemet afviser registreringen, giver mekanikeren besked om den aktuelle beholdning og gemmer intet. Mekanikeren kan rette antallet eller afbryde.
+- **4a. Reservedel eller antal mangler, eller der er ikke nok på lager:** Systemet tilføjer ikke reservedelen og viser en fejlbesked, fx hvor mange der er på lager. Mekanikeren kan rette reservedel eller antal og trykke **Tilføj** igen.
+- **5a. En reservedel skal fjernes fra udtagslisten:** Mekanikeren trykker **Fjern** på linjen, og systemet fjerner den fra listen. Fortsætter ved trin 5.
+- **6a. Service, medarbejder eller reservedele på listen mangler:** Systemet viser en fejlbesked og gemmer ikke. Mekanikeren vælger det, der mangler, og trykker **Gem** igen.
+- **7a. Beholdningen er utilstrækkelig:** Systemet afviser registreringen, giver mekanikeren besked om den aktuelle beholdning og gemmer intet. Mekanikeren kan rette antallet eller afbryde. \[Antagelse: sker kun, hvis beholdningen er ændret siden Tilføj\]
 
 ## Specielle krav
 
@@ -36,7 +39,8 @@
 
 - **Øverst:** Vælg Service (reparationsnummer), Vælg medarbejder (dropdown/søgning).
 - **Derunder:** Vælg Reservedel (dropdown/søgning), Antal, knap **Tilføj** (tilføjer reservedelen til en liste).
-- **Derunder:** Liste over de reservedele, der er tilføjet.
+- **Derunder:** Liste over de reservedele, der er tilføjet, med en knap **Fjern** på hver linje.
+- **Derunder:** Liste over reservedele, der allerede er registreret på servicen.
 - **Nederst:** Knap **Gem/Opdater** (opdaterer lageret).
 
 ## Åbent spørgsmål
@@ -49,4 +53,4 @@
 - Forudsætter: UC1, UC3, UC8
 - Påvirker: UC4 (viser forbrug på ordren), UC7 (beholdning og bestillingsliste)
 - Første sprint starter med UC3 og UC6.
-- Se [SSD for UC6](../4.%20System%20Sekvens%20Diagram/SSD%20UC6%20Reservedele%20udtag.md) og [systemoperationskontrakter](../5.%20System%20Operations%20Kontrakt/SOK%20UC6%20Reservedele%20udtag.md).
+- Se [SSD for UC6](../4.%20System%20Sekvens%20Diagram/UC6_reservedele_udtag.puml) og [systemoperationskontrakter](../5.%20System%20Operations%20Kontrakt/SOK%20UC6%20Reservedele%20udtag.md).

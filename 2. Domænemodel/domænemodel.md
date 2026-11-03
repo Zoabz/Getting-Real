@@ -1,65 +1,6 @@
 # Domænemodel – Vekto Cykelværksted
 
-Domænemodellen viser de begreber i Vektos forretning, som systemet skal kende, deres egenskaber og relationer. Den er udarbejdet i Google Docs og er her skrevet om til Mermaid, så den kan versionsstyres sammen med resten af dokumentationen. Begreberne er forklaret i [ordlisten](../0.%20Ordliste/ordliste.md).
-
-## Diagram
-
-```mermaid
-classDiagram
-    class Reparation {
-        reparationsnummer
-        indleveringsdato
-        cykelbeskrivelse
-        fejlbeskrivelse
-        aftaltAfhentningsdato
-        status
-    }
-    class Kunde {
-        navn
-        telefonnummer
-    }
-    class Udtag {
-        dato
-        antalTaget
-    }
-    class Reservedel {
-        varenummer
-        beskrivelse
-        enhed
-        beholdning
-        minimumsbeholdning
-    }
-    class Medarbejder {
-        navn
-        initialer
-    }
-    class Leverandor["Leverandør"] {
-        navn
-        adresse
-    }
-    class Bestilling {
-        købsordrenummer
-        dato
-        ønsketLeveringsdato
-        bemærkning
-        status
-    }
-    class Bestillingslinje {
-        bestillingsantal
-        forfaldsdato
-        modtagetAntal
-    }
-
-    Kunde "1" -- "1..*" Reparation : har indleveret
-    Reparation "1" -- "*" Udtag : har
-    Udtag "*" -- "1" Reservedel : gælder
-    Udtag "*" -- "1" Medarbejder : foretaget af
-    Leverandor "1" -- "1..*" Reservedel : leverer
-    Leverandor "1" -- "*" Bestilling : modtager
-    Medarbejder "1" -- "*" Bestilling : opretter
-    Bestilling "1" -- "1..*" Bestillingslinje : består af
-    Bestillingslinje "*" -- "1" Reservedel : angår
-```
+Domænemodellen viser de begreber i Vektos forretning, som systemet skal kende, deres egenskaber og relationer. Selve diagrammet ligger i [domænemodel.puml](domænemodel.puml). Denne fil er den tilhørende tekst. Begreberne er forklaret i [ordlisten](../0.%20Ordliste/ordliste.md).
 
 ## Klasser
 

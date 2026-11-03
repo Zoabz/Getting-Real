@@ -12,10 +12,11 @@ Mapperne er nummereret i den rækkefølge, vi arbejder i:
 
 - **0. Ordliste** – de begreber, vi bruger, så vi og Vekto bruger de samme ord.
 - **1. Usecases** – en fil for hver use case, UC1–UC9.
-- **2. Domænemodel** – klasser og relationer i Vektos forretning.
+- **2. Domænemodel** – domænemodellen som diagram og en tekst med klasser og relationer.
 - **3. Objekt Model** – et konkret eksempel på modellen, taget fra UC6.
-- **4. System Sekvens Diagram** – SSD for UC3, UC6, UC7 og UC9.
-- **5. System Operations Kontrakt** – kontrakter for udvalgte systemoperationer i UC3, UC6 og UC9.
+- **4. System Sekvens Diagram** – SSD for alle ni use cases som PlantUML (`.puml`), samlet i en PDF.
+- **5. System Operations Kontrakt** – kontrakter for udvalgte systemoperationer i UC3, UC6 og UC9, med objektmodeller der viser før- og eftertilstand.
+- **6. Brugergrænseflade** – navigationsmodeller og tegninger af siderne i programmet, med en PDF af hver.
 - **Materiale** – opgaveoplæg, casen fra Vekto og slides fra undervisningen.
 
-Diagrammerne er skrevet i Mermaid, så de vises direkte på GitHub og i VS Code med preview.
+Diagrammerne er skrevet i PlantUML (`.puml`). Tekst, fx use cases, ordliste og kontrakter, er skrevet i `.md`.

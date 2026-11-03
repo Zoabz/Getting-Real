@@ -3,6 +3,13 @@ title UC7 - Lager og bestilling
 hide footbox
 skinparam monochrome true
 skinparam shadowing false
+skinparam backgroundColor white
+skinparam actor {
+  BackgroundColor white
+}
+skinparam participant {
+  BackgroundColor white
+}
 
 actor Mekaniker
 participant ":System" as System
