@@ -1,0 +1,38 @@
+' Navigationsmodel – UC6 - Reservedele udtag
+@startuml
+title UC6 - Reservedele udtag
+start
+:Vælg »Reservedele udtag« i sidebaren;
+:Vælg service »1001 · Frederik Eriksen ·
+Hyundai - I30«;
+:Vælg medarbejder »John Pedersen (JP)«;
+while (Skal der tilføjes en reservedel?) is (Ja)
+  :Vælg reservedel »Oliefilter (3 på lager)« og skriv
+Antal »2«;
+  :Vælg »Tilføj«;
+  while (Mangler reservedel eller antal, eller er der ikke\nnok på lager?) is (Ja)
+    :Vis fx »Der er kun 3 stk. Oliefilter på lager.«
+øverst på siden;
+    :Ret reservedel eller antal;
+    :Vælg »Tilføj« igen;
+  endwhile (Nej)
+  :Vis reservedelen under »Reservedele på listen«;
+endwhile (Nej)
+while (Skal en linje fjernes fra listen?) is (Ja)
+  :Vælg »Fjern« på linjen;
+  :Fjern linjen fra listen;
+endwhile (Nej)
+:Vælg »Gem / Opdater lager«;
+while (Mangler service, medarbejder eller reservedele\npå listen?) is (Ja)
+  :Vis fx »Vælg en service (reparationsnummer).«
+øverst på siden;
+  :Vælg det, der mangler;
+  :Vælg »Gem / Opdater lager« igen;
+endwhile (Nej)
+:Træk reservedelene fra lageret og registrér dem
+på servicen;
+:Vis »2 stk. reservedele er registreret på service
+1001, og lageret er opdateret. Skal nu bestilles:
+Oliefilter.« og delene under »Allerede registreret«;
+stop
+@enduml

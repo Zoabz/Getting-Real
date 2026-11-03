@@ -1,0 +1,20 @@
+' Navigationsmodel – UC8 - Opret Reservedele
+@startuml
+title UC8 - Opret Reservedele
+start
+:Vælg »Opret reservedel« i sidebaren;
+:Udfyld Reservedel navn »Kølervæske«,
+Leverandør »Olie & Smøring« og Minimum antal
+»10«;
+:Vælg »Opret«;
+while (Mangler et felt, er minimum ugyldigt, eller findes\nnavnet allerede?) is (Ja)
+  :Vis fx »Skriv leverandøren.« øverst på siden;
+  :Ret felterne;
+  :Vælg »Opret« igen;
+endwhile (Nej)
+:Gem reservedelen med 0 på lager;
+:Vis »Reservedelen "Kølervæske" er oprettet med
+0 på lager. Den står nu på bestillingslisten.« og
+delen på listen;
+stop
+@enduml

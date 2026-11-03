@@ -1,0 +1,18 @@
+@startuml
+title UC8 - Opret Reservedele
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor Mekaniker
+participant ":System" as System
+
+Mekaniker -> System : opretReservedel(navn, leverandør, minimumAntal)
+activate System
+alt oplysninger mangler, eller navnet findes allerede
+  System --> Mekaniker : fejlbesked
+else oplysningerne er gyldige
+  System --> Mekaniker : reservedelId, antal på lager = 0
+end
+deactivate System
+@enduml

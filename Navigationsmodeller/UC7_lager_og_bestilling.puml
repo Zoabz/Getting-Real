@@ -1,0 +1,17 @@
+' Navigationsmodel – UC7 - Lager og bestilling
+@startuml
+title UC7 - Lager og bestilling
+start
+:Vælg »Lager og bestilling« i sidebaren;
+:Vis lageroversigten med navn, antal på lager,
+minimum og status;
+:Vis listen »Skal bestilles«, så dem der mangler
+flest af står øverst;
+while (Står der flere reservedele på listen »Skal\nbestilles«?) is (Ja)
+  :Bestil reservedelen hos leverandøren, fx 3 stk.
+Oliefilter hos Filter Engros;
+endwhile (Nej)
+:Vælg »Reservedele modtagelse« i sidebaren, når
+varerne kommer;
+stop
+@enduml

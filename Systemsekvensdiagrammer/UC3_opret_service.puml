@@ -1,0 +1,22 @@
+@startuml
+title UC3 - Opret Service
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor Mekaniker
+participant ":System" as System
+
+Mekaniker -> System : soegKunde(tlfNr)
+activate System
+System --> Mekaniker : kundenavn, tlfNr
+deactivate System
+Mekaniker -> System : opretService(tlfNr, mærke, model, fejltype, fejlbeskrivelse)
+activate System
+alt oplysninger mangler
+  System --> Mekaniker : fejlbesked
+else alle oplysninger er udfyldt
+  System --> Mekaniker : serviceId, Status = "Åben"
+end
+deactivate System
+@enduml

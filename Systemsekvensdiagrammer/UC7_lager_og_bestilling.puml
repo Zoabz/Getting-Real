@@ -1,0 +1,14 @@
+@startuml
+title UC7 - Lager og bestilling
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor Mekaniker
+participant ":System" as System
+
+Mekaniker -> System : visLager()
+activate System
+System --> Mekaniker : lageroversigt: navn, antal på lager, minimum, status,\nbestillingsliste: navn, leverandør, antal på lager, minimum, mangler
+deactivate System
+@enduml

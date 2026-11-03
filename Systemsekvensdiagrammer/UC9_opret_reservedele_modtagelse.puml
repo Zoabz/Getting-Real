@@ -1,0 +1,22 @@
+@startuml
+title UC9 - Opret Reservedele Modtagelse
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor Mekaniker
+participant ":System" as System
+
+Mekaniker -> System : vaelgReservedel(reservedel)
+activate System
+System --> Mekaniker : leverandør, antal på lager, minimum, mangler
+deactivate System
+Mekaniker -> System : modtagReservedel(reservedel, antal, dato)
+activate System
+alt oplysninger mangler, eller datoen ligger i fremtiden
+  System --> Mekaniker : fejlbesked
+else oplysningerne er gyldige
+  System --> Mekaniker : antal på lager, Status = "OK" eller "Skal bestilles"
+end
+deactivate System
+@enduml

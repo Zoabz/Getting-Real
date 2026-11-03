@@ -1,0 +1,14 @@
+' Navigationsmodel – Hele programmet (sidebar)
+@startuml
+title Hele programmet (sidebar)
+start
+:Start programmet;
+:Vis hovedvinduet med sidebaren til venstre og
+siden »Opret service«;
+while (Skal brugeren til en anden side?) is (Ja)
+  :Vælg siden i sidebaren, fx »Reservedele udtag«;
+  :Vis den valgte side og opdatér dens lister;
+endwhile (Nej)
+:Luk programmet;
+stop
+@enduml

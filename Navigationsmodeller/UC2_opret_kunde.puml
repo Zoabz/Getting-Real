@@ -1,0 +1,20 @@
+' Navigationsmodel – UC2 - Opret Kunde
+@startuml
+title UC2 - Opret Kunde
+start
+:Vælg »Opret kunde« i sidebaren;
+:Udfyld Navn »Ole Bach« og Tlf. nr. »+45 40 11
+22 33«;
+:Vælg »Opret«;
+while (Mangler navnet, eller er tlf. nr. ugyldigt eller\nallerede oprettet?) is (Ja)
+  :Vis fx »Skriv et gyldigt telefonnummer med
+mindst 8 cifre, fx +4523129428.« øverst på
+siden;
+  :Ret felterne;
+  :Vælg »Opret« igen;
+endwhile (Nej)
+:Gem kunden med tlf. nr. uden mellemrum;
+:Vis »Kunden Ole Bach (+4540112233) er
+oprettet.« og kunden på listen;
+stop
+@enduml

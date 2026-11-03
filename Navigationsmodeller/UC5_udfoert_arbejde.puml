@@ -1,0 +1,25 @@
+' Navigationsmodel – UC5 - Udført Arbejde
+@startuml
+title UC5 - Udført Arbejde
+start
+:Vælg »Udført arbejde« i sidebaren;
+:Vælg service »1001 · Frederik Eriksen ·
+Hyundai - I30« eller klik på den under »Åbne
+services«;
+:Vis kunde, bil, fejltype, beskrivelse og
+reservedele for servicen;
+:Vælg medarbejder »John Pedersen (JP)«;
+:Skriv Beskrivelse for udført arbejde »Skiftet
+bremseklodser for. Prøvekørt – ingen lyd.«;
+:Vælg »Gem«;
+while (Mangler service, medarbejder eller beskrivelse?) is (Ja)
+  :Vis fx »Skriv en beskrivelse af det udførte
+arbejde.« øverst på siden;
+  :Udfyld det, der mangler;
+  :Vælg »Gem« igen;
+endwhile (Nej)
+:Gem det udførte arbejde og sæt status til Lukket;
+:Vis »Service 1001 er gemt, og status er ændret
+til Lukket.« og fjern servicen fra »Åbne services«;
+stop
+@enduml

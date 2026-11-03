@@ -1,0 +1,24 @@
+' Navigationsmodel – UC9 - Opret Reservedele Modtagelse
+@startuml
+title UC9 - Opret Reservedele Modtagelse
+start
+:Vælg »Reservedele modtagelse« i sidebaren;
+:Vælg reservedel »Oliefilter (3 på lager)« fra
+bestillingslisten;
+:Vis leverandør, antal på lager, minimum og
+mangler, og foreslå Antal modtaget »3«;
+:Ret evt. Antal modtaget og Dato (i dag);
+:Vælg »Modtag«;
+while (Mangler reservedel, antal eller dato, eller ligger\ndatoen i fremtiden?) is (Ja)
+  :Vis fx »Datoen kan ikke ligge i fremtiden.«
+øverst på siden;
+  :Ret felterne;
+  :Vælg »Modtag« igen;
+endwhile (Nej)
+:Læg antallet på lager og gem modtagelsen;
+:Vis »3 stk. Oliefilter er modtaget. Der er nu 6 på
+lager (minimum 6). Den er fjernet fra
+bestillingslisten.« og modtagelsen under
+»Seneste modtagelser«;
+stop
+@enduml

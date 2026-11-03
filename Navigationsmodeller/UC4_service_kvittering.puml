@@ -1,0 +1,18 @@
+' Navigationsmodel – UC4 - Service Kvittering
+@startuml
+title UC4 - Service Kvittering
+start
+:Vælg »Service kvittering« i sidebaren;
+:Vis tabellen med alle services, nyeste først;
+:Skriv »Frederik« i søgefeltet;
+while (Står servicen ikke i tabellen?) is (Ja)
+  :Vis »Ingen services matcher søgningen.«;
+  :Ret søgningen eller vælg »Alle« i statusfilteret;
+endwhile (Nej)
+:Vælg rækken med service 1001;
+:Vælg »Vis kvittering« eller dobbeltklik på rækken;
+:Vis kvitteringen for service 1001 i en dialogboks
+med kunde, bil, udført arbejde og reservedele;
+:Vælg »Luk«;
+stop
+@enduml

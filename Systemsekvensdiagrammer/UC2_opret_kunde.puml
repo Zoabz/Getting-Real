@@ -1,0 +1,18 @@
+@startuml
+title UC2 - Opret Kunde
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor Mekaniker
+participant ":System" as System
+
+Mekaniker -> System : opretKunde(navn, tlfNr)
+activate System
+alt navn mangler, eller tlfNr er ugyldigt eller allerede oprettet
+  System --> Mekaniker : fejlbesked
+else oplysningerne er gyldige
+  System --> Mekaniker : kundeId, kundeliste
+end
+deactivate System
+@enduml

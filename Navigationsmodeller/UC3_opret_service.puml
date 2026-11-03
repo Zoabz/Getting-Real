@@ -1,0 +1,24 @@
+' Navigationsmodel – UC3 - Opret Service
+@startuml
+title UC3 - Opret Service
+start
+:Vælg »Opret service« i sidebaren;
+:Skriv »23129428« i Tlf. nr.;
+:Vis og vælg kunden »Frederik Eriksen
+(+4523129428)«;
+:Udfyld Mærke »Hyundai«, Model »I30«, Fejltype
+»Bremser« og Fejl beskrivelse »Hvinende lyd fra
+forhjulene«;
+:Vælg »Opret«;
+while (Mangler kunde, mærke, model, fejltype eller\nbeskrivelse?) is (Ja)
+  :Vis fx »Skriv bilens mærke, fx Hyundai.« øverst
+på siden;
+  :Udfyld det, der mangler;
+  :Vælg »Opret« igen;
+endwhile (Nej)
+:Gem servicen med status Åben;
+:Vis kvitteringen for service 1002 i en dialogboks;
+:Vælg »Luk«;
+:Vis »Service 1002 er oprettet med status Åben.«;
+stop
+@enduml

@@ -1,0 +1,18 @@
+' Navigationsmodel – UC1 - Opret Medarbejder
+@startuml
+title UC1 - Opret Medarbejder
+start
+:Vælg »Opret medarbejder« i sidebaren;
+:Udfyld Navn »Mette Hansen« og Navn kort »MH«;
+:Vælg »Opret«;
+while (Mangler navn eller navn kort, eller er initialerne\noptaget?) is (Ja)
+  :Vis fx »Skriv medarbejderens navn.« øverst på
+siden;
+  :Ret felterne;
+  :Vælg »Opret« igen;
+endwhile (Nej)
+:Gem medarbejderen;
+:Vis »Medarbejderen Mette Hansen (MH) er
+oprettet.« og medarbejderen på listen;
+stop
+@enduml

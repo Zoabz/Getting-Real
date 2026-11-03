@@ -1,0 +1,18 @@
+@startuml
+title UC1 - Opret Medarbejder
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor Mekaniker
+participant ":System" as System
+
+Mekaniker -> System : opretMedarbejder(navn, navnKort)
+activate System
+alt navn eller navnKort mangler, eller initialerne er optaget
+  System --> Mekaniker : fejlbesked
+else oplysningerne er gyldige
+  System --> Mekaniker : medarbejderId, medarbejderliste
+end
+deactivate System
+@enduml

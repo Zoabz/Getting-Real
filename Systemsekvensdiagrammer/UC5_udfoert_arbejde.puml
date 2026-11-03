@@ -1,0 +1,22 @@
+@startuml
+title UC5 - Udført Arbejde
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+
+actor Mekaniker
+participant ":System" as System
+
+Mekaniker -> System : vaelgService(serviceId)
+activate System
+System --> Mekaniker : kundenavn, kundeTlf, mærke - model, fejltype, beskrivelse,\nregistrerede reservedele
+deactivate System
+Mekaniker -> System : registrerUdfoertArbejde(serviceId, medarbejder, beskrivelse)
+activate System
+alt service, medarbejder eller beskrivelse mangler
+  System --> Mekaniker : fejlbesked
+else alt er udfyldt
+  System --> Mekaniker : Status = "Lukket", lukketidspunkt
+end
+deactivate System
+@enduml
