@@ -1,0 +1,13 @@
+To add files:
+	git add . 
+	git commit -m "message"
+	git push
+
+To restore if you delete files:
+	git restore .
+
+To show status and files not pushed:
+	git status
+
+Pull current main branch:
+	git pull 
