@@ -1,7 +1,9 @@
 @startuml
+' Samme model som domænemodel.png / domænemodel.drawio
 skinparam monochrome true
 skinparam shadowing false
-skinparam nodesep 60
+skinparam nodesep 80
+skinparam ranksep 60
 skinparam backgroundColor white
 skinparam classAttributeIconSize 0
 skinparam class {
@@ -19,15 +21,12 @@ class Kunde {
 class Reparation {
   reparationsnummer
   indleveringsdato
-  cykelbeskrivelse
+  mærke
+  model
+  fejltype
   fejlbeskrivelse
-  aftaltAfhentningsdato
+  udførtArbejde
   status
-}
-
-class Udtag {
-  dato
-  antalTaget
 }
 
 class Medarbejder {
@@ -35,40 +34,31 @@ class Medarbejder {
   initialer
 }
 
+class Udtag {
+  dato
+  antalTaget
+}
+
 class Reservedel {
-  varenummer
-  beskrivelse
-  enhed
-  beholdning
-  minimumsbeholdning
+  navn
+  antalPåLager
+  minimumAntal
 }
 
 class Leverandør {
   navn
-  adresse
 }
 
-class Bestilling {
-  købsordrenummer
+class Modtagelse {
   dato
-  ønsketLeveringsdato
-  bemærkning
-  status
+  antalModtaget
 }
 
-class Bestillingslinje {
-  bestillingsantal
-  forfaldsdato
-  modtagetAntal
-}
-
-Kunde "1" -right-- "1..*" Reparation
-Reparation "1" -down- "*" Udtag
-Udtag "*" -right-- "1" Reservedel
-Udtag "*" -down- "1" Medarbejder
-Reservedel "1..*" -down- "1" Leverandør
-Reservedel "1" -down- "*" Bestillingslinje
-Leverandør "1" -down- "*" Bestilling
-Medarbejder "1" -right- "*" Bestilling
-Bestilling "1" -right-- "*" Bestillingslinje
+Kunde "1" -right- "0..*" Reparation
+Reparation "0..*" -right- "0..1" Medarbejder
+Reparation "1" -down- "0..*" Udtag
+Udtag "0..*" -right- "1" Medarbejder
+Udtag "0..*" -down- "1" Reservedel
+Leverandør "1" -right- "1..*" Reservedel
+Reservedel "1" -right- "0..*" Modtagelse
 @enduml

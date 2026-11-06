@@ -1,33 +1,36 @@
 # Domænemodel – Vekto Cykelværksted
 
-Domænemodellen viser de begreber i Vektos forretning, som systemet skal kende, deres egenskaber og relationer. Selve diagrammet ligger i [domænemodel.puml](domænemodel.puml). Denne fil er den tilhørende tekst. Begreberne er forklaret i [ordlisten](../0.%20Ordliste/ordliste.md).
+Domænemodellen viser de begreber i Vektos forretning, som systemet skal kende, deres egenskaber og relationer. Den er lavet ud fra use casene UC1–UC9 og programmet (de data, programmet gemmer). Begreberne er forklaret i [ordlisten](../0.%20Ordliste/ordliste.md).
+
+![Domænemodel](domænemodel.png)
+
+- [domænemodel.png](domænemodel.png) – billedet af modellen.
+- [domænemodel.drawio](domænemodel.drawio) – samme model, som kan redigeres i draw.io (diagrams.net).
+- [domænemodel.puml](domænemodel.puml) – samme model i PlantUML.
 
 ## Klasser
 
 | Klasse | Attributter | Beskrivelse |
 | :---- | :---- | :---- |
-| **Reparation** | reparationsnummer, indleveringsdato, cykelbeskrivelse, fejlbeskrivelse, aftaltAfhentningsdato, status | Én indleveret cykel og det arbejde, der skal udføres på den. Kaldes *Service* i brugergrænsefladen. |
-| **Kunde** | navn, telefonnummer | Den, der har indleveret cyklen. Telefonnummeret bruges som søgenøgle. |
-| **Udtag** | dato, antalTaget | At en medarbejder har taget et antal af en reservedel til en reparation. |
-| **Reservedel** | varenummer, beskrivelse, enhed, beholdning, minimumsbeholdning | En del, der bruges ved reparationer og ligger på lager. |
-| **Medarbejder** | navn, initialer | En person ansat hos Vekto. |
-| **Leverandør** | navn, adresse | Virksomhed, der leverer reservedele (fx Nordic Bike Parts A/S). |
-| **Bestilling** | købsordrenummer, dato, ønsketLeveringsdato, bemærkning, status | Indkøb af reservedele hos én leverandør. |
-| **Bestillingslinje** | bestillingsantal, forfaldsdato, modtagetAntal | Én reservedel og antal på en bestilling. |
+| **Kunde** | navn, telefonnummer | Den, der har indleveret cyklen. Telefonnummeret bruges som søgenøgle (UC2, UC3). |
+| **Reparation** | reparationsnummer, indleveringsdato, mærke, model, fejltype, fejlbeskrivelse, udførtArbejde, status | Én indleveret cykel og det arbejde, der skal udføres på den. Kaldes *Service* i brugergrænsefladen. Status er *Åben* eller *Lukket*. |
+| **Medarbejder** | navn, initialer | En person ansat hos Vekto (UC1). |
+| **Udtag** | dato, antalTaget | At en medarbejder har taget et antal af én reservedel til én reparation (UC6). |
+| **Reservedel** | navn, antalPåLager, minimumAntal | En del, der bruges ved reparationer og ligger på lager (UC8). Skal bestilles, når antalPåLager er på eller under minimumAntal (UC7). |
+| **Leverandør** | navn | Virksomhed, der leverer reservedele (UC8). |
+| **Modtagelse** | dato, antalModtaget | At en levering af en reservedel er modtaget og lagt på lager (UC9). |
 
 ## Relationer
 
 | Fra | Til | Multiplicitet | Betydning |
 | :---- | :---- | :---- | :---- |
-| Kunde | Reparation | 1 – 1..\* | En kunde har indleveret mindst én reparation. En reparation tilhører én kunde. |
-| Reparation | Udtag | 1 – \* | En reparation kan have mange udtag. Et udtag hører til én reparation. |
-| Udtag | Reservedel | \* – 1 | Et udtag gælder én reservedel. En reservedel kan indgå i mange udtag. |
-| Udtag | Medarbejder | \* – 1 | Et udtag er foretaget af én medarbejder. |
-| Leverandør | Reservedel | 1 – 1..\* | En leverandør leverer mindst én reservedel. En reservedel har én leverandør. |
-| Leverandør | Bestilling | 1 – \* | En bestilling sendes til én leverandør. |
-| Medarbejder | Bestilling | 1 – \* | En bestilling er oprettet af én medarbejder. |
-| Bestilling | Bestillingslinje | 1 – 1..\* | En bestilling har mindst én linje. |
-| Bestillingslinje | Reservedel | \* – 1 | En linje angår én reservedel. |
+| Kunde | Reparation | 1 – 0..\* | En reparation tilhører én kunde. En kunde kan have mange reparationer, men kan også være oprettet uden en (UC2 før UC3). |
+| Reparation | Medarbejder | 0..\* – 0..1 | Det udførte arbejde er lavet af én medarbejder. Før UC5 er der ingen (derfor 0..1). |
+| Reparation | Udtag | 1 – 0..\* | En reparation kan have mange udtag. Et udtag hører til én reparation. |
+| Udtag | Medarbejder | 0..\* – 1 | Et udtag er foretaget af én medarbejder. |
+| Udtag | Reservedel | 0..\* – 1 | Et udtag gælder én reservedel. En reservedel kan indgå i mange udtag. |
+| Leverandør | Reservedel | 1 – 1..\* | En reservedel har én leverandør. En leverandør oprettes sammen med en reservedel og har derfor mindst én. |
+| Reservedel | Modtagelse | 1 – 0..\* | En modtagelse gælder én reservedel. En reservedel kan modtages mange gange. |
 
 ## Sammenhæng med use cases
 
@@ -35,20 +38,19 @@ Domænemodellen viser de begreber i Vektos forretning, som systemet skal kende, 
 | :---- | :---- |
 | Medarbejder | UC1 |
 | Kunde | UC2 |
-| Reparation | UC3 (oprettes med status Åben), UC5 (udført arbejde, status Lukket) |
-| Udtag, Reservedel.beholdning | UC6 (udtag nedskriver beholdning) |
-| Reservedel | UC8 (oprettes med navn, leverandør og minimum), UC7 (vises og vurderes mod minimum) |
-| Reservedel.beholdning, Bestillingslinje.modtagetAntal | UC9 (modtagelse lægges til beholdning) |
+| Reparation | UC3 (oprettes med status Åben), UC4 (vises), UC5 (udførtArbejde og medarbejder sættes, status Lukket) |
+| Udtag, Reservedel.antalPåLager | UC6 (udtag nedskriver antal på lager) |
+| Reservedel, Leverandør | UC8 (oprettes med navn, leverandør og minimum), UC7 (vises og vurderes mod minimum) |
+| Modtagelse, Reservedel.antalPåLager | UC9 (modtaget antal lægges til antal på lager) |
 
-## Åbne punkter (modellen og use casene er ikke helt ens)
+## Ændringer i forhold til den udleverede model
 
-Modellen blev tegnet før use casene blev skrevet færdige. Følgende skal afklares i teamet og evt. rettes i modellen:
+Den udleverede model fra Vekto er tilpasset vores use cases og programmet:
 
-1. **Udført arbejde (UC5):** Modellen har ingen attribut til beskrivelsen af udført arbejde på *Reparation*, og ingen relation mellem *Reparation* og den *Medarbejder*, der har udført arbejdet.
-2. **Fejltype (UC3):** Fejltype vælges i en dropdown, men findes ikke som attribut på *Reparation*. Mærke og model indtastes hver for sig, mens modellen har én *cykelbeskrivelse*.
-3. **Reservedelsnavn (UC8):** Use casene bruger *navn* som unikt navn på en reservedel, mens modellen har *varenummer* og *beskrivelse*. Der skal vælges, hvilken attribut der er det navn, brugeren ser og søger på.
-4. **Leverandør på Reservedel:** UC8 kræver leverandør pr. reservedel. Det passer med relationen Leverandør – Reservedel.
-5. **Bestilling i prototypen:** UC7 og UC9 bruger kun bestillingslisten og beholdningen. *Bestilling* og *Bestillingslinje* er i modellen, men ingen use case opretter dem endnu. Skal en bestilling gemmes (som fil, der kan printes eller sendes), kræver det en ny use case.
-6. **Aftalt afhentningsdato:** Ingen use case sætter datoen.
-7. **Bestillingslinjens "forfaldsdato":** Betydningen skal afklares (forventet leveringsdato?).
-8. **Antal på lager ved oprettelse:** UC8 sætter beholdningen til 0 \[Antagelse\]. Startoptælling kunne kræve en anden løsning.
+1. **Bestilling og Bestillingslinje er fjernet.** Ingen use case opretter en bestilling. Bestillingslisten i UC7 beregnes ud fra antalPåLager og minimumAntal på Reservedel.
+2. **Modtagelse er tilføjet**, fordi UC9 registrerer modtagne reservedele med dato og antal.
+3. **Reparation** har fået *mærke*, *model* og *fejltype* (UC3) i stedet for *cykelbeskrivelse*, og *udførtArbejde* (UC5). *aftaltAfhentningsdato* er fjernet, fordi ingen use case sætter den.
+4. **Reparation – Medarbejder** er tilføjet, fordi UC5 gemmer, hvem der har udført arbejdet.
+5. **Reservedel** bruger *navn* (UC8) i stedet for *varenummer*, *beskrivelse* og *enhed*, som hverken use cases eller programmet bruger.
+6. **Kunde – Reparation** er ændret fra 1..\* til 0..\*, fordi en kunde oprettes før reparationen (UC2).
+7. **Leverandør** har kun *navn*, fordi adressen ikke bruges i nogen use case.

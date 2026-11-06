@@ -1,4 +1,6 @@
 @startuml
+' Samme objekter som objektmodel.png / objektmodel.drawio.
+' PlantUML kan ikke tegne de buede linjer, så layoutet er ikke helt det samme.
 skinparam monochrome true
 skinparam shadowing false
 skinparam backgroundColor white
@@ -8,44 +10,54 @@ skinparam usecase {
 }
 skinparam rectangle {
   BackgroundColor white
-  BorderColor white
+  BorderColor black
 }
 
 rectangle "Kunde" as hK
 rectangle "Reparation" as hR
+rectangle "Medarbejder" as hM
 rectangle "Udtag" as hU
 rectangle "Reservedel" as hS
 rectangle "Leverandør" as hL
-rectangle "Medarbejder" as hM
+rectangle "Modtagelse" as hMo
 
-usecase "Mette Hansen\n+4512345678" as k1
-usecase "1001\n02-11-2026\nTrek FX 2\nBremser larmer\n06-11-2026\nÅben" as r1
+usecase "Frederik Eriksen\n+4523129428" as frederik
+usecase "1001\n03-11-2026\nTrek\nFX 2\nBremser\nBremser hviner\nSkiftet klodser\nLukket" as r1001
+usecase "1002\n04-11-2026\nKildemoes\nCity\nBremser\nSlap bremse\n-\nÅben" as r1002
+usecase "John Pedersen\nJP" as john
+usecase "Lise Madsen\nLM" as lise
 usecase "03-11-2026\n2" as u1
-usecase "03-11-2026\n1" as u2
-usecase "Annette\nAN" as m1
-usecase "BK-05\nBremseklodser\n(skive)\nstk\n3\n4" as rd1
-usecase "KO-01\nKædeolie 1L\nstk\n2\n2" as rd2
-usecase "Nordic Bike\nParts A/S\nVejle" as l1
+usecase "04-11-2026\n1" as u2
+usecase "Bremseklodser\n4\n4" as klodser
+usecase "Bremsekabel\n9\n3" as kabel
+usecase "Nordic Bike\nParts A/S" as nordic
+usecase "02-11-2026\n7" as mod1
 
 hK -[hidden]right- hR
-hR -[hidden]right- hU
+hR -[hidden]right- hM
+hM -[hidden]right- hU
 hU -[hidden]right- hS
 hS -[hidden]right- hL
+hL -[hidden]right- hMo
 
-hK -[hidden]down- k1
-hR -[hidden]down- r1
+hK -[hidden]down- frederik
+hR -[hidden]down- r1001
+hM -[hidden]down- john
 hU -[hidden]down- u1
-hS -[hidden]down- rd1
-hL -[hidden]down- l1
-hM -[hidden]right- m1
+hS -[hidden]down- klodser
+hL -[hidden]down- nordic
+hMo -[hidden]down- mod1
 
-k1 -right- r1
-r1 -right- u1
-u1 -right- rd1
-rd1 -right- l1
-u1 -down- m1
-m1 -down- u2
-r1 -down- u2
-u2 -right- rd2
-rd2 -up- l1
+frederik -- r1001
+frederik -- r1002
+r1001 -right- john
+john -right- u1
+r1001 -- u1
+lise -right- u2
+r1002 -- u2
+u1 -right- klodser
+u2 -right- kabel
+klodser -- nordic
+kabel -- nordic
+kabel -- mod1
 @enduml
