@@ -17,6 +17,7 @@ Mapperne er nummereret i den rækkefølge, vi arbejder i:
 - **4. System Sekvens Diagram** – SSD for alle ni use cases som PlantUML (`.puml`), samlet i en PDF.
 - **5. System Operations Kontrakt** – kontrakter for udvalgte systemoperationer i UC3, UC6 og UC9, med objektmodeller der viser før- og eftertilstand.
 - **6. Brugergrænseflade** – navigationsmodeller og tegninger af siderne i programmet, med en PDF af hver.
+- **7. Designklassediagram** – klasserne i prototypen med attributter, typer og metoder, lavet ud fra domænemodellen, SSD'erne og kontrakterne.
 - **Materiale** – opgaveoplæg, casen fra Vekto og slides fra undervisningen.
 
 Diagrammerne er skrevet i PlantUML (`.puml`). Tekst, fx use cases, ordliste og kontrakter, er skrevet i `.md`.

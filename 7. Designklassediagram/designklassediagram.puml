@@ -1,0 +1,134 @@
+@startuml
+' Samme design som designklassediagram.png / designklassediagram.drawio
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+}
+hide circle
+
+class Værksted {
+  ~medarbejdere : Medarbejder[0..*]
+  ~kunder : Kunde[0..*]
+  ~reparationer : Reparation[0..*]
+  ~reservedele : Reservedel[0..*]
+  ~modtagelser : Modtagelse[0..*]
+  ~næsteReparationsnummer : int = 1001
+  -datafil : Datafil
+  +«constructor» Værksted(datafil : Datafil)
+  +OpretMedarbejder(navn : string, initialer : string) : Medarbejder
+  +HentMedarbejdere() : Medarbejder[0..*]
+  +OpretKunde(navn : string, telefonnummer : string) : Kunde
+  +HentKunder() : Kunde[0..*]
+  +SøgKunder(søgetekst : string) : Kunde[0..*]
+  +OpretService(kunde : Kunde, mærke : string, model : string, fejltype : string, fejlbeskrivelse : string) : Reparation
+  +SøgServices(søgetekst : string, status : ReparationStatus[0..1]) : Reparation[0..*]
+  +RegistrerUdførtArbejde(reparation : Reparation, medarbejder : Medarbejder, beskrivelse : string)
+  +RegistrerUdtag(reparation : Reparation, medarbejder : Medarbejder, udtagsliste : Udtag[1..*])
+  +HentLageroversigt() : Reservedel[0..*]
+  +HentBestillingsliste() : Reservedel[0..*]
+  +OpretReservedel(navn : string, leverandørNavn : string, minimumAntal : int) : Reservedel
+  +RegistrerModtagelse(reservedel : Reservedel, antal : int, dato : DateTime) : Modtagelse
+  +HentModtagelser() : Modtagelse[0..*]
+  -Gem()
+}
+
+class Datafil {
+  -sti : string
+  +«constructor» Datafil(sti : string)
+  +Indlæs(værksted : Værksted)
+  +Gem(værksted : Værksted)
+}
+
+class Kunde {
+  +Id : int
+  +Navn : string
+  +Telefonnummer : string
+  +«constructor» Kunde(id : int, navn : string, telefonnummer : string)
+  +Matcher(søgetekst : string) : bool
+}
+
+class Reparation {
+  +Reparationsnummer : int
+  +Indleveringsdato : DateTime
+  +Mærke : string
+  +Model : string
+  +Fejltype : string
+  +Fejlbeskrivelse : string
+  +UdførtArbejde : string
+  +LukketDato : DateTime[0..1]
+  +Status : ReparationStatus = Åben
+  +Kunde : Kunde
+  +UdførtAf : Medarbejder[0..1]
+  -udtag : Udtag[0..*]
+  +«constructor» Reparation(reparationsnummer : int, kunde : Kunde, mærke : string, model : string, fejltype : string, fejlbeskrivelse : string)
+  +TilføjUdtag(udtag : Udtag)
+  +HentUdtag() : Udtag[0..*]
+  +Luk(medarbejder : Medarbejder, beskrivelse : string)
+  +Matcher(søgetekst : string) : bool
+}
+
+class Medarbejder {
+  +Id : int
+  +Navn : string
+  +Initialer : string
+  +«constructor» Medarbejder(id : int, navn : string, initialer : string)
+  +ToString() : string
+}
+
+class Udtag {
+  +Dato : DateTime
+  +AntalTaget : int
+  +Reservedel : Reservedel
+  +Medarbejder : Medarbejder
+  +«constructor» Udtag(reservedel : Reservedel, antalTaget : int, medarbejder : Medarbejder, dato : DateTime)
+}
+
+class Reservedel {
+  +Id : int
+  +Navn : string
+  +AntalPåLager : int = 0
+  +MinimumAntal : int
+  +Leverandør : Leverandør
+  +«constructor» Reservedel(id : int, navn : string, leverandør : Leverandør, minimumAntal : int)
+  +HarNokPåLager(antal : int) : bool
+  +NedskrivLager(antal : int)
+  +OpskrivLager(antal : int)
+  +SkalBestilles() : bool
+  +Mangler() : int
+}
+
+class Leverandør {
+  +Navn : string
+  +«constructor» Leverandør(navn : string)
+}
+
+class Modtagelse {
+  +Dato : DateTime
+  +AntalModtaget : int
+  +Reservedel : Reservedel
+  +«constructor» Modtagelse(reservedel : Reservedel, antalModtaget : int, dato : DateTime)
+}
+
+enum ReparationStatus <<enumeration>> {
+  Åben
+  Lukket
+}
+
+Værksted "1" --> "0..*" Kunde
+Værksted "1" --> "0..*" Medarbejder
+Værksted "1" --> "0..*" Reparation
+Værksted "1" --> "0..*" Reservedel
+Værksted "1" --> "0..*" Modtagelse
+Værksted "1" --> "1" Datafil
+Reparation "0..*" --> "1" Kunde
+Reparation "0..*" --> "0..1" Medarbejder
+Reparation "1" --> "0..*" Udtag
+Udtag "0..*" --> "1" Medarbejder
+Udtag "0..*" --> "1" Reservedel
+Reservedel "1..*" --> "1" Leverandør
+Modtagelse "0..*" --> "1" Reservedel
+@enduml
