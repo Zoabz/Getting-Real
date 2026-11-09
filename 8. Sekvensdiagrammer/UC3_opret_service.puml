@@ -1,0 +1,76 @@
+@startuml
+title SD: UC3 Opret Service
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam dpi 150
+skinparam defaultFontName Arial
+skinparam participant {
+  BackgroundColor white
+}
+skinparam note {
+  BackgroundColor white
+}
+
+participant ":Værksted" as v
+participant "k : Kunde" as k
+
+== Søg kunde ==
+[-> v : SøgKunder(søgetekst)
+activate v
+note right of v
+  søgetekst (tlf. nr. eller navn)
+  indlæses fra UI-laget, mens der skrives
+end note
+loop for hver k i kunder
+  v -> k : Matcher(søgetekst)
+  activate k
+  k --> v : bool
+  deactivate k
+end
+[<-- v : fundne kunder : List<Kunde>
+deactivate v
+
+== Opret service ==
+[-> v : OpretService(kunde, mærke, model, fejltype, fejlbeskrivelse)
+activate v
+note right of v
+  kunde er valgt på listen over fundne kunder.
+  mærke, model, fejltype og fejlbeskrivelse
+  indlæses fra UI-laget
+end note
+
+alt kunde == null, eller et felt er tomt
+  [<-- v : throw ArgumentException(fejlbesked)
+else alle oplysninger er udfyldt
+  note right of v
+    nr = næsteReparationsnummer
+    næsteReparationsnummer++
+  end note
+  create participant "r : Reparation" as r
+  v -> r : create(nr, kunde, mærke, model, fejltype, fejlbeskrivelse)
+  note right of r
+    Indleveringsdato = DateTime.Today
+    Status = ReparationStatus.Åben
+  end note
+  participant "reparationer : List<Reparation>" as liste
+  v -> liste : Add(r)
+  activate liste
+  deactivate liste
+  v -> v : Gem()
+  activate v
+  participant "datafil : Datafil" as datafil
+  v -> datafil : Gem(this)
+  activate datafil
+  datafil --> v
+  deactivate datafil
+  deactivate v
+  [<-- v : r
+  note right of v
+    UI-laget åbner kvitteringen
+    for r som dialog (se UC4)
+  end note
+end
+deactivate v
+@enduml

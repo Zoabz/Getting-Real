@@ -1,0 +1,55 @@
+<UserControl x:Class="Vektor.Views.ServiceKvitteringSide"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:views="clr-namespace:Vektor.Views">
+    <StackPanel>
+        <TextBlock Text="Service kvittering" Style="{StaticResource SideTitel}"/>
+        <views:Besked x:Name="besked"/>
+
+        <Border Style="{StaticResource Panel}">
+            <StackPanel>
+                <TextBlock Text="Alle services" Style="{StaticResource SektionTitel}"/>
+
+                <!-- Søgning -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="320"/>
+                        <ColumnDefinition Width="16"/>
+                        <ColumnDefinition Width="170"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0">
+                        <TextBlock Text="Søg på nr., navn, tlf. nr. eller cykel" Style="{StaticResource FeltTitel}"/>
+                        <TextBox x:Name="txtSøg" TextChanged="Filter_Changed"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="Status" Style="{StaticResource FeltTitel}"/>
+                        <ComboBox x:Name="cmbStatus" SelectionChanged="Filter_Changed"/>
+                    </StackPanel>
+
+                    <TextBlock Grid.Column="3" x:Name="txtAntal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,4,16,0"/>
+
+                    <Button Grid.Column="4" Content="Vis kvittering" Click="VisKvittering_Click" VerticalAlignment="Center" Margin="0,4,0,0"/>
+                </Grid>
+
+                <!-- Tabel -->
+                <DataGrid x:Name="dgServices" MouseDoubleClick="VisKvittering_Click">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nr." Binding="{Binding Reparationsnummer}" Width="60"/>
+                        <DataGridTextColumn Header="Kunde" Binding="{Binding Kunde.Navn}" Width="*" ElementStyle="{StaticResource Ombryd}"/>
+                        <DataGridTextColumn Header="Tlf. nr." Binding="{Binding Kunde.Telefonnummer}" Width="110"/>
+                        <DataGridTextColumn Header="Mærke" Binding="{Binding Mærke}" Width="90"/>
+                        <DataGridTextColumn Header="Model" Binding="{Binding Model}" Width="90"/>
+                        <DataGridTextColumn Header="Fejltype" Binding="{Binding Fejltype}" Width="90"/>
+                        <DataGridTextColumn Header="Beskrivelse" Binding="{Binding Fejlbeskrivelse}" Width="1.4*" ElementStyle="{StaticResource Ombryd}"/>
+                        <DataGridTextColumn Header="Udført" Binding="{Binding UdførtArbejde}" Width="1.4*" ElementStyle="{StaticResource Ombryd}"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

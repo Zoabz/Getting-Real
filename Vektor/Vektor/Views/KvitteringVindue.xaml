@@ -1,0 +1,71 @@
+<Window x:Class="Vektor.Views.KvitteringVindue"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Service kvittering"
+        Width="620" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False"
+        Background="White" FontFamily="Segoe UI" FontSize="14">
+    <StackPanel Margin="32,28,32,28">
+
+        <!-- Top -->
+        <Grid>
+            <StackPanel>
+                <TextBlock Text="SERVICE KVITTERING" FontSize="12" FontWeight="SemiBold"/>
+                <TextBlock x:Name="txtNummer" FontSize="26" FontWeight="Bold"/>
+                <TextBlock x:Name="txtOprettet"/>
+            </StackPanel>
+            <Border x:Name="statusRamme" HorizontalAlignment="Right" VerticalAlignment="Top"
+                    BorderBrush="{StaticResource Sort}" BorderThickness="1" Padding="14,5">
+                <TextBlock x:Name="txtStatus" FontWeight="SemiBold"/>
+            </Border>
+        </Grid>
+
+        <Border Height="1" Background="{StaticResource Sort}" Margin="0,20"/>
+
+        <!-- Kunde og cykel -->
+        <TextBlock Text="Kunde og cykel" Style="{StaticResource SektionTitel}"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Kunde" Style="{StaticResource FeltTitel}"/>
+                <TextBlock x:Name="txtKunde" Style="{StaticResource FeltVærdi}"/>
+                <TextBlock Text="Mærke og model" Style="{StaticResource FeltTitel}"/>
+                <TextBlock x:Name="txtCykel" Style="{StaticResource FeltVærdi}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Tlf. nr." Style="{StaticResource FeltTitel}"/>
+                <TextBlock x:Name="txtTelefon" Style="{StaticResource FeltVærdi}"/>
+                <TextBlock Text="Fejltype" Style="{StaticResource FeltTitel}"/>
+                <TextBlock x:Name="txtFejltype" Style="{StaticResource FeltVærdi}"/>
+            </StackPanel>
+        </Grid>
+        <TextBlock Text="Fejlbeskrivelse" Style="{StaticResource FeltTitel}"/>
+        <TextBlock x:Name="txtBeskrivelse" Style="{StaticResource FeltVærdi}"/>
+
+        <Border Height="1" Background="{StaticResource Sort}" Margin="0,6,0,20"/>
+
+        <!-- Udført arbejde -->
+        <TextBlock Text="Udført arbejde" Style="{StaticResource SektionTitel}"/>
+        <TextBlock x:Name="txtUdført" Style="{StaticResource FeltVærdi}" Margin="0,0,0,4"/>
+        <TextBlock x:Name="txtUdførtAf" FontSize="13"/>
+
+        <Border Height="1" Background="{StaticResource Sort}" Margin="0,20"/>
+
+        <!-- Reservedele -->
+        <TextBlock Text="Reservedele" Style="{StaticResource SektionTitel}"/>
+        <DataGrid x:Name="dgReservedele" MaxHeight="220">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Reservedel" Binding="{Binding Reservedel.Navn}" Width="*"/>
+                <DataGridTextColumn Header="Antal" Binding="{Binding AntalTaget}" Width="70"/>
+                <DataGridTextColumn Header="Medarbejder" Binding="{Binding Medarbejder.Initialer}" Width="110"/>
+                <DataGridTextColumn Header="Dato" Binding="{Binding Dato, StringFormat=dd.MM.yyyy}" Width="110"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <TextBlock x:Name="txtIngenReservedele" Text="Ingen reservedele registreret." Visibility="Collapsed"/>
+
+        <Button Content="Luk" Click="Luk_Click" IsDefault="True" IsCancel="True" HorizontalAlignment="Right" Margin="0,24,0,0"/>
+    </StackPanel>
+</Window>
