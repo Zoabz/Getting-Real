@@ -11,11 +11,11 @@ skinparam participant {
   BackgroundColor white
 }
 
-actor Mekaniker
+actor ":Mekaniker"
 participant ":System" as System
 
-Mekaniker -> System : visLager()
-activate System
-System --> Mekaniker : lageroversigt: navn, antal på lager, minimum, status,\nbestillingsliste: navn, leverandør, antal på lager, minimum, mangler
-deactivate System
+":Mekaniker" -> System : visLager()
+
+System --> ":Mekaniker" : lageroversigt: navn, antal på lager, minimum, status,\nbestillingsliste: navn, leverandør, antal på lager, minimum, mangler
+
 @enduml

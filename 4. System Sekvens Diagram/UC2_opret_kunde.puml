@@ -11,15 +11,15 @@ skinparam participant {
   BackgroundColor white
 }
 
-actor Mekaniker
+actor ":Mekaniker"
 participant ":System" as System
 
-Mekaniker -> System : opretKunde(navn, tlfNr)
-activate System
+":Mekaniker" -> System : opretKunde(navn, tlfNr)
+
 alt navn mangler, eller tlfNr er ugyldigt eller allerede oprettet
-  System --> Mekaniker : fejlbesked
-else oplysningerne er gyldige
-  System --> Mekaniker : kundeId, kundeliste
+  System --> ":Mekaniker" : fejlbesked
+else 
+  System --> ":Mekaniker" : kundeId, kundeliste
 end
-deactivate System
+
 @enduml

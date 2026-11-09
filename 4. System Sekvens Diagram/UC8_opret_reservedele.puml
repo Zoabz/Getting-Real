@@ -11,15 +11,15 @@ skinparam participant {
   BackgroundColor white
 }
 
-actor Mekaniker
+actor ":Mekaniker"
 participant ":System" as System
 
-Mekaniker -> System : opretReservedel(navn, leverandør, minimumAntal)
-activate System
+":Mekaniker" -> System : opretReservedel(navn, leverandør, minimumAntal)
+
 alt oplysninger mangler, eller navnet findes allerede
-  System --> Mekaniker : fejlbesked
-else oplysningerne er gyldige
-  System --> Mekaniker : reservedelId, antal på lager = 0
+  System --> ":Mekaniker" : fejlbesked
+else 
+  System --> ":Mekaniker" : reservedelId, antal på lager = 0
 end
-deactivate System
+
 @enduml
