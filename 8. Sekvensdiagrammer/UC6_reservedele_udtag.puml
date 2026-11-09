@@ -1,0 +1,85 @@
+@startuml
+title SD: UC6 Reservedele udtag
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam dpi 150
+skinparam defaultFontName Arial
+skinparam participant {
+  BackgroundColor white
+}
+skinparam note {
+  BackgroundColor white
+}
+
+participant ":Værksted" as v
+participant "r : Reparation" as r
+participant "rd : Reservedel" as rd
+
+== Vælg service ==
+ref over v : SøgServices("", ReparationStatus.Åben) – se UC4
+[-> r : HentUdtag()
+activate r
+[<-- r : allerede registrerede udtag
+deactivate r
+
+== Tilføj reservedel til udtagslisten ==
+loop for hver reservedel, der skal på listen
+  [-> rd : HarNokPåLager(antal)
+  activate rd
+  [<-- rd : bool
+  deactivate rd
+  opt HarNokPåLager == true
+    create participant "u : Udtag" as u
+    [-> u : create(rd, antal, m, DateTime.Now)
+    note right of u
+      u lægges på udtagslisten i UI-laget.
+      Intet er gemt endnu.
+      Fjern tager u af listen igen.
+    end note
+  end
+end
+
+== Gem / Opdater lager ==
+[-> v : RegistrerUdtag(r, m, udtagsliste)
+activate v
+alt r eller m mangler, eller udtagslisten er tom
+  [<-- v : throw ArgumentException(fejlbesked)
+else alt er udfyldt
+  loop for hver u i udtagsliste (rd = u.Reservedel)
+    v -> rd : HarNokPåLager(u.AntalTaget)
+    activate rd
+    rd --> v : bool
+    deactivate rd
+  end
+  alt en reservedel har ikke nok på lager
+    [<-- v : throw InvalidOperationException(fejlbesked)
+    note right of v : intet gemmes
+  else der er nok af alle reservedele
+    loop for hver u i udtagsliste (rd = u.Reservedel)
+      v -> r : TilføjUdtag(u)
+      activate r
+      deactivate r
+      v -> rd : NedskrivLager(u.AntalTaget)
+      activate rd
+      note right of rd : AntalPåLager -= antal
+      deactivate rd
+    end
+    v -> v : Gem()
+    activate v
+    participant "datafil : Datafil" as datafil
+    v -> datafil : Gem(this)
+    activate datafil
+    datafil --> v
+    deactivate datafil
+    deactivate v
+    [<-- v
+    note right of v
+      UI-laget viser de registrerede udtag
+      (r.HentUdtag()) og bestillingslisten (se UC7)
+    end note
+  end
+end
+deactivate v
+@enduml

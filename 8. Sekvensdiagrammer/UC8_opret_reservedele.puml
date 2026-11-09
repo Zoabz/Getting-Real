@@ -1,0 +1,61 @@
+@startuml
+title SD: UC8 Opret Reservedele
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam dpi 150
+skinparam defaultFontName Arial
+skinparam participant {
+  BackgroundColor white
+}
+skinparam note {
+  BackgroundColor white
+}
+
+participant ":Værksted" as v
+participant "reservedele : List<Reservedel>" as liste
+
+[-> v : OpretReservedel(navn, leverandørNavn, minimumAntal)
+activate v
+note right of v
+  navn, leverandørNavn og minimumAntal
+  indlæses fra UI-laget (Opret reservedel)
+end note
+v -> liste : Any(rd => rd.Navn == navn)
+activate liste
+liste --> v : findes
+deactivate liste
+
+alt et felt mangler, minimumAntal < 0, eller findes == true
+  [<-- v : throw ArgumentException(fejlbesked)
+else oplysningerne er gyldige
+  v -> liste : FirstOrDefault(rd => rd.Leverandør.Navn == leverandørNavn)
+  activate liste
+  liste --> v : eksisterende
+  deactivate liste
+  alt eksisterende != null
+    note right of v : lev = eksisterende.Leverandør
+  else leverandøren er ny
+    create participant "lev : Leverandør" as lev
+    v -> lev : create(leverandørNavn)
+  end
+  note right of v : id = reservedele.Count + 1
+  create participant "rd : Reservedel" as rd
+  v -> rd : create(id, navn, lev, minimumAntal)
+  note right of rd : AntalPåLager = 0
+  v -> liste : Add(rd)
+  activate liste
+  deactivate liste
+  v -> v : Gem()
+  activate v
+  participant "datafil : Datafil" as datafil
+  v -> datafil : Gem(this)
+  activate datafil
+  datafil --> v
+  deactivate datafil
+  deactivate v
+  [<-- v : rd
+end
+deactivate v
+@enduml

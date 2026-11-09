@@ -1,5 +1,7 @@
 @startuml
 ' Samme design som designklassediagram.png / designklassediagram.drawio
+' smetana = PlantUML's indbyggede layout, så Graphviz ikke er nødvendig
+!pragma layout smetana
 skinparam monochrome true
 skinparam shadowing false
 skinparam backgroundColor white

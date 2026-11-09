@@ -1,0 +1,53 @@
+@startuml
+title SD: UC1 Opret Medarbejder
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam dpi 150
+skinparam defaultFontName Arial
+skinparam participant {
+  BackgroundColor white
+}
+skinparam note {
+  BackgroundColor white
+}
+
+participant ":Værksted" as v
+participant "medarbejdere : List<Medarbejder>" as liste
+
+[-> v : OpretMedarbejder(navn, initialer)
+activate v
+note right of v
+  navn og initialer indlæses
+  fra UI-laget (Opret medarbejder)
+end note
+v -> liste : Any(m => m.Initialer == initialer)
+activate liste
+liste --> v : findes
+deactivate liste
+
+alt navn eller initialer mangler, eller findes == true
+  [<-- v : throw ArgumentException(fejlbesked)
+else oplysningerne er gyldige
+  note right of v
+    id = medarbejdere.Count + 1
+    initialer = initialer.ToUpper()
+  end note
+  create participant "m : Medarbejder" as m
+  v -> m : create(id, navn, initialer)
+  v -> liste : Add(m)
+  activate liste
+  deactivate liste
+  v -> v : Gem()
+  activate v
+  participant "datafil : Datafil" as datafil
+  v -> datafil : Gem(this)
+  activate datafil
+  datafil --> v
+  deactivate datafil
+  deactivate v
+  [<-- v : m
+end
+deactivate v
+@enduml
