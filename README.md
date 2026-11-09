@@ -19,6 +19,7 @@ Mapperne er nummereret i den rækkefølge, vi arbejder i:
 - **6. Brugergrænseflade** – navigationsmodeller og tegninger af siderne i programmet, med en PDF af hver.
 - **7. Designklassediagram** – klasserne i prototypen med attributter, typer og metoder, lavet ud fra domænemodellen, SSD'erne og kontrakterne.
 - **8. Sekvensdiagrammer** – ét sekvensdiagram (SD) for hver use case, der viser, hvordan objekterne i designklassediagrammet samarbejder. Som PlantUML (`.puml`) og PNG, samlet i en PDF.
+- **Vektor** – WPF-prototypen. Åbn `Vektor/Vektor.sln` i Visual Studio.
 - **Materiale** – opgaveoplæg, casen fra Vekto og slides fra undervisningen.
 
 Diagrammerne er skrevet i PlantUML (`.puml`). Tekst, fx use cases, ordliste og kontrakter, er skrevet i `.md`.

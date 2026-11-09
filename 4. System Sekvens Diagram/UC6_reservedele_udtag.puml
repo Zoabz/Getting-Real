@@ -11,35 +11,27 @@ skinparam participant {
   BackgroundColor white
 }
 
-actor Mekaniker
+actor ":Mekaniker" as Mekaniker
 participant ":System" as System
 
 Mekaniker -> System : vaelgService(serviceId)
-activate System
 System --> Mekaniker : allerede registrerede reservedele
-deactivate System
 loop flere reservedele skal tilføjes
   Mekaniker -> System : tilfoejReservedel(reservedel, antal)
-  activate System
   alt reservedel eller antal mangler, eller ikke nok på lager
     System --> Mekaniker : fejlbesked
   else nok på lager
     System --> Mekaniker : reservedele på listen
   end
-  deactivate System
 end
 loop en linje skal fjernes
   Mekaniker -> System : fjernReservedel(reservedel)
-  activate System
   System --> Mekaniker : reservedele på listen
-  deactivate System
 end
 Mekaniker -> System : gemUdtag(serviceId, medarbejder)
-activate System
 alt service, medarbejder eller reservedele mangler
   System --> Mekaniker : fejlbesked
 else alt er udfyldt
   System --> Mekaniker : registrerede reservedele, reservedele der skal bestilles
 end
-deactivate System
 @enduml

@@ -61,7 +61,7 @@
                 <DataGridTextColumn Header="Reservedel" Binding="{Binding Reservedel.Navn}" Width="*"/>
                 <DataGridTextColumn Header="Antal" Binding="{Binding AntalTaget}" Width="70"/>
                 <DataGridTextColumn Header="Medarbejder" Binding="{Binding Medarbejder.Initialer}" Width="110"/>
-                <DataGridTextColumn Header="Dato" Binding="{Binding Dato, StringFormat=dd-MM-yyyy}" Width="110"/>
+                <DataGridTextColumn Header="Dato" Binding="{Binding Dato, StringFormat=dd.MM.yyyy}" Width="110"/>
             </DataGrid.Columns>
         </DataGrid>
         <TextBlock x:Name="txtIngenReservedele" Text="Ingen reservedele registreret." Visibility="Collapsed"/>

@@ -11,7 +11,7 @@ public partial class KvitteringVindue : Window
         InitializeComponent();
 
         txtNummer.Text = $"Service nr. {reparation.Reparationsnummer}";
-        txtOprettet.Text = $"Oprettet {reparation.Indleveringsdato:dd-MM-yyyy}";
+        txtOprettet.Text = $"Oprettet {reparation.Indleveringsdato:dd.MM.yyyy}";
         txtStatus.Text = reparation.Status.ToString();
 
         if (reparation.Status == ReparationStatus.Lukket)
@@ -29,7 +29,7 @@ public partial class KvitteringVindue : Window
         if (reparation.Status == ReparationStatus.Lukket)
         {
             txtUdført.Text = reparation.UdførtArbejde;
-            txtUdførtAf.Text = $"Udført af {reparation.UdførtAf} · {reparation.LukketDato:dd-MM-yyyy}";
+            txtUdførtAf.Text = $"Udført af {reparation.UdførtAf} · {reparation.LukketDato:dd.MM.yyyy}";
         }
         else
         {

@@ -12,7 +12,7 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        // Danske datoer, fx 09-11-2026
+        // Danske datoer og tal
         CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("da-DK");
         FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement),
             new FrameworkPropertyMetadata(XmlLanguage.GetLanguage("da-DK")));

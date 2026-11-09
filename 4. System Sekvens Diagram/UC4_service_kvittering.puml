@@ -11,17 +11,13 @@ skinparam participant {
   BackgroundColor white
 }
 
-actor Mekaniker
+actor ":Mekaniker" as Mekaniker
 participant ":System" as System
 
 loop indtil servicen står i tabellen
   Mekaniker -> System : soegServices(søgetekst, status)
-  activate System
   System --> Mekaniker : serviceliste: serviceId, kundenavn, kundeTlf, mærke - model,\nfejltype, beskrivelse, udført, status
-  deactivate System
 end
 Mekaniker -> System : visKvittering(serviceId)
-activate System
 System --> Mekaniker : serviceId, kundenavn, kundeTlf, mærke - model, fejltype,\nbeskrivelse, udført arbejde, reservedele, status
-deactivate System
 @enduml

@@ -234,9 +234,45 @@
     <Style TargetType="DatePicker">
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Height" Value="36"/>
-        <Setter Property="BorderBrush" Value="{StaticResource Sort}"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Margin" Value="0,0,0,16"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DatePicker">
+                    <Border Background="{StaticResource Hvid}" BorderBrush="{StaticResource Sort}" BorderThickness="1">
+                        <Grid x:Name="PART_Root">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <DatePickerTextBox x:Name="PART_TextBox" Grid.Column="0"/>
+                            <Button x:Name="PART_Button" Grid.Column="1" Width="38" Focusable="False" Cursor="Hand">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="Transparent">
+                                            <Path Data="M1,3 H15 V15 H1 Z M1,7 H15 M5,1 V4 M11,1 V4"
+                                                  Stroke="{StaticResource Sort}" StrokeThickness="1.3"
+                                                  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                            <Popup x:Name="PART_Popup" Placement="Bottom" StaysOpen="False" AllowsTransparency="True"
+                                   PlacementTarget="{Binding ElementName=PART_Root}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="DatePickerTextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DatePickerTextBox">
+                    <ScrollViewer x:Name="PART_ContentHost" Margin="8,0" VerticalAlignment="Center"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 

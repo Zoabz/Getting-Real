@@ -33,7 +33,7 @@
                     <TextBlock Text="Allerede registreret på servicen" Style="{StaticResource SektionTitel}"/>
                     <DataGrid x:Name="dgRegistreret" MaxHeight="200">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Dato" Binding="{Binding Dato, StringFormat=dd-MM-yyyy}" Width="100"/>
+                            <DataGridTextColumn Header="Dato" Binding="{Binding Dato, StringFormat=dd.MM.yyyy}" Width="100"/>
                             <DataGridTextColumn Header="Reservedel" Binding="{Binding Reservedel.Navn}" Width="*"/>
                             <DataGridTextColumn Header="Antal" Binding="{Binding AntalTaget}" Width="70"/>
                             <DataGridTextColumn Header="Medarbejder" Binding="{Binding Medarbejder.Initialer}" Width="110"/>
