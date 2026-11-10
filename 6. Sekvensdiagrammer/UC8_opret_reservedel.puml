@@ -1,0 +1,46 @@
+@startuml
+hide footbox
+title <U>SD UC8 - Create Spare Part
+
+participant ":SparePartView" as View
+participant ":SparePartController" as Controller
+participant ":SparePartRepository" as Repository
+
+[-> View : openSparePartView()
+activate View
+
+View -> Controller : createSparePart(name, supplier, minimumQuantity)
+activate Controller
+
+alt name missing
+    Controller --> View : showError("Name is required")
+
+else supplier missing
+    Controller --> View : showError("Supplier is required")
+
+else minimum quantity invalid
+    Controller --> View : showError("Invalid minimum quantity")
+
+else valid information
+    Controller -> Repository : exists(name)
+    activate Repository
+    Repository --> Controller : exists
+    deactivate Repository
+
+    alt spare part already exists
+        Controller --> View : showError("Spare part already exists")
+
+    else 
+        Controller -> Repository : addSparePart(name, supplier,\nminimumQuantity, 0)
+        activate Repository
+        Repository --> Controller : success
+        deactivate Repository
+
+        Controller --> View : showConfirmation("Spare part created")
+    end
+end
+
+deactivate Controller
+deactivate View
+
+@enduml

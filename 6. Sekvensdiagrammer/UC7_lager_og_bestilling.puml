@@ -1,0 +1,42 @@
+@startuml
+hide footbox
+title <U>SD UC7 - Inventory and Ordering
+
+participant ":InventoryView" as View
+participant ":InventoryController" as Controller
+participant ":InventoryRepository" as Repository
+
+[-> View : openInventoryView()
+activate View
+
+View -> Controller : getInventoryOverview()
+activate Controller
+
+Controller -> Repository : getAllParts()
+activate Repository
+Repository --> Controller : parts
+deactivate Repository
+
+alt no spare parts found
+    Controller --> View : showMessage("No spare parts found")
+
+else 
+    Controller --> View : showInventoryTable(parts)
+
+    Controller -> Repository : getPartsBelowMinimum()
+    activate Repository
+    Repository --> Controller : partsToOrder
+    deactivate Repository
+
+    alt no parts need ordering
+        Controller --> View : showMessage("Nothing to order")
+
+    else 
+        Controller --> View : showSortedOrderList(partsToOrder)
+    end
+end
+
+deactivate Controller
+deactivate View
+
+@enduml

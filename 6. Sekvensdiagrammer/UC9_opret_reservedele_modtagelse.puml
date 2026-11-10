@@ -1,0 +1,57 @@
+@startuml
+hide footbox
+title <U>SD UC9 - Receive Spare Parts
+
+participant ":SparePartReceiptView" as View
+participant ":SparePartReceiptController" as Controller
+participant ":InventoryRepository" as Repository
+
+[-> View : openSparePartReceiptView()
+activate View
+
+View -> Controller : getPartsToOrder()
+activate Controller
+
+Controller -> Repository : getPartsBelowMinimum()
+activate Repository
+Repository --> Controller : partsToOrder
+deactivate Repository
+
+alt no parts to receive
+    Controller --> View : showMessage("No parts to receive")
+
+else 
+    Controller --> View : showPartsList(partsToOrder)
+end
+
+deactivate Controller
+
+View -> Controller : receiveSparePart(partId, quantity, date)
+activate Controller
+
+alt quantity invalid
+    Controller --> View : showError("Invalid quantity")
+
+else date missing or in future
+    Controller --> View : showError("Invalid date")
+
+else valid information
+    Controller -> Repository : addReceivedStock(partId, quantity, date)
+    activate Repository
+
+    alt save failed
+        Repository --> Controller : failure
+        Controller --> View : showError("Could not save receipt")
+
+    else 
+        Repository --> Controller : success
+        Controller --> View : showConfirmation("Spare parts received")
+    end
+
+    deactivate Repository
+end
+
+deactivate Controller
+deactivate View
+
+@enduml

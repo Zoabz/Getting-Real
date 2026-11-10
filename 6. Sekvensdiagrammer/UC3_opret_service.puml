@@ -1,0 +1,52 @@
+@startuml
+hide footbox
+title <U>SD UC3 - Create Service
+
+participant ":ServiceView" as View
+participant ":ServiceController" as Controller
+participant ":CustomerRepository" as Customers
+participant ":ServiceRepository" as Services
+
+[-> View : openServiceView()
+activate View
+
+View -> Controller : searchCustomer(phoneNumber)
+activate Controller
+
+Controller -> Customers : findByPhone(phoneNumber)
+activate Customers
+Customers --> Controller : customer
+deactivate Customers
+
+alt customer not found
+    Controller --> View : showError("Create customer first")
+else 
+    Controller --> View : showCustomer(customer)
+end
+
+deactivate Controller
+
+View -> Controller : createService(customerId, brand, model,\nerrorType, description)
+activate Controller
+
+alt required information missing
+    Controller --> View : showError("Missing information")
+
+else 
+    Controller -> Services : generateUniqueServiceId()
+    activate Services
+    Services --> Controller : serviceId
+    deactivate Services
+
+    Controller -> Services : addService(serviceId, customerId,\nbrand, model, errorType, description,\n"Open", currentDate)
+    activate Services
+    Services --> Controller : success
+    deactivate Services
+
+    Controller --> View : showServiceReceipt(serviceId)
+end
+
+deactivate Controller
+deactivate View
+
+@enduml
