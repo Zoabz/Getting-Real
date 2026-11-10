@@ -1,5 +1,5 @@
 @startuml
-title UC1 - Opret Medarbejder
+title <u>UC1 - Opret Medarbejder</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

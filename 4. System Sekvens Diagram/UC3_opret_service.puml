@@ -1,5 +1,5 @@
 @startuml
-title UC3 - Opret Service
+title <u>UC3 - Opret Service</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

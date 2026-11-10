@@ -1,5 +1,5 @@
 @startuml
-title UC8 - Opret Reservedele
+title <u>UC8 - Opret Reservedele</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

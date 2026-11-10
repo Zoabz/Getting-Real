@@ -1,5 +1,5 @@
 @startuml
-title UC6 - Reservedele udtag
+title <u>UC6 - Reservedele udtag</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

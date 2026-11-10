@@ -1,5 +1,5 @@
 @startuml
-title UC9 - Opret Reservedele Modtagelse
+title <u>UC9 - Opret Reservedele Modtagelse</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

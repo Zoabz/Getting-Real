@@ -1,5 +1,5 @@
 @startuml
-title UC4 - Service Kvittering
+title <u>UC4 - Service Kvittering</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

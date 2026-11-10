@@ -1,5 +1,5 @@
 @startuml
-title UC5 - Udført Arbejde
+title <u>UC5 - Udført Arbejde</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false
