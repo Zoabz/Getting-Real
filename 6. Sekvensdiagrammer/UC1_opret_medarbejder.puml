@@ -1,0 +1,38 @@
+@startuml
+hide footbox
+title SD UC1 - Create Employee
+
+participant ":EmployeeView" as View
+participant ":EmployeeController" as Controller
+participant ":EmployeeRepository" as Repository
+
+[-> View : openEmployeeView()
+activate View
+
+View -> Controller : createEmployee(name, initials)
+activate Controller
+
+alt name missing
+    Controller --> View : showError("Name is required")
+
+else initials missing
+    Controller --> View : showError("Initials are required")
+
+else valid information
+    Controller -> Repository : generateUniqueEmployeeId()
+    activate Repository
+    Repository --> Controller : employeeId
+    deactivate Repository
+
+    Controller -> Repository : addEmployee(employeeId, name, initials)
+    activate Repository
+    Repository --> Controller : success
+    deactivate Repository
+
+    Controller --> View : showConfirmation(employeeId)
+end
+
+deactivate Controller
+deactivate View
+
+@enduml

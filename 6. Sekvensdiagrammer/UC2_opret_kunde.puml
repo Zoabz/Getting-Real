@@ -1,0 +1,43 @@
+@startuml
+hide footbox
+title SD UC2 - Create Customer
+
+participant ":CustomerView" as View
+participant ":CustomerController" as Controller
+participant ":CustomerRepository" as Repository
+
+[-> View : openCustomerView()
+activate View
+
+View -> Controller : createCustomer(name, phoneNumber)
+activate Controller
+
+alt name missing
+    Controller --> View : showError("Name is required")
+
+else phone number missing or invalid
+    Controller --> View : showError("Invalid phone number")
+
+else valid information
+    Controller -> Repository : findByPhone(phoneNumber)
+    activate Repository
+    Repository --> Controller : customer
+    deactivate Repository
+
+    alt customer already exists
+        Controller --> View : showExistingCustomer(customer)
+
+    else customer does not exist
+        Controller -> Repository : addCustomer(name, phoneNumber)
+        activate Repository
+        Repository --> Controller : success
+        deactivate Repository
+
+        Controller --> View : showConfirmation("Customer created")
+    end
+end
+
+deactivate Controller
+deactivate View
+
+@enduml

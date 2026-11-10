@@ -1,0 +1,55 @@
+@startuml
+hide footbox
+title SD UC4 - Service Receipt
+
+participant ":ServiceReceiptView" as View
+participant ":ServiceController" as Controller
+participant ":ServiceRepository" as Repository
+
+[-> View : openServiceReceiptView()
+activate View
+
+View -> Controller : getAllServices()
+activate Controller
+
+Controller -> Repository : getAllServices()
+activate Repository
+Repository --> Controller : services
+deactivate Repository
+
+alt no services found
+    Controller --> View : showMessage("No services found")
+
+else services found
+    Controller --> View : showServiceTable(services)
+end
+
+deactivate Controller
+
+View -> Controller : filterServices(status)
+activate Controller
+Controller -> Repository : findByStatus(status)
+activate Repository
+Repository --> Controller : filteredServices
+deactivate Repository
+
+alt no matching services
+    Controller --> View : showMessage("No matching services")
+else matching services found
+    Controller --> View : showServiceTable(filteredServices)
+end
+
+deactivate Controller
+
+View -> Controller : getServiceDetails(serviceId)
+activate Controller
+Controller -> Repository : findById(serviceId)
+activate Repository
+Repository --> Controller : serviceDetails
+deactivate Repository
+Controller --> View : showServiceDetails(serviceDetails)
+
+deactivate Controller
+deactivate View
+
+@enduml
