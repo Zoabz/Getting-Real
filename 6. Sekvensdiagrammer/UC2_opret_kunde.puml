@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC2 - Create Customer
+title <U>SD UC2 - Create Customer
 
 participant ":CustomerView" as View
 participant ":CustomerController" as Controller

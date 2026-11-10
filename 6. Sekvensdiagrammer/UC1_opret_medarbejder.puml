@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC1 - Create Employee
+title <U>SD UC1 - Create Employee
 
 participant ":EmployeeView" as View
 participant ":EmployeeController" as Controller
