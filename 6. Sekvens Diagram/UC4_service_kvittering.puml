@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC4 - Service Receipt
+title <U>SD UC4 - Service Receipt
 
 participant ":ServiceReceiptView" as View
 participant ":ServiceController" as Controller

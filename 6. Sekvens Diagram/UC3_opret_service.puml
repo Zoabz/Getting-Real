@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC3 - Create Service
+title <U>SD UC3 - Create Service
 
 participant ":ServiceView" as View
 participant ":ServiceController" as Controller

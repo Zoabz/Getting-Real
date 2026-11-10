@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC7 - Inventory and Ordering
+title <U>SD UC7 - Inventory and Ordering
 
 participant ":InventoryView" as View
 participant ":InventoryController" as Controller

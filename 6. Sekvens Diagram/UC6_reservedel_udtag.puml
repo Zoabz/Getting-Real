@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC6 - Spare Parts Withdrawal
+title <U>SD UC6 - Spare Parts Withdrawal
 
 participant ":WithdrawalView" as View
 participant ":WithdrawalController" as Controller

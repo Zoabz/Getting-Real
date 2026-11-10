@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC9 - Receive Spare Parts
+title <U>SD UC9 - Receive Spare Parts
 
 participant ":SparePartReceiptView" as View
 participant ":SparePartReceiptController" as Controller

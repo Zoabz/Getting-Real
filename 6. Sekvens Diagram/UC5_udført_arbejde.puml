@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title SD UC5 - Completed Work
+title <U>SD UC5 - Completed Work
 
 participant ":CompletedWorkView" as View
 participant ":ServiceController" as Controller
