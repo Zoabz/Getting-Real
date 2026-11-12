@@ -22,7 +22,7 @@ System --> ":Mekaniker" : leverandør, antal på lager, minimum, mangler
 
 alt oplysninger mangler, eller datoen ligger i fremtiden
   System --> ":Mekaniker" : fejlbesked
-else 
+else oplysninger mangler ikke, eller datoen ligger ikke i fremtiden
   System --> ":Mekaniker" : antal på lager, Status = "OK" eller "Skal bestilles"
 end
 
