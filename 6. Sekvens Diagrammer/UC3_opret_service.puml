@@ -2,10 +2,10 @@
 hide footbox
 title <U>SD UC3 - Create Service
 
-participant ":ServiceView" as View
-participant ":ServiceController" as Controller
-participant ":CustomerRepository" as Customers
-participant ":ServiceRepository" as Services
+participant ":ServiceView" as View #White
+participant ":ServiceController" as Controller #White
+participant ":CustomerRepository" as Customers #White
+participant ":ServiceRepository" as Services #White
 
 [-> View : openServiceView()
 activate View

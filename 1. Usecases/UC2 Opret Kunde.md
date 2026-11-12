@@ -1,9 +1,9 @@
-# UC2 – Opret Kunde
+# UC2 – Opret Kunde I Butikken
 
 | Felt | Beskrivelse |
 | :---- | :---- |
 | **Nummer** | UC2 |
-| **Use case navn** | Opret Kunde |
+| **Use case navn** | Opret Kunde I Butikken |
 | **Virkefelt** | Vekto værkstedssystem (WPF-prototype) |
 | **Niveau** | Brugermål |
 | **Primær aktør** | Medarbejder (mekaniker eller ejer) |

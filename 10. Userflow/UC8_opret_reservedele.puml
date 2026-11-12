@@ -1,6 +1,6 @@
-' Navigationsmodel – UC8 - Opret Reservedele
+' Navigationsmodel – UC8 - Opret Reservedele På Lageret
 @startuml
-title UC8 - Opret Reservedele I Systemet
+title UC8 - Opret Reservedele På Lageret
 start
 :Vælg »Opret reservedel« i sidebaren;
 :Udfyld Reservedel navn »Kølervæske«,

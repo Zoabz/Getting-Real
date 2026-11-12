@@ -2,9 +2,9 @@
 hide footbox
 title <U>SD UC7 - Inventory And Ordering Of Spare Parts</U>
 
-participant ":InventoryView" as View
-participant ":InventoryController" as Controller
-participant ":InventoryRepository" as Repository
+participant ":InventoryView" as View #White
+participant ":InventoryController" as Controller #White
+participant ":InventoryRepository" as Repository #White
 
 [-> View : openInventoryView()
 activate View

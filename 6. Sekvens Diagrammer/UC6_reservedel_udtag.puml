@@ -2,9 +2,9 @@
 hide footbox
 title <U>SD UC6 - Spare Parts Withdrawal From Inventory</U>
 
-participant ":WithdrawalView" as View
-participant ":WithdrawalController" as Controller
-participant ":InventoryRepository" as Repository
+participant ":WithdrawalView" as View #White
+participant ":WithdrawalController" as Controller #White
+participant ":InventoryRepository" as Repository #White
 
 [-> View : openWithdrawalView()
 activate View

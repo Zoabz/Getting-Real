@@ -2,9 +2,9 @@
 hide footbox
 title <U>SD UC4 - Service Receipt
 
-participant ":ServiceReceiptView" as View
-participant ":ServiceController" as Controller
-participant ":ServiceRepository" as Repository
+participant ":ServiceReceiptView" as View #White
+participant ":ServiceController" as Controller #White
+participant ":ServiceRepository" as Repository #White
 
 [-> View : openServiceReceiptView()
 activate View

@@ -2,9 +2,9 @@
 hide footbox
 title <U>SD UC2 - Create Customer In Store</U>
 
-participant ":CustomerView" as View
-participant ":CustomerController" as Controller
-participant ":CustomerRepository" as Repository
+participant ":CustomerView" as View #White
+participant ":CustomerController" as Controller #White
+participant ":CustomerRepository" as Repository #White
 
 [-> View : openCustomerView()
 activate View

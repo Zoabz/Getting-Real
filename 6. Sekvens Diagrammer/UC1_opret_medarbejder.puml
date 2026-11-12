@@ -2,9 +2,11 @@
 hide footbox
 title <U>SD UC1 - Create Employee
 
-participant ":EmployeeView" as View
-participant ":EmployeeController" as Controller
-participant ":EmployeeRepository" as Repository
+participant ":EmployeeView" as View #White
+participant ":EmployeeController" as Controller #White
+participant ":EmployeeRepository" as Repository #White
+
+
 
 [-> View : openEmployeeView()
 activate View
