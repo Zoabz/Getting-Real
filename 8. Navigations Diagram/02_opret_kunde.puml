@@ -1,0 +1,20 @@
+' Navigationsdiagram – 02 · Opret kunde
+@startuml
+title 02 · Opret kunde
+skinparam shadowing false
+skinparam dpi 150
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 14
+skinparam ArrowColor black
+skinparam ArrowThickness 1.2
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  RoundCorner 15
+}
+
+rectangle "Hovedvindue (00)" as H
+rectangle "Opret kunde (02)" as P
+
+H <--> P : Opret kunde /\nAnden side i menuen
+@enduml

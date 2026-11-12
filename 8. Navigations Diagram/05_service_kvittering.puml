@@ -1,0 +1,22 @@
+' Navigationsdiagram – 05 · Service kvittering
+@startuml
+title 05 · Service kvittering
+skinparam shadowing false
+skinparam dpi 150
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 14
+skinparam ArrowColor black
+skinparam ArrowThickness 1.2
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  RoundCorner 15
+}
+
+rectangle "Hovedvindue (00)" as H
+rectangle "Service kvittering (05)" as P05
+rectangle "Service kvittering\n(dialog, 04)" as D04
+
+H <--> P05 : Service kvittering /\nAnden side i menuen
+P05 <-> D04 : Vis kvittering eller dobbeltklik /\nLuk
+@enduml
