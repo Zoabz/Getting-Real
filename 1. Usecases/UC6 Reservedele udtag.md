@@ -1,9 +1,9 @@
-# UC6 – Reservedele udtag
+# UC6 – Reservedele Udtag Fra Lageret
 
 | Felt | Beskrivelse |
 | :---- | :---- |
 | **Nummer** | UC6 |
-| **Use case navn** | Reservedele udtag |
+| **Use case navn** | Reservedele Udtag Fra Lageret |
 | **Virkefelt** | Vekto værkstedssystem (WPF-prototype) |
 | **Niveau** | Brugermål |
 | **Primær aktør** | Mekaniker |

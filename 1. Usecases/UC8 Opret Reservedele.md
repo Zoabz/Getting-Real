@@ -1,9 +1,9 @@
-# UC8 – Opret Reservedele
+# UC8 – Opret Reservedele På Lageret
 
 | Felt | Beskrivelse |
 | :---- | :---- |
 | **Nummer** | UC8 |
-| **Use case navn** | Opret Reservedele |
+| **Use case navn** | Opret Reservedele På Lageret |
 | **Virkefelt** | Vekto værkstedssystem (WPF-prototype) |
 | **Niveau** | Brugermål |
 | **Primær aktør** | Ejer (Peter) eller medarbejder |

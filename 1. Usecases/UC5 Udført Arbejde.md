@@ -1,9 +1,9 @@
-# UC5 – Udført Arbejde
+# UC5 – Udført Arbejde På Reparationen
 
 | Felt | Beskrivelse |
 | :---- | :---- |
 | **Nummer** | UC5 |
-| **Use case navn** | Udført Arbejde |
+| **Use case navn** | Udført Arbejde På Reparationen |
 | **Virkefelt** | Vekto værkstedssystem (WPF-prototype) |
 | **Niveau** | Brugermål |
 | **Primær aktør** | Mekaniker |

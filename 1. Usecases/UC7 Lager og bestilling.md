@@ -1,9 +1,9 @@
-# UC7 – Lager og bestilling
+# UC7 – Lager Og Bestilling Af Reservedele
 
 | Felt | Beskrivelse |
 | :---- | :---- |
 | **Nummer** | UC7 |
-| **Use case navn** | Lager og bestilling |
+| **Use case navn** | Lager Og Bestilling Af Reservedele |
 | **Virkefelt** | Vekto værkstedssystem (WPF-prototype) |
 | **Niveau** | Brugermål |
 | **Primær aktør** | Ejer (Peter) eller medarbejder |

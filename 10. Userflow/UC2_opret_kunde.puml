@@ -1,6 +1,6 @@
-' Navigationsmodel – UC2 - Opret Kunde
+' Navigationsmodel – UC2 - Opret Kunde I Butikken
 @startuml
-title UC2 - Opret Kunde I Systemet
+title UC2 - Opret Kunde I Butikken
 start
 :Vælg »Opret kunde« i sidebaren;
 :Udfyld Navn »Ole Bach« og Tlf. nr. »+45 40 11

@@ -42,6 +42,6 @@
 ## Relaterede begreber og artefakter
 
 - Begreber: Reparation, Servicekvittering, Fejltype (se [ordliste](../0.%20Ordliste/ordliste.md))
-- Forudsætter: [UC2 Opret Kunde](UC2%20Opret%20Kunde.md)
+- Forudsætter: [UC2 Opret Kunde I Butikken](UC2%20Opret%20Kunde.md)
 - Bruges af: UC4, UC5, UC6
 - Første sprint starter med UC3 og UC6.
