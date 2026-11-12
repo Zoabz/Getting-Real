@@ -20,7 +20,7 @@ deactivate Repository
 alt no spare parts found
     Controller --> View : showMessage("No spare parts found")
 
-else 
+else spare parts found
     Controller --> View : showInventoryTable(parts)
 
     Controller -> Repository : getPartsBelowMinimum()
@@ -31,7 +31,7 @@ else
     alt no parts need ordering
         Controller --> View : showMessage("Nothing to order")
 
-    else 
+    else parts needing ordering found
         Controller --> View : showSortedOrderList(partsToOrder)
     end
 end

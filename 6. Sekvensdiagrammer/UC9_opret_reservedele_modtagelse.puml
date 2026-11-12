@@ -20,7 +20,7 @@ deactivate Repository
 alt no parts to receive
     Controller --> View : showMessage("No parts to receive")
 
-else 
+else parts to order
     Controller --> View : showPartsList(partsToOrder)
 end
 
@@ -43,7 +43,7 @@ else valid information
         Repository --> Controller : failure
         Controller --> View : showError("Could not save receipt")
 
-    else 
+    else save successful
         Repository --> Controller : success
         Controller --> View : showConfirmation("Spare parts received")
     end

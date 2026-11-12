@@ -15,7 +15,7 @@ activate Controller
 alt description missing
     Controller --> View : showError("Description is required")
 
-else 
+else description found
     Controller -> Repository : findById(serviceId)
     activate Repository
     Repository --> Controller : service
@@ -24,7 +24,7 @@ else
     alt service not found or closed
         Controller --> View : showError("Service unavailable")
 
-    else 
+    else service found
         Controller -> Repository : saveCompletedWork(serviceId,\nemployeeId, description)
         activate Repository
         Repository --> Controller : success

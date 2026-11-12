@@ -20,7 +20,7 @@ deactivate Repository
 alt no services found
     Controller --> View : showMessage("No services found")
 
-else 
+else services found
     Controller --> View : showServiceTable(services)
 end
 
@@ -35,7 +35,7 @@ deactivate Repository
 
 alt no matching services
     Controller --> View : showMessage("No matching services")
-else 
+else matching services found 
     Controller --> View : showServiceTable(filteredServices)
 end
 

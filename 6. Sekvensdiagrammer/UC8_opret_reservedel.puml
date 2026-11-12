@@ -30,7 +30,7 @@ else valid information
     alt spare part already exists
         Controller --> View : showError("Spare part already exists")
 
-    else 
+    else spare part doesnt exist 
         Controller -> Repository : addSparePart(name, supplier,\nminimumQuantity, 0)
         activate Repository
         Repository --> Controller : success
