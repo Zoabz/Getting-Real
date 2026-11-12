@@ -23,7 +23,7 @@ loop flere reservedele skal tilføjes
   
   alt reservedel eller antal mangler, eller ikke nok på lager
     System --> ":Mekaniker" : fejlbesked
-  else reservedel og antal mangler ikke, eller nok på lager
+  else else
     System --> ":Mekaniker" : reservedele på listen
   end
   
@@ -38,7 +38,7 @@ end
 
 alt service, medarbejder eller reservedele mangler
   System --> ":Mekaniker" : fejlbesked
-else service, medarbejder og reservedele mangler ikke
+else else
   System --> ":Mekaniker" : registrerede reservedele, reservedele der skal bestilles
 end
 

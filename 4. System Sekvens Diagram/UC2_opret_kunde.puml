@@ -18,7 +18,7 @@ participant ":System" as System
 
 alt navn mangler, eller tlfNr er ugyldigt eller allerede oprettet
   System --> ":Mekaniker" : fejlbesked
-else navn mangler ikke, eller tlfNr er gyldigt og ikke allerede oprettet
+else else
   System --> ":Mekaniker" : kundeId, kundeliste
 end
 
