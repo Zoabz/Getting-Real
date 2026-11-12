@@ -15,7 +15,7 @@ activate Controller
 alt description missing
     Controller --> View : showError("Description is required")
 
-else description found
+else else
     Controller -> Repository : findById(serviceId)
     activate Repository
     Repository --> Controller : service

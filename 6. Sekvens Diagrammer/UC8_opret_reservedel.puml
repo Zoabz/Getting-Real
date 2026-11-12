@@ -21,7 +21,7 @@ else supplier missing
 else minimum quantity invalid
     Controller --> View : showError("Invalid minimum quantity")
 
-else valid information
+else else
     Controller -> Repository : exists(name)
     activate Repository
     Repository --> Controller : exists
@@ -30,7 +30,7 @@ else valid information
     alt spare part already exists
         Controller --> View : showError("Spare part already exists")
 
-    else spare part doesnt exist 
+    else else
         Controller -> Repository : addSparePart(name, supplier,\nminimumQuantity, 0)
         activate Repository
         Repository --> Controller : success

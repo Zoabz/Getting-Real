@@ -35,7 +35,7 @@ alt quantity invalid
 else date missing or in future
     Controller --> View : showError("Invalid date")
 
-else valid information
+else else
     Controller -> Repository : addReceivedStock(partId, quantity, date)
     activate Repository
 
@@ -43,7 +43,7 @@ else valid information
         Repository --> Controller : failure
         Controller --> View : showError("Could not save receipt")
 
-    else save successful
+    else else
         Repository --> Controller : success
         Controller --> View : showConfirmation("Spare parts received")
     end

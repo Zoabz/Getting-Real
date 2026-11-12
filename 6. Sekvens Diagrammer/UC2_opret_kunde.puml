@@ -27,7 +27,7 @@ else valid information
     alt customer already exists
         Controller --> View : showExistingCustomer(customer)
 
-    else customer doesnt exist
+    else else
         Controller -> Repository : addCustomer(name, phoneNumber)
         activate Repository
         Repository --> Controller : success

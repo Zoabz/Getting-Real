@@ -20,7 +20,7 @@ deactivate Customers
 
 alt customer not found
     Controller --> View : showError("Create customer first")
-else customer found
+else else
     Controller --> View : showCustomer(customer)
 end
 
@@ -32,7 +32,7 @@ activate Controller
 alt required information missing
     Controller --> View : showError("Missing information")
 
-else required information found
+else else
     Controller -> Services : generateUniqueServiceId()
     activate Services
     Services --> Controller : serviceId
