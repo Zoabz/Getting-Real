@@ -1,52 +1,70 @@
 @startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
 hide footbox
-title <U>SD UC3 - Create Service
+title SD UC3 - Create Service
 
-participant ":ServiceView" as View
-participant ":ServiceController" as Controller
-participant ":CustomerRepository" as Customers
-participant ":ServiceRepository" as Services
+participant ":CreateServiceController" as C
+participant ":CustomerRepo" as KR
+participant ":ServiceRepo" as SR
 
-[-> View : openServiceView()
-activate View
+== SearchCustomer ==
+[-> C : SearchCustomer(phoneNumber)
+activate C
+C -> KR : customer = GetById(phoneNumber)
+activate KR
+deactivate KR
 
-View -> Controller : searchCustomer(phoneNumber)
-activate Controller
-
-Controller -> Customers : findByPhone(phoneNumber)
-activate Customers
-Customers --> Controller : customer
-deactivate Customers
-
-alt customer not found
-    Controller --> View : showError("Create customer first")
-else customer found
-    Controller --> View : showCustomer(customer)
+alt customer == null
+    [<-- C : error "Create customer first"
+else customer != null
+    [<-- C : customer
 end
+deactivate C
 
-deactivate Controller
+== CreateService ==
+[-> C : CreateService(phoneNumber, brand, model,\nerrorType, description)
+activate C
 
-View -> Controller : createService(customerId, brand, model,\nerrorType, description)
-activate Controller
+alt information missing
+    [<-- C : error "Missing information"
 
-alt required information missing
-    Controller --> View : showError("Missing information")
+else all information filled in
+    C -> KR : customer = GetById(phoneNumber)
+    activate KR
+    deactivate KR
 
-else required information found
-    Controller -> Services : generateUniqueServiceId()
-    activate Services
-    Services --> Controller : serviceId
-    deactivate Services
+    C -> SR : serviceId = GetNextId()
+    activate SR
+    deactivate SR
 
-    Controller -> Services : addService(serviceId, customerId,\nbrand, model, errorType, description,\n"Open", currentDate)
-    activate Services
-    Services --> Controller : success
-    deactivate Services
+    create participant ":Service" as S
+    C -->> S : service = «create»(serviceId, customer,\nbrand, model, errorType, description)
+    note right of S
+      DropOffDate = today
+      Status = Open
+    end note
 
-    Controller --> View : showServiceReceipt(serviceId)
+    C -> SR : Add(service)
+    activate SR
+    deactivate SR
+
+    [<-- C : service
 end
-
-deactivate Controller
-deactivate View
+deactivate C
 
 @enduml

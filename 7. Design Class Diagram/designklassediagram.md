@@ -1,72 +1,74 @@
-# Designklassediagram – Vekto værkstedssystem
+# Designklassediagram (DCD) – Vekto værkstedssystem
 
-Designklassediagrammet viser de klasser, vi vil programmere i prototypen, med attributter, typer og metoder. Det bygger på [domænemodellen](../2.%20Domænemodel/domænemodel.md) (klasser og relationer), [systemsekvensdiagrammerne](../4.%20System%20Sekvens%20Diagram/) (systemoperationer) og [systemoperationskontrakterne](../5.%20System%20Operation%20Kontrakt/Systemoperationskontrakter.pdf) (hvad operationerne ændrer).
+> **Status:** Diagrammet dækker indtil videre **UC1–UC4** (Opret Medarbejder, Opret Kunde, Opret Service og Service Kvittering). UC5–UC9 tilføjes bagefter i samme stil.
 
 ![Designklassediagram](designklassediagram.png)
 
-- [designklassediagram.png](designklassediagram.png) – billedet af diagrammet.
-- [designklassediagram.drawio](designklassediagram.drawio) – samme diagram, som kan redigeres i draw.io (diagrams.net eller Draw.io-udvidelsen i VS Code).
-- [designklassediagram.puml](designklassediagram.puml) – samme klasser og relationer i PlantUML.
+- [designklassediagram.puml](designklassediagram.puml) er kilden i PlantUML.
+- [designklassediagram.png](designklassediagram.png) er billedet til rapporten, lavet ud fra `.puml`-filen.
 
-## Sådan læses diagrammet
+Layoutet ligger fast i `.puml`-filen med `left to right direction` og `linetype ortho`. Lagene står fra venstre mod højre (View → Controller → Repo → domæneklasse) i stiplede rammer som i Disaheim-eksemplet. Renderes med Graphviz (standard i PlantUML-udvidelsen til VS Code).
 
-- Hver kasse har tre sektioner: **klassenavn** øverst, **attributter** i midten og **operationer/metoder** nederst.
-- Synlighed: `+` public, `-` private, `#` protected, `~` package (i C# `internal`, synlig i samme projekt). `#` bruges ikke, fordi der ikke er arv i designet.
-- `«constructor»` markerer konstruktøren.
-- `Type[0..*]` er en liste. `Type[0..1]` betyder, at værdien kan mangle (fx er `UdførtAf` tom, indtil reparationen er lukket).
-- Pilen viser, hvilken vej man kan navigere. Fx kender en Reparation sin Kunde, men en Kunde kender ikke sine reparationer.
-- Tallene ved linjerne er multipliciteter, som i domænemodellen.
+DCD'et er tegnet i samme stil som undervisningens lagdelte DCD'er: mødebookingsystemet (Pr20, `BookMeetingController` og `RoomRepo`) og Disaheim (Pr19, `Menu → Controller → BookRepository → Book`). Det bygger på [domænemodellen](../2.%20Domæne%20Model/domænemodel.md) og [sekvensdiagrammerne](../6.%20Sekvens%20Diagrammer/) for UC1–UC4.
 
-## Klasserne
+## Opbygning
 
-| Klasse | Ansvar |
-| :---- | :---- |
-| **Værksted** | Controller for hele systemet. Modtager systemoperationerne fra SSD'erne, holder listerne over alle objekter og gemmer efter hver ændring (`- Gem()`). |
-| **Datafil** | Gemmer og indlæser alle data i én tekstfil. Listerne i Værksted er `~` (package), så Datafil kan læse og skrive dem, uden at de er public. |
-| **Kunde** | Navn og telefonnummer. `Matcher` bruges, når der søges på telefonnummer eller navn (UC3). |
-| **Medarbejder** | Navn og initialer. `ToString` giver fx *John Pedersen (JP)* til dropdowns. |
-| **Reparation** | Kaldes *Service* i brugergrænsefladen. `Luk` sætter UdførtArbejde, UdførtAf, LukketDato og Status til Lukket (UC5). Kender sine udtag (UC4, UC6). |
-| **Udtag** | Et antal af én reservedel, som en medarbejder har taget til en reparation (UC6). |
-| **Reservedel** | Kender sit eget lager: `HarNokPåLager` og `NedskrivLager` (UC6), `OpskrivLager` (UC9), `SkalBestilles` og `Mangler` (UC7). |
-| **Leverandør** | Oprettes sammen med reservedelen (UC8). |
-| **Modtagelse** | En levering af en reservedel med dato og antal (UC9). |
-| **ReparationStatus** | Åben eller Lukket. |
+| Lag | Klasser | Ansvar |
+| :---- | :---- | :---- |
+| **UI Layer** | EmployeeView, CustomerView, ServiceView, ServiceReceiptView | WPF-siderne. Hvert view kender sin controller (`- controller : …`), ligesom `Menu` i Disaheim. |
+| **Application Layer** | En **use case controller** pr. use case: CreateEmployeeController, CreateCustomerController, CreateServiceController, ServiceReceiptController. Et **repository** pr. domæneklasse: EmployeeRepo, CustomerRepo, ServiceRepo. | Controlleren modtager systemoperationerne fra SSD'et og delegerer (GRASP Controller). Repositoriet opbevarer objekterne i en privat liste (Repository-mønstret, SRP). |
+| **Domain Layer** | Employee, Customer, Service, ServiceStatus | Domæneklasserne fra domænemodellen på engelsk med datatyper. |
 
-## Fra systemoperation til metode
+## Notation (som i undervisningens eksempler)
 
-| UC | SSD | Kontrakt | Metode i designet |
+- **Lag:** UI Layer, Application Layer og Domain Layer står hver i en stiplet ramme, ligesom i Disaheim-eksemplet (Pr19).
+- **Synlighed:** `+` public, `-` private.
+- **Properties og felter:** `+ Name : string` er en property, og `- employees : Employee[0..*]` er et privat felt (Pr16).
+- **`«get»`** er en property, der kun kan læses, og bruges til den værdi, der identificerer objektet. Det svarer til `+ «get» Name : string` på Guest og Company i eksemplet.
+- **Constructors** står med klassens navn, fx `+ Employee(name : string, initials : string)`. De kommer fra `«create»`-beskederne i SD'erne.
+- **Repositories** har standardmetoderne fra eksemplet: `GetById`, `GetAll` og `Add(objekt)`. Der er kun taget de metoder med, som SD'erne bruger.
+- **Linjer:**
+  - View — Controller — Repo er tegnet som i Disaheim.
+  - Repo — domæneklasse har `0..*` i domæneenden.
+  - Service — Customer har multiplicitet i begge ender som i domænemodellen (`*` og `1`).
+  - Enum'en er forbundet med en stiplet linje.
+
+## Fra domænemodel til designklasse
+
+| Domænemodel | DCD | Nøgle (`GetById`) |
+| :---- | :---- | :---- |
+| Medarbejder (navn, initialer) | Employee (Name, Initials) | Initials. De skal være unikke (CO1). |
+| Kunde (navn, telefonnummer) | Customer (Name, PhoneNumber) | PhoneNumber. Kunden søges på telefonnummer (UC2, UC3). |
+| Reparation (reparationsnummer, indleveringsdato, mærke, model, fejltype, fejlbeskrivelse, status) | Service (ServiceId, DropOffDate, Brand, Model, ErrorType, Description, Status, Customer) | ServiceId. Det næste nummer hentes med `GetNextId()`. |
+| status (Åben/Lukket) | ServiceStatus (Open, Closed) | – |
+| Kunde 1 – \* Reparation | Customer 1 – \* Service | – |
+
+`DropOffDate` sættes til dags dato og `Status` til Open i Service-constructoren. Udført arbejde, medarbejderen på reparationen og reservedelene kommer med, når UC5 og UC6 tilføjes.
+
+## Sporbarhed: SSD → SD → DCD
+
+Hver systemoperation fra SSD'et har sin egen del af sekvensdiagrammet (adskilt med `== … ==`). Hver besked i SD'et er en operation i modtagerens klasse.
+
+| UC | Systemoperation (SSD) | Controller-operation | Repo- og domæneoperationer i SD'et |
 | :---- | :---- | :---- | :---- |
-| UC1 | opretMedarbejder | CO1 opretMedarbejder | `Værksted.OpretMedarbejder` |
-| UC2 | opretKunde | CO2 opretKunde | `Værksted.OpretKunde` |
-| UC3 | soegKunde, opretService | CO3 opretService | `Værksted.SøgKunder`, `Værksted.OpretService` |
-| UC4 | soegServices, visKvittering | CO4 visServiceKvittering | `Værksted.SøgServices`, `Reparation.HentUdtag` |
-| UC5 | vaelgService, registrerUdfoertArbejde | CO5 registrerUdførtArbejde | `Værksted.RegistrerUdførtArbejde` → `Reparation.Luk` |
-| UC6 | tilfoejReservedel, fjernReservedel, gemUdtag | CO6 registrerReservedeludtag | `Reservedel.HarNokPåLager` ved Tilføj. `Værksted.RegistrerUdtag` → `Reparation.TilføjUdtag` og `Reservedel.NedskrivLager` |
-| UC7 | visLager | CO7 visLagerOgBestilling | `Værksted.HentLageroversigt`, `Værksted.HentBestillingsliste` |
-| UC8 | opretReservedel | CO8 opretReservedel | `Værksted.OpretReservedel` |
-| UC9 | vaelgReservedel, modtagReservedel | CO9 registrerModtagelse | `Værksted.RegistrerModtagelse` → `Reservedel.OpskrivLager` |
+| UC1 | opretMedarbejder(navn, initialer) | `CreateEmployeeController.CreateEmployee` | `EmployeeRepo.GetById(initials)`, `«create» Employee(name, initials)`, `EmployeeRepo.Add(employee)` |
+| UC1 | (medarbejderliste) | `CreateEmployeeController.GetAllEmployees` | `EmployeeRepo.GetAll()` |
+| UC2 | opretKunde(navn, tlfNr) | `CreateCustomerController.CreateCustomer` | `CustomerRepo.GetById(phoneNumber)`, `«create» Customer(name, phoneNumber)`, `CustomerRepo.Add(customer)` |
+| UC2 | (kundeliste) | `CreateCustomerController.GetAllCustomers` | `CustomerRepo.GetAll()` |
+| UC3 | soegKunde(tlfNr) | `CreateServiceController.SearchCustomer` | `CustomerRepo.GetById(phoneNumber)` |
+| UC3 | opretService(tlfNr, mærke, model, fejltype, fejlbeskrivelse) | `CreateServiceController.CreateService` | `CustomerRepo.GetById`, `ServiceRepo.GetNextId()`, `«create» Service(...)`, `ServiceRepo.Add(service)` |
+| UC4 | soegServices(søgetekst, status) | `ServiceReceiptController.SearchServices` | `ServiceRepo.Search(searchText, status)` |
+| UC4 | visKvittering(serviceId) | `ServiceReceiptController.GetService` | `ServiceRepo.GetById(serviceId)` |
 
-Tilføj og Fjern i UC6 ændrer kun udtagslisten i skærmbilledet. Intet gemmes, før brugeren trykker Gem, og så kaldes `RegistrerUdtag` med hele listen.
+## Valg, hvor pensum ikke er entydigt
 
-## Designbeslutninger
+- **Én controller pr. use case.** Vi følger eksemplet med `BookMeetingController` (use case controller). Pr17 tillader også én controller til flere use cases. Det kan blive aktuelt for Service, når UC5 kommer med.
+- **MVVM.** Projektet er WPF. Controllerne har den rolle, som ViewModel har i MVVM (Pr26): de formidler mellem View og Model og kender ikke View.
+- **Felt og linje.** Larman siger, at en anden klasse vises som en linje og ikke som attributtekst. Undervisningens eksempler viser begge dele, fx `- bookRepo : BookRepository` sammen med en linje. Vi følger eksemplerne.
+- **Pile.** Larman bruger navigationspile, men undervisningens eksempler bruger linjer uden pile. Vi følger eksemplerne.
 
-- **Én controller.** Værksted modtager alle systemoperationer, fordi systemet er lille, og alle sider bruger de samme data.
-- **Én datafil.** Alt gemmes i én fil efter hver ændring, som vist i tegningen af hovedvinduet.
-- **Id på Medarbejder, Kunde og Reservedel**, fordi SSD'erne returnerer medarbejderId, kundeId og reservedelId, og listerne i programmet viser et nummer.
-- **LukketDato er tilføjet** i forhold til domænemodellen, fordi SSD'en for UC5 returnerer lukketidspunktet, og kvitteringen viser datoen.
-- **Leverandør har ingen egen liste.** `OpretReservedel` genbruger en leverandør med samme navn fra en eksisterende reservedel eller opretter en ny.
-- **Validering** (fx unikke initialer, telefonnummer og reservedelsnavn) sker i Værksted, før objektet oprettes.
+## Punkter at rette i andre artefakter
 
-## Afvigelser fra systemoperationskontrakterne
-
-Kontrakterne bruger andre navne end domænemodellen. Designet følger domænemodellen, så kontrakterne bør rettes, så alle dokumenter bruger de samme navne.
-
-| I kontrakterne | I domænemodellen og designet |
-| :---- | :---- |
-| Reparationsordre, ordrenummer | Reparation, Reparationsnummer |
-| Cykel med mærke og model | Mærke og Model er attributter på Reparation |
-| UdførtArbejde-instans | UdførtArbejde (tekst) og UdførtAf (medarbejder) på Reparation |
-| Reservedelsforbrug | Udtag |
-| lagerbeholdning, minimumsantal | AntalPåLager, MinimumAntal |
-| r.leverandør sættes til en tekst | Reservedel peger på et Leverandør-objekt |
-| m.antal, m.modtagelsesdato | AntalModtaget, Dato |
+1. **SSD'erne for UC1 og UC2** returnerer `medarbejderId` og `kundeId`. I designet er id'et initialerne og telefonnummeret. Skriv det i SSD'erne eller i ordlisten.
+2. **Kontrakten CO3** nævner Reparationsordre, ordrenummer og en Cykel-instans. Ret den til Service/Reparation med mærke og model som attributter, som i domænemodellen.
+3. **Domænemodellen** kalder associationsklassen `Reservedelsforbrug` i `domænemodel.puml` og `Udtag` i `domænemodel.md`. Vælg ét navn, før UC6 kommer med i DCD'et.

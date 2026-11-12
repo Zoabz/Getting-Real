@@ -1,38 +1,61 @@
 @startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
 hide footbox
-title <U>SD UC1 - Create Employee
+title SD UC1 - Create Employee
 
-participant ":EmployeeView" as View
-participant ":EmployeeController" as Controller
-participant ":EmployeeRepository" as Repository
+participant ":CreateEmployeeController" as C
+participant ":EmployeeRepo" as R
 
-[-> View : openEmployeeView()
-activate View
+== CreateEmployee ==
+[-> C : CreateEmployee(name, initials)
+activate C
 
-View -> Controller : createEmployee(name, initials)
-activate Controller
+alt name or initials missing
+    [<-- C : error "Name and initials are required"
 
-alt name missing
-    Controller --> View : showError("Name is required")
+else name and initials filled in
+    C -> R : employee = GetById(initials)
+    activate R
+    deactivate R
 
-else initials missing
-    Controller --> View : showError("Initials are required")
+    alt employee != null
+        [<-- C : error "Initials already in use"
 
-else valid information
-    Controller -> Repository : generateUniqueEmployeeId()
-    activate Repository
-    Repository --> Controller : employeeId
-    deactivate Repository
+    else employee == null
+        create participant ":Employee" as E
+        C -->> E : employee = «create»(name, initials)
 
-    Controller -> Repository : addEmployee(employeeId, name, initials)
-    activate Repository
-    Repository --> Controller : success
-    deactivate Repository
+        C -> R : Add(employee)
+        activate R
+        deactivate R
 
-    Controller --> View : showConfirmation(employeeId)
+        [<-- C : employee
+    end
 end
+deactivate C
 
-deactivate Controller
-deactivate View
+== GetAllEmployees ==
+[-> C : GetAllEmployees()
+activate C
+C -> R : employees = GetAll()
+activate R
+deactivate R
+[<-- C : employees
+deactivate C
 
 @enduml

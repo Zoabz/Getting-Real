@@ -1,43 +1,61 @@
 @startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
 hide footbox
-title <U>SD UC2 - Create Customer In Store</U>
+title SD UC2 - Create Customer In Store
 
-participant ":CustomerView" as View
-participant ":CustomerController" as Controller
-participant ":CustomerRepository" as Repository
+participant ":CreateCustomerController" as C
+participant ":CustomerRepo" as R
 
-[-> View : openCustomerView()
-activate View
+== CreateCustomer ==
+[-> C : CreateCustomer(name, phoneNumber)
+activate C
 
-View -> Controller : createCustomer(name, phoneNumber)
-activate Controller
-
-alt name missing
-    Controller --> View : showError("Name is required")
-
-else phone number missing or invalid
-    Controller --> View : showError("Invalid phone number")
+alt name missing or phone number invalid
+    [<-- C : error "Name and a valid phone number are required"
 
 else valid information
-    Controller -> Repository : findByPhone(phoneNumber)
-    activate Repository
-    Repository --> Controller : customer
-    deactivate Repository
+    C -> R : customer = GetById(phoneNumber)
+    activate R
+    deactivate R
 
-    alt customer already exists
-        Controller --> View : showExistingCustomer(customer)
+    alt customer != null
+        [<-- C : error "Customer already exists"
 
-    else customer doesnt exist
-        Controller -> Repository : addCustomer(name, phoneNumber)
-        activate Repository
-        Repository --> Controller : success
-        deactivate Repository
+    else customer == null
+        create participant ":Customer" as K
+        C -->> K : customer = «create»(name, phoneNumber)
 
-        Controller --> View : showConfirmation("Customer created")
+        C -> R : Add(customer)
+        activate R
+        deactivate R
+
+        [<-- C : customer
     end
 end
+deactivate C
 
-deactivate Controller
-deactivate View
+== GetAllCustomers ==
+[-> C : GetAllCustomers()
+activate C
+C -> R : customers = GetAll()
+activate R
+deactivate R
+[<-- C : customers
+deactivate C
 
 @enduml

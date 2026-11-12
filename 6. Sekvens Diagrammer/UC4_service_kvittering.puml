@@ -1,55 +1,42 @@
 @startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
 hide footbox
-title <U>SD UC4 - Service Receipt
+title SD UC4 - Service Receipt
 
-participant ":ServiceReceiptView" as View
-participant ":ServiceController" as Controller
-participant ":ServiceRepository" as Repository
+participant ":ServiceReceiptController" as C
+participant ":ServiceRepo" as R
 
-[-> View : openServiceReceiptView()
-activate View
+== SearchServices ==
+[-> C : SearchServices(searchText, status)
+activate C
+C -> R : services = Search(searchText, status)
+activate R
+deactivate R
+[<-- C : services
+deactivate C
 
-View -> Controller : getAllServices()
-activate Controller
-
-Controller -> Repository : getAllServices()
-activate Repository
-Repository --> Controller : services
-deactivate Repository
-
-alt no services found
-    Controller --> View : showMessage("No services found")
-
-else services found
-    Controller --> View : showServiceTable(services)
-end
-
-deactivate Controller
-
-View -> Controller : filterServices(status)
-activate Controller
-Controller -> Repository : findByStatus(status)
-activate Repository
-Repository --> Controller : filteredServices
-deactivate Repository
-
-alt no matching services
-    Controller --> View : showMessage("No matching services")
-else matching services found 
-    Controller --> View : showServiceTable(filteredServices)
-end
-
-deactivate Controller
-
-View -> Controller : getServiceDetails(serviceId)
-activate Controller
-Controller -> Repository : findById(serviceId)
-activate Repository
-Repository --> Controller : serviceDetails
-deactivate Repository
-Controller --> View : showServiceDetails(serviceDetails)
-
-deactivate Controller
-deactivate View
+== GetService ==
+[-> C : GetService(serviceId)
+activate C
+C -> R : service = GetById(serviceId)
+activate R
+deactivate R
+[<-- C : service
+deactivate C
 
 @enduml

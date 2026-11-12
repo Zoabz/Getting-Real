@@ -1,23 +1,34 @@
 @startuml
-' Samme model som domænemodel.png / domænemodel.drawio
 skinparam monochrome true
 skinparam shadowing false
-skinparam nodesep 80
-skinparam ranksep 60
+skinparam linetype ortho
+skinparam nodesep 90
+skinparam ranksep 80
 skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
 skinparam classAttributeIconSize 0
 skinparam class {
   BackgroundColor white
   BorderColor black
+  ArrowColor black
 }
 hide circle
 hide methods
 
+' UC1
+class Medarbejder {
+  navn
+  initialer
+}
+
+' UC2
 class Kunde {
   navn
   telefonnummer
 }
 
+' UC3, UC4, UC5
 class Reparation {
   reparationsnummer
   indleveringsdato
@@ -29,36 +40,35 @@ class Reparation {
   status
 }
 
-class Medarbejder {
-  navn
-  initialer
-}
-
-class Udtag {
+' UC6 (associationsklasse på Reparation–Reservedel)
+class Reservedelsforbrug {
   dato
   antalTaget
 }
 
+' UC6, UC7, UC8, UC9
 class Reservedel {
   navn
   antalPåLager
   minimumAntal
 }
 
+' UC8
 class Leverandør {
   navn
 }
 
+' UC9
 class Modtagelse {
   dato
   antalModtaget
 }
 
-Kunde "1" -right- "0..*" Reparation
-Reparation "0..*" -right- "0..1" Medarbejder
-Reparation "1" -down- "0..*" Udtag
-Udtag "0..*" -right- "1" Medarbejder
-Udtag "0..*" -down- "1" Reservedel
-Leverandør "1" -right- "1..*" Reservedel
-Reservedel "1" -right- "0..*" Modtagelse
+Kunde "1" -right- "*" Reparation
+Reparation "*" -right- "0..1" Medarbejder
+Reparation "*" -down- "*" Reservedel
+(Reparation, Reservedel) .. Reservedelsforbrug
+Reservedelsforbrug "*" -right- "1" Medarbejder
+Leverandør "1" -right- "*" Reservedel
+Reservedel "1" -right- "*" Modtagelse
 @enduml
