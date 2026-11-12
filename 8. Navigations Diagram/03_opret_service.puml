@@ -1,0 +1,22 @@
+' Navigationsdiagram – 03 · Opret service
+@startuml
+title 03 · Opret service
+skinparam shadowing false
+skinparam dpi 150
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 14
+skinparam ArrowColor black
+skinparam ArrowThickness 1.2
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  RoundCorner 15
+}
+
+rectangle "Hovedvindue (00)" as H
+rectangle "Opret service (03)" as P03
+rectangle "Service kvittering\n(dialog, 04)" as D04
+
+H <--> P03 : Opret service /\nAnden side i menuen
+P03 <-> D04 : Opret /\nLuk
+@enduml

@@ -18,8 +18,14 @@ skinparam defaultFontName Arial
 hide footbox
 title SD UC2 - Create Customer In Store
 
+<<<<<<< HEAD
 participant ":CreateCustomerController" as C
 participant ":CustomerRepo" as R
+=======
+participant ":CustomerView" as View #White
+participant ":CustomerController" as Controller #White
+participant ":CustomerRepository" as Repository #White
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 
 == CreateCustomer ==
 [-> C : CreateCustomer(name, phoneNumber)
@@ -36,9 +42,17 @@ else valid information
     alt customer != null
         [<-- C : error "Customer already exists"
 
+<<<<<<< HEAD
     else customer == null
         create participant ":Customer" as K
         C -->> K : customer = «create»(name, phoneNumber)
+=======
+    else else
+        Controller -> Repository : addCustomer(name, phoneNumber)
+        activate Repository
+        Repository --> Controller : success
+        deactivate Repository
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 
         C -> R : Add(customer)
         activate R

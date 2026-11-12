@@ -18,9 +18,16 @@ skinparam defaultFontName Arial
 hide footbox
 title SD UC3 - Create Service
 
+<<<<<<< HEAD
 participant ":CreateServiceController" as C
 participant ":CustomerRepo" as KR
 participant ":ServiceRepo" as SR
+=======
+participant ":ServiceView" as View #White
+participant ":ServiceController" as Controller #White
+participant ":CustomerRepository" as Customers #White
+participant ":ServiceRepository" as Services #White
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 
 == SearchCustomer ==
 [-> C : SearchCustomer(phoneNumber)
@@ -29,10 +36,25 @@ C -> KR : customer = GetById(phoneNumber)
 activate KR
 deactivate KR
 
+<<<<<<< HEAD
 alt customer == null
     [<-- C : error "Create customer first"
 else customer != null
     [<-- C : customer
+=======
+View -> Controller : searchCustomer(phoneNumber)
+activate Controller
+
+Controller -> Customers : findByPhone(phoneNumber)
+activate Customers
+Customers --> Controller : customer
+deactivate Customers
+
+alt customer not found
+    Controller --> View : showError("Create customer first")
+else else
+    Controller --> View : showCustomer(customer)
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 end
 deactivate C
 
@@ -48,9 +70,17 @@ else all information filled in
     activate KR
     deactivate KR
 
+<<<<<<< HEAD
     C -> SR : serviceId = GetNextId()
     activate SR
     deactivate SR
+=======
+else else
+    Controller -> Services : generateUniqueServiceId()
+    activate Services
+    Services --> Controller : serviceId
+    deactivate Services
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 
     create participant ":Service" as S
     C -->> S : service = «create»(serviceId, customer,\nbrand, model, errorType, description)

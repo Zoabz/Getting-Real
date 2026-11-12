@@ -18,8 +18,16 @@ skinparam defaultFontName Arial
 hide footbox
 title SD UC1 - Create Employee
 
+<<<<<<< HEAD
 participant ":CreateEmployeeController" as C
 participant ":EmployeeRepo" as R
+=======
+participant ":EmployeeView" as View #White
+participant ":EmployeeController" as Controller #White
+participant ":EmployeeRepository" as Repository #White
+
+
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 
 == CreateEmployee ==
 [-> C : CreateEmployee(name, initials)

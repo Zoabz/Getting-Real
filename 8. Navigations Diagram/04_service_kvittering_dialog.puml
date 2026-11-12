@@ -1,0 +1,22 @@
+' Navigationsdiagram – 04 · Service kvittering (dialog)
+@startuml
+title 04 · Service kvittering (dialog)
+skinparam shadowing false
+skinparam dpi 150
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 14
+skinparam ArrowColor black
+skinparam ArrowThickness 1.2
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  RoundCorner 15
+}
+
+rectangle "Opret service (03)" as P03
+rectangle "Service kvittering (05)" as P05
+rectangle "Service kvittering\n(dialog, 04)" as D04
+
+P03 <--> D04 : Opret /\nLuk
+P05 <--> D04 : Vis kvittering eller dobbeltklik /\nLuk
+@enduml

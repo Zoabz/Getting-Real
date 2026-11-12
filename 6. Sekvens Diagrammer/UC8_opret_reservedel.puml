@@ -2,9 +2,15 @@
 hide footbox
 title <U>SD UC8 - Create Spare Part In Inventory</U>
 
+<<<<<<< HEAD
 participant ":SparePartView" as View
 participant ":SparePartController" as Controller
 participant ":InventoryRepository" as Repository
+=======
+participant ":SparePartView" as View #White
+participant ":SparePartController" as Controller #White
+participant ":SparePartRepository" as Repository #White
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 
 [-> View : openSparePartView()
 activate View
@@ -21,7 +27,7 @@ else supplier missing
 else minimum quantity invalid
     Controller --> View : showError("Invalid minimum quantity")
 
-else valid information
+else else
     Controller -> Repository : exists(name)
     activate Repository
     Repository --> Controller : exists
@@ -30,7 +36,7 @@ else valid information
     alt spare part already exists
         Controller --> View : showError("Spare part already exists")
 
-    else spare part doesnt exist 
+    else else
         Controller -> Repository : addSparePart(name, supplier,\nminimumQuantity, 0)
         activate Repository
         Repository --> Controller : success

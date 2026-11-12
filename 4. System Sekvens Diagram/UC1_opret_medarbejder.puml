@@ -18,7 +18,7 @@ participant ":System" as System
 
 alt navn eller navnKort mangler, eller initialerne er optaget
   System --> ":Mekaniker" : fejlbesked
-else navn og navnKort mangler ikke, eller initialerne er ikke optaget
+else else
   System --> ":Mekaniker" : medarbejderId, medarbejderliste
 end
 

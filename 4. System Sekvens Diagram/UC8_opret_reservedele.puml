@@ -18,7 +18,7 @@ participant ":System" as System
 
 alt oplysninger mangler, eller navnet findes allerede
   System --> ":Mekaniker" : fejlbesked
-else oplysninger mangler ikke, eller navnet findes ikke allerede
+else else
   System --> ":Mekaniker" : reservedelId, antal på lager = 0
 end
 

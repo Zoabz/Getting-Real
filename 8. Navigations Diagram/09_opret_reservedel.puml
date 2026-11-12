@@ -1,0 +1,20 @@
+' Navigationsdiagram – 09 · Opret reservedel
+@startuml
+title 09 · Opret reservedel
+skinparam shadowing false
+skinparam dpi 150
+skinparam defaultTextAlignment center
+skinparam defaultFontSize 14
+skinparam ArrowColor black
+skinparam ArrowThickness 1.2
+skinparam rectangle {
+  BackgroundColor white
+  BorderColor black
+  RoundCorner 15
+}
+
+rectangle "Hovedvindue (00)" as H
+rectangle "Opret reservedel (09)" as P
+
+H <--> P : Opret reservedel /\nAnden side i menuen
+@enduml

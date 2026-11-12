@@ -18,8 +18,14 @@ skinparam defaultFontName Arial
 hide footbox
 title SD UC4 - Service Receipt
 
+<<<<<<< HEAD
 participant ":ServiceReceiptController" as C
 participant ":ServiceRepo" as R
+=======
+participant ":ServiceReceiptView" as View #White
+participant ":ServiceController" as Controller #White
+participant ":ServiceRepository" as Repository #White
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 
 == SearchServices ==
 [-> C : SearchServices(searchText, status)
@@ -39,4 +45,48 @@ deactivate R
 [<-- C : service
 deactivate C
 
+<<<<<<< HEAD
 @enduml
+=======
+Controller -> Repository : getAllServices()
+activate Repository
+Repository --> Controller : services
+deactivate Repository
+
+alt no services found
+    Controller --> View : showMessage("No services found")
+
+else else
+    Controller --> View : showServiceTable(services)
+end
+
+deactivate Controller
+
+View -> Controller : filterServices(status)
+activate Controller
+Controller -> Repository : findByStatus(status)
+activate Repository
+Repository --> Controller : filteredServices
+deactivate Repository
+
+alt no matching services
+    Controller --> View : showMessage("No matching services")
+else else
+    Controller --> View : showServiceTable(filteredServices)
+end
+
+deactivate Controller
+
+View -> Controller : getServiceDetails(serviceId)
+activate Controller
+Controller -> Repository : findById(serviceId)
+activate Repository
+Repository --> Controller : serviceDetails
+deactivate Repository
+Controller --> View : showServiceDetails(serviceDetails)
+
+deactivate Controller
+deactivate View
+
+@enduml
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447

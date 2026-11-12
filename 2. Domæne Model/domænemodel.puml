@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml
 skinparam monochrome true
 skinparam shadowing false
@@ -7,14 +8,33 @@ skinparam ranksep 80
 skinparam backgroundColor white
 skinparam defaultFontName Arial
 skinparam defaultFontSize 11
+=======
+@startuml domænemodel_ny
+' Domænemodel – Vekto Cykelværksted (UC1–UC9)
+
+skinparam backgroundColor #FFFFFF
+skinparam linetype ortho
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontName Arial
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 skinparam classAttributeIconSize 0
+skinparam nodesep 70
+skinparam ranksep 70
 skinparam class {
+<<<<<<< HEAD
   BackgroundColor white
   BorderColor black
   ArrowColor black
+=======
+  BackgroundColor #FFFFFF
+  BorderColor #000000
+  ArrowColor #000000
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
 }
 hide circle
 hide methods
+hide empty members
 
 ' UC1
 class Medarbejder {
@@ -28,21 +48,41 @@ class Kunde {
   telefonnummer
 }
 
+<<<<<<< HEAD
 ' UC3, UC4, UC5
 class Reparation {
   reparationsnummer
   indleveringsdato
+=======
+class Cykel {
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
   mærke
   model
+}
+
+class Reparation {
+  reparationsnummer
   fejltype
   fejlbeskrivelse
-  udførtArbejde
   status
 }
 
+<<<<<<< HEAD
 ' UC6 (associationsklasse på Reparation–Reservedel)
 class Reservedelsforbrug {
   dato
+=======
+class "Udført arbejde" as UdfoertArbejde {
+  beskrivelse
+}
+
+class Medarbejder {
+  navn
+  initialer
+}
+
+class Udtag {
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
   antalTaget
 }
 
@@ -50,7 +90,7 @@ class Reservedelsforbrug {
 class Reservedel {
   navn
   antalPåLager
-  minimumAntal
+  minimumsantal
 }
 
 ' UC8
@@ -64,6 +104,7 @@ class Modtagelse {
   antalModtaget
 }
 
+<<<<<<< HEAD
 Kunde "1" -right- "*" Reparation
 Reparation "*" -right- "0..1" Medarbejder
 Reparation "*" -down- "*" Reservedel
@@ -72,3 +113,16 @@ Reservedelsforbrug "*" -right- "1" Medarbejder
 Leverandør "1" -right- "*" Reservedel
 Reservedel "1" -right- "*" Modtagelse
 @enduml
+=======
+Kunde "1" -down- "0..*" Cykel
+Cykel "1" -down- "1..*" Reparation
+Reparation "1" -down- "0..1  " UdfoertArbejde
+UdfoertArbejde "0..*" -down- "1" Medarbejder
+Reparation "1  " -down- "0..*" Udtag
+Medarbejder "1" -right- "0..*" Udtag
+Udtag "0..*" -right- "1" Reservedel
+Leverandør "1" -down- "1..*" Reservedel
+Reservedel "1" -down- "0..*" Modtagelse
+
+@enduml
+>>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447

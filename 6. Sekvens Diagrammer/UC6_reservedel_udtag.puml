@@ -2,9 +2,9 @@
 hide footbox
 title <U>SD UC6 - Spare Parts Withdrawal From Inventory</U>
 
-participant ":WithdrawalView" as View
-participant ":WithdrawalController" as Controller
-participant ":InventoryRepository" as Repository
+participant ":WithdrawalView" as View #White
+participant ":WithdrawalController" as Controller #White
+participant ":InventoryRepository" as Repository #White
 
 [-> View : openWithdrawalView()
 activate View
@@ -16,7 +16,7 @@ loop for each spare part
     alt quantity invalid
         Controller --> View : showError("Invalid quantity")
 
-    else quantity valid 
+    else else 
         Controller --> View : addToWithdrawalList(partId, quantity)
     end
 
@@ -34,7 +34,7 @@ deactivate Repository
 alt insufficient stock
     Controller --> View : showError("Insufficient stock", stockResult)
 
-else stock found 
+else else
     Controller -> Repository : saveWithdrawalAndUpdateStock(\nserviceId, employeeId, parts)
     activate Repository
     Repository --> Controller : success

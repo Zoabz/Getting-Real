@@ -22,7 +22,7 @@ System --> ":Mekaniker" : kundenavn, kundeTlf, mærke - model, fejltype, beskriv
 
 alt service, medarbejder eller beskrivelse mangler
   System --> ":Mekaniker" : fejlbesked
-else service, medarbejder og beskrivelse mangler ikke
+else else
   System --> ":Mekaniker" : Status = "Lukket", lukketidspunkt
 end
 

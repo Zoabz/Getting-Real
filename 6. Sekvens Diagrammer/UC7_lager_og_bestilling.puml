@@ -2,9 +2,9 @@
 hide footbox
 title <U>SD UC7 - Inventory And Ordering Of Spare Parts</U>
 
-participant ":InventoryView" as View
-participant ":InventoryController" as Controller
-participant ":InventoryRepository" as Repository
+participant ":InventoryView" as View #White
+participant ":InventoryController" as Controller #White
+participant ":InventoryRepository" as Repository #White
 
 [-> View : openInventoryView()
 activate View
@@ -20,7 +20,7 @@ deactivate Repository
 alt no spare parts found
     Controller --> View : showMessage("No spare parts found")
 
-else spare parts found
+else else
     Controller --> View : showInventoryTable(parts)
 
     Controller -> Repository : getPartsBelowMinimum()
@@ -31,7 +31,7 @@ else spare parts found
     alt no parts need ordering
         Controller --> View : showMessage("Nothing to order")
 
-    else parts needing ordering found
+    else else
         Controller --> View : showSortedOrderList(partsToOrder)
     end
 end
