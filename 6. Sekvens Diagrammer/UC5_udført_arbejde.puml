@@ -2,9 +2,9 @@
 hide footbox
 title <U>SD UC5 - Completed Work on Repaircase</U>
 
-participant ":CompletedWorkView" as View
-participant ":ServiceController" as Controller
-participant ":ServiceRepository" as Repository
+participant ":CompletedWorkView" as View #White
+participant ":ServiceController" as Controller #White
+participant ":ServiceRepository" as Repository #White
 
 [-> View : openCompletedWorkView()
 activate View
