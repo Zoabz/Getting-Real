@@ -1,5 +1,5 @@
 @startuml
-title <u>UC2 - Opret Kunde</u>
+title <u>UC2 - Opret Kunde I Butikken</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

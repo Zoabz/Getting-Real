@@ -1,6 +1,6 @@
 @startuml
 hide footbox
-title <U>SD UC8 - Create Spare Part
+title <U>SD UC8 - Create Spare Part In Inventory</U>
 
 participant ":SparePartView" as View
 participant ":SparePartController" as Controller

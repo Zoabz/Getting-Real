@@ -1,6 +1,6 @@
 ' Navigationsmodel – UC8 - Opret Reservedele
 @startuml
-title UC8 - Opret Reservedele
+title UC8 - Opret Reservedele I Systemet
 start
 :Vælg »Opret reservedel« i sidebaren;
 :Udfyld Reservedel navn »Kølervæske«,

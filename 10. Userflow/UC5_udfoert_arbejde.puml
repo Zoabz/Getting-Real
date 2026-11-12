@@ -1,6 +1,6 @@
 ' Navigationsmodel – UC5 - Udført Arbejde
 @startuml
-title UC5 - Udført Arbejde
+title UC5 - Udført Arbejde På Reparation
 start
 :Vælg »Udført arbejde« i sidebaren;
 :Vælg service »1001 · Frederik Eriksen ·

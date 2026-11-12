@@ -1,5 +1,5 @@
 @startuml
-title <u>UC7 - Lager og bestilling</u>
+title <u>UC7 - Lager Og Bestilling Af Reservedele</u>
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

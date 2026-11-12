@@ -1,6 +1,6 @@
 ' Navigationsmodel – UC6 - Reservedele udtag
 @startuml
-title UC6 - Reservedele udtag
+title UC6 - Reservedele Udtag Fra Lageret
 start
 :Vælg »Reservedele udtag« i sidebaren;
 :Vælg service »1001 · Frederik Eriksen ·

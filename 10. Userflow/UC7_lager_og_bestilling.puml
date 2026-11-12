@@ -1,6 +1,6 @@
 ' Navigationsmodel – UC7 - Lager og bestilling
 @startuml
-title UC7 - Lager og bestilling
+title UC7 - Lager Og Bestilling Af Reservedele
 start
 :Vælg »Lager og bestilling« i sidebaren;
 :Vis lageroversigten med navn, antal på lager,
