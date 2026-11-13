@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace Vekto.Views
 {
-    /// <summary>
-    /// Interaction logic for ServiceKvittering.xaml
-    /// </summary>
+    // Dialog: åbnes fra Opret service med ShowDialog(), når man trykker Opret (Pr25)
     public partial class ServiceKvittering : Window
     {
         public ServiceKvittering()
         {
             InitializeComponent();
+            // TODO: vis servicens oplysninger, når Service-klassen findes
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
         }
     }
 }

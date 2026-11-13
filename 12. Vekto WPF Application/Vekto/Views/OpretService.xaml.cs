@@ -1,24 +1,29 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace Vekto
+namespace Vekto.Views
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    // Side: vises i MainWindow's sideområde
+    public partial class OpretService : UserControl
     {
-        public MainWindow()
+        public OpretService()
         {
             InitializeComponent();
+        }
+
+        // UC3: søg efter kunden
+        private void tbPhone_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            // TODO: søg efter kunden med CreateServiceController.SearchCustomer(...)
+        }
+
+        // UC3: opret servicen
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: opret servicen med CreateServiceController.CreateService(...)
+            // og vis kvitteringen bagefter:
+            ServiceKvittering kvittering = new ServiceKvittering();
+            kvittering.ShowDialog();
         }
     }
 }

@@ -1,0 +1,47 @@
+<Window x:Class="Vekto.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Værkstedsstyring" Height="600" Width="1150">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>   <!-- Sidebar -->
+            <ColumnDefinition Width="*"/>     <!-- Siderne vises her -->
+        </Grid.ColumnDefinitions>
+
+        <!-- ================= SIDEBAR (findes kun her) ================= -->
+        <Grid Grid.Column="0" Background="#FFE5CCC2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Logo -->
+            <StackPanel Grid.Row="0" Margin="15,20,15,20">
+                <TextBlock Text="Værkstedsstyring" Foreground="Black" FontWeight="Bold" FontSize="16"/>
+                <TextBlock Text="Service - Lager - Kunder" Foreground="Black"/>
+            </StackPanel>
+
+            <!-- Menu: knappen for den side, der vises, får mørkere baggrund og fed skrift (sættes i koden) -->
+            <StackPanel Grid.Row="1" Margin="10,0,10,0">
+                <Label Content="Kunder og medarbejdere" Foreground="Black"/>
+                <Button x:Name="btnOpretMedarbejder" Content="Opret medarbejder" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnOpretMedarbejder_Click"/>
+                <Button x:Name="btnOpretKunde" Content="Opret kunde" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnOpretKunde_Click"/>
+
+                <Label Content="Service" Foreground="Black" Margin="0,10,0,0"/>
+                <Button x:Name="btnOpretService" Content="Opret service" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnOpretService_Click"/>
+                <Button x:Name="btnReservedeleUdtag" Content="Reservedele udtag" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnReservedeleUdtag_Click"/>
+                <Button x:Name="btnServiceOversigt" Content="Service oversigt" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnServiceOversigt_Click"/>
+
+                <Label Content="Lager" Foreground="Black" Margin="0,10,0,0"/>
+                <Button x:Name="btnLagerOgBestilling" Content="Lager og bestilling" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnLagerOgBestilling_Click"/>
+                <Button x:Name="btnOpretReservedel" Content="Opret reservedel" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnOpretReservedel_Click"/>
+                <Button x:Name="btnReservedeleModtagelse" Content="Reservedele modtagelse" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnReservedeleModtagelse_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ================= SIDEOMRÅDE: den valgte side vises her ================= -->
+        <ContentControl Grid.Column="1" x:Name="PageArea"/>
+    </Grid>
+</Window>
