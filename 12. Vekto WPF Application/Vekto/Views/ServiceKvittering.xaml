@@ -1,0 +1,84 @@
+﻿<Window x:Class="Vekto.ServiceReceiptDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Service kvittering" Height="560" Width="500">
+
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Service nr. og status -->
+            <RowDefinition Height="Auto"/>
+            <!-- Kunde og bil -->
+            <RowDefinition Height="Auto"/>
+            <!-- Udført arbejde -->
+            <RowDefinition Height="Auto"/>
+            <!-- Reservedele -->
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <!-- Luk -->
+        </Grid.RowDefinitions>
+
+        <!-- Service nr. og status -->
+        <Grid Grid.Row="0" Margin="20,20,20,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="SERVICE KVITTERING" Foreground="Gray"/>
+                <TextBlock x:Name="tbServiceId" Text="Service nr." FontSize="22" FontWeight="Bold"/>
+                <TextBlock x:Name="tbCreated" Text="Oprettet" Foreground="Gray"/>
+            </StackPanel>
+            <Label Grid.Column="1" x:Name="lblStatus" Content="Åben" FontWeight="Bold"
+                   Background="#FFE5CCC2" VerticalAlignment="Top"/>
+        </Grid>
+
+        <!-- Kunde og bil -->
+        <Grid Grid.Row="1" Background="White" Margin="20,0,20,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Content="Kunde navn" Foreground="Gray"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="lblCustomerName"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Content="Kunde tlf" Foreground="Gray"/>
+            <Label Grid.Row="1" Grid.Column="1" x:Name="lblCustomerPhone"/>
+
+            <Label Grid.Row="2" Grid.Column="0" Content="Mærke - model" Foreground="Gray"/>
+            <Label Grid.Row="2" Grid.Column="1" x:Name="lblBrandModel"/>
+
+            <Label Grid.Row="3" Grid.Column="0" Content="Fejltype" Foreground="Gray"/>
+            <Label Grid.Row="3" Grid.Column="1" x:Name="lblErrorType"/>
+
+            <Label Grid.Row="4" Grid.Column="0" Content="Beskrivelse" Foreground="Gray"/>
+            <Label Grid.Row="4" Grid.Column="1" x:Name="lblDescription"/>
+        </Grid>
+
+        <!-- Udført arbejde (UC5 - laves senere) -->
+        <StackPanel Grid.Row="2" Background="White" Margin="20,0,20,10">
+            <Label Content="Udført arbejde" FontWeight="Bold"/>
+            <Label Content="Vises, når servicen er lukket (UC5)." Foreground="Gray"/>
+        </StackPanel>
+
+        <!-- Reservedele (UC6 - laves senere) -->
+        <StackPanel Grid.Row="3" Background="White" Margin="20,0,20,10">
+            <Label Content="Reservedele" FontWeight="Bold"/>
+            <Label Content="Delene, der er taget fra lageret til servicen (UC6)." Foreground="Gray"/>
+        </StackPanel>
+
+        <!-- Luk -->
+        <Button Grid.Row="5" x:Name="btnClose" Content="Luk" Width="80" Height="30"
+                HorizontalAlignment="Right" Margin="20"
+                Background="#FFEBEBEB" Foreground="Black" Click="btnClose_Click"/>
+    </Grid>
+</Window>
