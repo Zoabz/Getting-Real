@@ -15,7 +15,7 @@ actor ":Mekaniker"
 participant ":System" as System
 
 loop indtil servicen står i tabellen
-  ":Mekaniker" -> System : soegServices(søgetekst, status)
+  ":Mekaniker" -> System : søgServices(søgetekst, status)
   
   System --> ":Mekaniker" : serviceliste: serviceId, kundenavn, kundeTlf, mærke - model,\nfejltype, beskrivelse, udført, status
   

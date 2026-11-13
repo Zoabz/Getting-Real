@@ -1,0 +1,116 @@
+@startuml objektmodel_ny
+' Objektmodel – Vekto Cykelværksted (følger domænemodel.puml)
+
+skinparam backgroundColor #FFFFFF
+skinparam linetype ortho
+skinparam shadowing false
+skinparam monochrome true
+skinparam defaultFontName Arial
+skinparam nodesep 50
+skinparam ranksep 50
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #000000
+}
+skinparam usecase {
+  BackgroundColor #FFFFFF
+  BorderColor #000000
+}
+skinparam usecase<<tom>> {
+  BackgroundColor #FFFFFF
+  BorderColor #FFFFFF
+  StereotypeFontColor #FFFFFF
+  FontColor #FFFFFF
+}
+skinparam ArrowColor #000000
+hide stereotype
+
+' Klasser
+rectangle "Kunde" as HKunde
+rectangle "Cykel" as HCykel
+rectangle "Reparation" as HReparation
+rectangle "Udført arbejde" as HUdfoert
+rectangle "Medarbejder" as HMedarbejder
+rectangle "Udtag" as HUdtag
+rectangle "Reservedel" as HReservedel
+rectangle "Leverandør" as HLeverandoer
+rectangle "Modtagelse" as HModtagelse
+
+' Objekter (kun værdier, i samme rækkefølge som attributterne)
+usecase "Frederik Eriksen\n+4523129428" as K1
+usecase "Hyundai\ni30" as C1
+usecase "1001\nBremser\nHviner\nLukket" as R1
+usecase "Skiftet\nklodser" as UA1
+usecase "John Pedersen\nJP" as M1
+usecase "2" as U1
+usecase "Bremseklodser\n4\n4" as RD1
+usecase "Nordic Bike\nParts A/S" as L1
+usecase "02-11-2026\n6" as MO1
+
+' Tomme pladser i gitteret (usynlige)
+usecase " " as P1_3 <<tom>>
+usecase " " as P1_4 <<tom>>
+usecase " " as P1_8 <<tom>>
+usecase " " as P2_0 <<tom>>
+usecase " " as P2_1 <<tom>>
+usecase " " as P2_2 <<tom>>
+usecase " " as P2_5 <<tom>>
+usecase " " as P2_6 <<tom>>
+usecase " " as P2_7 <<tom>>
+
+' Gitter: kolonner og rækker (usynlige)
+HKunde -[hidden]down- K1
+K1 -[hidden]down- P2_0
+HCykel -[hidden]down- C1
+C1 -[hidden]down- P2_1
+HReparation -[hidden]down- R1
+R1 -[hidden]down- P2_2
+HUdfoert -[hidden]down- P1_3
+P1_3 -[hidden]down- UA1
+HMedarbejder -[hidden]down- P1_4
+P1_4 -[hidden]down- M1
+HUdtag -[hidden]down- U1
+U1 -[hidden]down- P2_5
+HReservedel -[hidden]down- RD1
+RD1 -[hidden]down- P2_6
+HLeverandoer -[hidden]down- L1
+L1 -[hidden]down- P2_7
+HModtagelse -[hidden]down- P1_8
+P1_8 -[hidden]down- MO1
+HKunde -[hidden]right- HCykel
+HCykel -[hidden]right- HReparation
+HReparation -[hidden]right- HUdfoert
+HUdfoert -[hidden]right- HMedarbejder
+HMedarbejder -[hidden]right- HUdtag
+HUdtag -[hidden]right- HReservedel
+HReservedel -[hidden]right- HLeverandoer
+HLeverandoer -[hidden]right- HModtagelse
+K1 -[hidden]right- C1
+C1 -[hidden]right- R1
+R1 -[hidden]right- P1_3
+P1_3 -[hidden]right- P1_4
+P1_4 -[hidden]right- U1
+U1 -[hidden]right- RD1
+RD1 -[hidden]right- L1
+L1 -[hidden]right- P1_8
+P2_0 -[hidden]right- P2_1
+P2_1 -[hidden]right- P2_2
+P2_2 -[hidden]right- UA1
+UA1 -[hidden]right- M1
+M1 -[hidden]right- P2_5
+P2_5 -[hidden]right- P2_6
+P2_6 -[hidden]right- P2_7
+P2_7 -[hidden]right- MO1
+
+' Links
+K1 -[norank]- C1
+C1 -[norank]- R1
+R1 -[norank]- UA1
+UA1 -[norank]- M1
+R1 -[norank]- U1
+M1 -[norank]- U1
+U1 -[norank]- RD1
+RD1 -[norank]- L1
+RD1 -[norank]- MO1
+
+@enduml
