@@ -22,7 +22,7 @@ rectangle "Opret service (03)" as P03
 rectangle "Service kvittering\n(dialog, 04)" as D04
 rectangle "Service kvittering (05)" as P05
 rectangle "Reservedele udtag (06)" as P06
-rectangle "Udført arbejde (07)" as P07
+rectangle "Service oversigt (07)" as P07
 rectangle "Lager og bestilling (08)" as P08
 rectangle "Opret reservedel (09)" as P09
 rectangle "Reservedele modtagelse (10)" as P10
@@ -32,7 +32,7 @@ H <--> P02 : Opret kunde /\nAnden side i menuen
 H <--> P03 : Opret service /\nAnden side i menuen
 H <--> P05 : Service kvittering /\nAnden side i menuen
 H <--> P06 : Reservedele udtag /\nAnden side i menuen
-H <--> P07 : Udført arbejde /\nAnden side i menuen
+H <--> P07 : Service oversigt /\nAnden side i menuen
 H <--> P08 : Lager og bestilling /\nAnden side i menuen
 H <--> P09 : Opret reservedel /\nAnden side i menuen
 H <--> P10 : Reservedele modtagelse /\nAnden side i menuen

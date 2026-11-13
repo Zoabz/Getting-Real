@@ -37,6 +37,6 @@ Felter: **Vælg Service (reparationsnummer)**, **Vælg medarbejder** (dropdown/s
 
 ## Relaterede begreber og artefakter
 
-- Begreber: Udført arbejde, Status (se [ordliste](../0.%20Ordliste/ordliste.md))
+- Begreber: Service oversigt, Status (se [ordliste](../0.%20Ordliste/ordliste.md))
 - Forudsætter: UC1, UC3
 - Vises i: UC4

@@ -1,8 +1,8 @@
-' Navigationsmodel – UC5 - Udført Arbejde På Reparationen
+' Navigationsmodel – UC5 - Service oversigt over reparationer
 @startuml
-title UC5 - Udført Arbejde På Reparationen
+title UC5 - Service oversigt over reparationer
 start
-:Vælg »Udført arbejde« i sidebaren;
+:Vælg »Service oversigt« i sidebaren;
 :Vælg service »1001 · Frederik Eriksen ·
 Hyundai - I30« eller klik på den under »Åbne
 services«;

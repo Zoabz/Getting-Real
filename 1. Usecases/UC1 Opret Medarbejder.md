@@ -39,4 +39,4 @@ Felter: **Navn**, **Initialer**, knap **Opret**. Eksempel: *John Pedersen, JP*.
 ## Relaterede begreber og artefakter
 
 - Begreber: Medarbejder, Initialer (se [ordliste](../0.%20Ordliste/ordliste.md))
-- Bruges af: UC5 Udført Arbejde På Reparationen, UC6 Reservedele Udtag Fra Lageret
+- Bruges af: UC5 Service oversigt over reparationer, UC6 Reservedele Udtag Fra Lageret
