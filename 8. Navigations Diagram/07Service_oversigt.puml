@@ -1,6 +1,6 @@
 ' Navigationsdiagram – 07 · Udført arbejde
 @startuml
-title 07 · Udført arbejde
+title 07 · Service oversigt
 skinparam shadowing false
 skinparam dpi 150
 skinparam defaultTextAlignment center
@@ -14,7 +14,7 @@ skinparam rectangle {
 }
 
 rectangle "Hovedvindue (00)" as H
-rectangle "Udført arbejde (07)" as P
+rectangle "Service oversigt (07)" as P
 
-H <--> P : Udført arbejde /\nAnden side i menuen
+H <--> P : Service oversigt /\nAnden side i menuen
 @enduml

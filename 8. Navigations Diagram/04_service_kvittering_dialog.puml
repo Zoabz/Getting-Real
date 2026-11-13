@@ -14,7 +14,7 @@ skinparam rectangle {
 }
 
 rectangle "Opret service (03)" as P03
-rectangle "Service kvittering (05)" as P05
+rectangle "Service oversigt  (07)" as P05
 rectangle "Service kvittering\n(dialog, 04)" as D04
 
 P03 <--> D04 : Opret /\nLuk

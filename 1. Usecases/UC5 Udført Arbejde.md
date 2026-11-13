@@ -1,9 +1,9 @@
-# UC5 – Udført Arbejde På Reparationen
+# UC5 – Service oversigt over reparationer
 
 | Felt | Beskrivelse |
 | :---- | :---- |
 | **Nummer** | UC5 |
-| **Use case navn** | Udført Arbejde På Reparationen |
+| **Use case navn** | Service oversigt over reparationer |
 | **Virkefelt** | Vekto værkstedssystem (WPF-prototype) |
 | **Niveau** | Brugermål |
 | **Primær aktør** | Mekaniker |
@@ -14,7 +14,7 @@
 
 ## Hovedscenarie
 
-1. Brugeren vælger *Udført arbejde*.
+1. Brugeren vælger *Service oversigt*.
 2. Systemet viser en formular med felterne *Service* (reparationsnummer), *Medarbejder* og *Beskrivelse af udført arbejde*.
 3. Brugeren vælger service (reparationsnummer) i en dropdown eller via søgning.
 4. Brugeren vælger medarbejder i en dropdown eller via søgning.
@@ -31,7 +31,7 @@
 - Data gemmes i tekstfiler.
 - Service og medarbejder vælges i lister med søgning, så nummer og navn ikke skal skrives i hånden.
 
-## Skærmbillede (fane: Udført Arbejde)
+## Skærmbillede (fane: Service oversigt)
 
 Felter: **Vælg Service (reparationsnummer)**, **Vælg medarbejder** (dropdown/søgning), **Beskrivelse for udført arbejde**, knap **Gem** (status ændres til *Lukket*).
 
