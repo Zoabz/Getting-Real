@@ -29,8 +29,8 @@ class Kunde {
 }
 
 ' UC3, UC4, UC5
-class Reparation {
-  reparationsnummer
+class Service {
+  servicenummer
   indleveringsdato
   mærke
   model
@@ -40,7 +40,7 @@ class Reparation {
   status
 }
 
-' UC6 (associationsklasse på Reparation–Reservedel)
+' UC6 (associationsklasse på Service–Reservedel)
 class Reservedelsforbrug {
   dato
   antalTaget
@@ -64,10 +64,10 @@ class Modtagelse {
   antalModtaget
 }
 
-Kunde "1" -right- "*" Reparation
-Reparation "*" -right- "0..1" Medarbejder
-Reparation "*" -down- "*" Reservedel
-(Reparation, Reservedel) .. Reservedelsforbrug
+Kunde "1" -right- "*" Service
+Service "*" -right- "0..1" Medarbejder
+Service "*" -down- "*" Reservedel
+(Service, Reservedel) .. Reservedelsforbrug
 Reservedelsforbrug "*" -right- "1" Medarbejder
 Leverandør "1" -right- "*" Reservedel
 Reservedel "1" -right- "*" Modtagelse

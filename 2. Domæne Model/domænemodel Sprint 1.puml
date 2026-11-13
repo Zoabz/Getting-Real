@@ -1,0 +1,48 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 90
+skinparam ranksep 80
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+  ArrowColor black
+}
+hide circle
+hide methods
+
+' UC1
+class Medarbejder {
+  navn
+  initialer
+}
+
+' UC2
+class Kunde {
+  navn
+  telefonnummer
+}
+
+' UC3, UC4, UC5
+class Service {
+  servicenummer
+  indleveringsdato
+  mærke
+  model
+  fejltype
+  fejlbeskrivelse
+  udførtArbejde
+  status
+}
+
+
+
+
+Kunde "1" -right- "*" Service
+Service "*" -right- "0..1" Medarbejder
+@enduml
