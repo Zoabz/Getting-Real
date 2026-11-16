@@ -1,63 +1,66 @@
-@startuml
-' Samme objekter som objektmodel.png / objektmodel.drawio.
-' PlantUML kan ikke tegne de buede linjer, så layoutet er ikke helt det samme.
-skinparam monochrome true
-skinparam shadowing false
-skinparam backgroundColor white
-skinparam usecase {
-  BackgroundColor white
-  BorderColor black
+@startdot
+digraph objektmodel {
+  // Objektmodel: samme objekter, kolonner og linjer som objektmodel.png
+  graph [bgcolor=white, nodesep=0.8, ranksep=0.75]
+  edge [dir=none, color=black]
+
+  // Klasser (overskrifter)
+  node [shape=plaintext, fixedsize=true, width=1.8, height=0.3, fontname="Arial", fontsize=12, fontcolor=black]
+  hK [label="Kunde"]
+  hR [label="Reparation"]
+  hM [label="Medarbejder"]
+  hU [label="Udtag"]
+  hS [label="Reservedel"]
+  hL [label="Leverandør"]
+  hMo [label="Modtagelse"]
+
+  // Objekter (kun værdier)
+  node [shape=circle, fixedsize=true, width=1.8, height=1.8, fontsize=11, color=black]
+  frederik [label="Frederik Eriksen\n+4523129428"]
+  r1001 [label="1001\n03-11-2026\nTrek\nFX 2\nBremser\nBremser hviner\nSkiftet klodser\nLukket"]
+  r1002 [label="1002\n04-11-2026\nKildemoes\nCity\nBremser\nSlap bremse\n-\nÅben"]
+  john [label="John Pedersen\nJP"]
+  lise [label="Lise Madsen\nLM"]
+  u1 [label="03-11-2026\n2"]
+  u2 [label="04-11-2026\n1"]
+  klodser [label="Bremseklodser\n4\n4"]
+  kabel [label="Bremsekabel\n9\n3"]
+  nordic [label="Nordic Bike\nParts A/S"]
+  mod1 [label="02-11-2026\n7"]
+
+  // Rækker: overskrifter, række 1 og række 2
+  { rank=same; hK; hR; hM; hU; hS; hL; hMo }
+  { rank=same; frederik; r1001; john; u1; klodser; nordic; mod1 }
+  { rank=same; r1002; lise; u2; kabel }
+
+  // Usynlige linjer, der holder rækkefølgen og kolonnerne
+  hK -> hR -> hM -> hU -> hS -> hL -> hMo [style=invis]
+  hK -> frederik [style=invis, weight=10]
+  hR -> r1001 [style=invis, weight=10]
+  hM -> john [style=invis, weight=10]
+  hU -> u1 [style=invis, weight=10]
+  hS -> klodser [style=invis, weight=10]
+  hL -> nordic [style=invis, weight=10]
+  hMo -> mod1 [style=invis, weight=10]
+  r1001 -> r1002 [style=invis, weight=10]
+  john -> lise [style=invis, weight=10]
+  u1 -> u2 [style=invis, weight=10]
+  klodser -> kabel [style=invis, weight=10]
+  r1002 -> lise [style=invis]
+  nordic -> mod1 [style=invis]
+
+  // Relationer (samme linjer som i objektmodel.png)
+  frederik -> r1001
+  frederik -> r1002
+  r1001 -> john
+  john -> u1
+  r1001:s -> u1:s
+  lise -> u2
+  r1002:s -> u2:s
+  u1 -> klodser
+  u2 -> kabel
+  klodser -> nordic
+  kabel -> nordic
+  kabel:e -> mod1:s
 }
-skinparam rectangle {
-  BackgroundColor white
-  BorderColor black
-}
-
-rectangle "Kunde" as hK
-rectangle "Reparation" as hR
-rectangle "Medarbejder" as hM
-rectangle "Udtag" as hU
-rectangle "Reservedel" as hS
-rectangle "Leverandør" as hL
-rectangle "Modtagelse" as hMo
-
-usecase "Frederik Eriksen\n+4523129428" as frederik
-usecase "1001\n03-11-2026\nTrek\nFX 2\nBremser\nBremser hviner\nSkiftet klodser\nLukket" as r1001
-usecase "1002\n04-11-2026\nKildemoes\nCity\nBremser\nSlap bremse\n-\nÅben" as r1002
-usecase "John Pedersen\nJP" as john
-usecase "Lise Madsen\nLM" as lise
-usecase "03-11-2026\n2" as u1
-usecase "04-11-2026\n1" as u2
-usecase "Bremseklodser\n4\n4" as klodser
-usecase "Bremsekabel\n9\n3" as kabel
-usecase "Nordic Bike\nParts A/S" as nordic
-usecase "02-11-2026\n7" as mod1
-
-hK -[hidden]right- hR
-hR -[hidden]right- hM
-hM -[hidden]right- hU
-hU -[hidden]right- hS
-hS -[hidden]right- hL
-hL -[hidden]right- hMo
-
-hK -[hidden]down- frederik
-hR -[hidden]down- r1001
-hM -[hidden]down- john
-hU -[hidden]down- u1
-hS -[hidden]down- klodser
-hL -[hidden]down- nordic
-hMo -[hidden]down- mod1
-
-frederik -- r1001
-frederik -- r1002
-r1001 -right- john
-john -right- u1
-r1001 -- u1
-lise -right- u2
-r1002 -- u2
-u1 -right- klodser
-u2 -right- kabel
-klodser -- nordic
-kabel -- nordic
-kabel -- mod1
-@enduml
+@enddot
