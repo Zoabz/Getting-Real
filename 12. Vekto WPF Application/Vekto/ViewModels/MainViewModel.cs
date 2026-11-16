@@ -6,5 +6,6 @@ namespace Vekto.ViewModels
 {
     internal class MainViewModel
     {
+
     }
 }
