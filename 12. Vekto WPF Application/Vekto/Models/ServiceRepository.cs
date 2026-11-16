@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Vekto.Models
 {
-   public class serviceRepository
+    class ServiceRepository
     {
-        private List<service> service;
+        private List<Service> services;
 
-        public serviceRepository()
+        public ServiceRepository()
         {
-            service = new List<service>();
+            services = new List<Service>();
             InitializeRepository();
         }
 
@@ -19,18 +19,18 @@ namespace Vekto.Models
         {
             try
             {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader("service.csv"))
+                using (StreamReader sr = new StreamReader("Service.csv"))
                 {
-                    // Read the stream to a string, and instantiate a Person object
+                    // Read the stream to a string, and instantiate a Service object
                     string line = sr.ReadLine();
 
                     while (line != null)
                     {
                         string[] parts = line.Split(',');
 
-                        // parts[0] contains first name, parts[1] contains last name, parts[2] contains age as text, parts[3] contains phone
-
-                        this.Add(parts[0], parts[1], parts[2], parts[3], parts[4], parts[5]), parts[6], parts[7]);
+                        // parts[0] = serviceId, parts[1] = dropOffDate, parts[2] = brand, parts[3] = model,
+                        // parts[4] = errorType, parts[5] = description, parts[6] = status, parts[7] = customer
+                        this.Add(int.Parse(parts[0]), DateTime.Parse(parts[1]), parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
 
                         //Read the next line
                         line = sr.ReadLine();
@@ -43,21 +43,28 @@ namespace Vekto.Models
             }
         }
 
-        public Service Add(int serviceId, DateTime dropOffDate, string brand, string model, string errorTupe, string description, string status, string service)
+        public Service Add(int serviceId, DateTime dropOffDate, string brand, string model, string errorType, string description, string status, string service)
         {
             Service result = null;
 
-            if (!string.IsNullOrEmpty(name) &&
-                !string.IsNullOrEmpty(phoneNumber))
+            if (!string.IsNullOrEmpty(brand) &&
+                !string.IsNullOrEmpty(model) &&
+                !string.IsNullOrEmpty(errorType))
             {
                 result = new Service()
                 {
-                    Name = name,
-                    PhoneNumber = phoneNumber
+                    ServiceId = serviceId,
+                    DropOffDate = dropOffDate,
+                    Brand = brand,
+                    Model = model,
+                    ErrorType = errorType,
+                    Description = description,
+                    Status = status,
+                    Customer = service
                 };
 
-                // Add to persons list
-                service.Add(result);
+                // Add to services list
+                services.Add(result);
             }
             else
                 throw (new ArgumentException("Not all arguments are valid"));
@@ -65,15 +72,15 @@ namespace Vekto.Models
             return result;
         }
 
-        public Costumer Get(string phoneNumber)
+        public Service Get(int serviceId)
         {
-            Costumer result = null;
+            Service result = null;
 
-            foreach (Costumer c in costumer)
+            foreach (Service s in services)
             {
-                if (c.PhoneNumber == phoneNumber)
+                if (s.ServiceId == serviceId)
                 {
-                    result = c;
+                    result = s;
                     break;
                 }
             }
@@ -81,45 +88,42 @@ namespace Vekto.Models
             return result;
         }
 
-
-        public List<Costumer> GetAll()
+        public List<Service> GetAll()
         {
-            return costumer;
+            return services;
         }
 
-        public void Update(string name, string phoneNumber)
+        public void Update(int serviceId, string status, string description)
         {
-            // Find the person in the internal persons list with same Id as the 'id'-parameter
-            Costumer foundCostumer = this.Get(phoneNumber);
+            // Find the service in the internal services list with same Id as the 'serviceId'-parameter
+            Service foundService = this.Get(serviceId);
 
-            if (foundCostumer != null)
+            if (foundService != null)
             {
-                if (!string.IsNullOrEmpty(name) &&
-                    !string.IsNullOrEmpty(phoneNumber))
+                if (!string.IsNullOrEmpty(status))
                 {
-                    // Update only changed properties for this person
-                    if (foundCostumer.Name != name)
-                        foundCostumer.Name = name;
-                    if (foundCostumer.PhoneNumber != phoneNumber)
-                        foundCostumer.PhoneNumber = phoneNumber;
+                    // Update only changed properties for this service
+                    if (foundService.Status != status)
+                        foundService.Status = status;
+                    if (foundService.Description != description)
+                        foundService.Description = description;
                 }
                 else
-                    throw (new ArgumentException("Not all arguments for costumer are valid"));
+                    throw (new ArgumentException("Not all arguments for service are valid"));
             }
             else
-                throw (new ArgumentException("Costumer with phonenumber = " + phoneNumber + " not found"));
+                throw (new ArgumentException("Service with id = " + serviceId + " not found"));
         }
 
-        public void Remove(string phoneNumber)
+        public void Remove(int serviceId)
         {
-            // Find the person in the internal persons list with same Id as the 'id'-parameter
-            Costumer foundCostumer = this.Get(phoneNumber);
+            // Find the service in the internal services list with same Id as the 'serviceId'-parameter
+            Service foundService = this.Get(serviceId);
 
-            if (foundCostumer != null)
-                costumer.Remove(foundCostumer);
+            if (foundService != null)
+                services.Remove(foundService);
             else
-                throw (new ArgumentException("Costumer with phonenumber = " + phoneNumber + " not found"));
+                throw (new ArgumentException("Service with id = " + serviceId + " not found"));
         }
     }
 }
-
