@@ -52,31 +52,5 @@ namespace Vekto.Views
         {
             ShowPage(new OpretService(), btnOpretService);
         }
-
-        // ---------- Sider, der ikke er lavet endnu ----------
-        private void btnReservedeleUdtag_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPage(new KommerSenere("Reservedele udtag"), btnReservedeleUdtag);
-        }
-
-        private void btnServiceOversigt_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPage(new KommerSenere("Service oversigt"), btnServiceOversigt);
-        }
-
-        private void btnLagerOgBestilling_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPage(new KommerSenere("Lager og bestilling"), btnLagerOgBestilling);
-        }
-
-        private void btnOpretReservedel_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPage(new KommerSenere("Opret reservedel"), btnOpretReservedel);
-        }
-
-        private void btnReservedeleModtagelse_Click(object sender, RoutedEventArgs e)
-        {
-            ShowPage(new KommerSenere("Reservedele modtagelse"), btnReservedeleModtagelse);
-        }
     }
 }
