@@ -14,7 +14,7 @@ namespace Vekto.Views
         {
             InitializeComponent();
 
-            ShowPage(new OpretService(), btnOpretService); // Her starter den på siden Opret service
+            ShowPage(new CreateService(), btnOpretService); // Her starter den på siden Opret service
         }
 
         // Viser en side i sideområdet og markerer knappen i sidebaren
@@ -22,7 +22,7 @@ namespace Vekto.Views
         {
             PageArea.Content = page;
 
-            // Alle knapper bliver normale ...
+            // Alle knapper bliver normale
             Button[] buttons = { btnOpretMedarbejder, btnOpretKunde, btnOpretService, btnReservedeleUdtag,
                                  btnServiceOversigt, btnLagerOgBestilling, btnOpretReservedel, btnReservedeleModtagelse };
             foreach (Button button in buttons)
@@ -31,7 +31,7 @@ namespace Vekto.Views
                 button.FontWeight = FontWeights.Normal;
             }
 
-            // ... og den valgte bliver markeret
+            // Den valgte bliver markeret
             activeButton.Background = activeColor;
             activeButton.FontWeight = FontWeights.Bold;
         }
@@ -39,17 +39,17 @@ namespace Vekto.Views
         // ---------- Sider, der er lavet ----------
         private void btnOpretMedarbejder_Click(object sender, RoutedEventArgs e)
         {
-            ShowPage(new OpretMedarbejder(), btnOpretMedarbejder);
+            ShowPage(new CreateEmployee(), btnOpretMedarbejder);
         }
 
         private void btnOpretKunde_Click(object sender, RoutedEventArgs e)
         {
-            ShowPage(new OpretKunde(), btnOpretKunde);
+            ShowPage(new CreateCostumer(), btnOpretKunde);
         }
 
         private void btnOpretService_Click(object sender, RoutedEventArgs e)
         {
-            ShowPage(new OpretService(), btnOpretService);
+            ShowPage(new CreateService(), btnOpretService);
         }
     }
 }

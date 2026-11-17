@@ -33,8 +33,7 @@ namespace Vekto.Models
 
         public Employee Add(string name, string initials)
         {
-            if (!string.IsNullOrEmpty(name) &&
-                !string.IsNullOrEmpty(initials))
+            if (name == "" || initials == "")
             throw (new ArgumentException("Not all arguments are valid"));
             
                 Employee result = new Employee()

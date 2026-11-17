@@ -4,9 +4,9 @@ using System.Windows.Controls;
 namespace Vekto.Views
 {
     // Side: vises i MainWindow's sideområde
-    public partial class OpretService : UserControl
+    public partial class CreateService : UserControl
     {
-        public OpretService()
+        public CreateService()
         {
             InitializeComponent();
         }
@@ -22,8 +22,8 @@ namespace Vekto.Views
         {
             // TODO: opret servicen med CreateServiceController.CreateService(...)
             // og vis kvitteringen bagefter:
-            ServiceKvittering kvittering = new ServiceKvittering();
-            kvittering.ShowDialog();
+             CreateReceipt receipt = new CreateReceipt();
+            receipt.ShowDialog();
         }
     }
 }
