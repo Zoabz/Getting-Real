@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+
+skinparam usecaseBackgroundColor white
+skinparam usecaseBorderColor black
+skinparam actorStyle stickman
+skinparam shadowing false
+skinparam ArrowColor black
+skinparam linetype polyline
+skinparam ranksep 200
+
+actor "Mekaniker" as me
+actor "Kasper" as ka
+actor "Peter" as me2
+
+rectangle "Vekto Flow" {
+  usecase "Opret Medarbejder" as UC1
+  usecase "Opret Kunde" as UC2
+  usecase "Opret Service" as UC3
+  usecase "Service Kvittering" as UC4
+  usecase "Udført Arbejde" as UC5
+  usecase "Reservedele udtag" as UC6
+  usecase "Lager og bestilling" as UC7
+  usecase "Opret Reservedele" as UC8
+  usecase "Opret Reservedele Modtagelse" as UC9
+
+}
+UC1 -- me2
+UC2 -- me2
+UC3 -- me2
+UC4 -- me2
+UC5 -- me2
+UC6 -- me2
+UC7 -- me2
+UC8 -- me2
+UC9 -- me2
+
+me -- UC2
+me -- UC3
+me -- UC4
+me -- UC5
+me -- UC6
+
+ka -- UC7
+ka -- UC8
+ka -- UC9
+
+@enduml
