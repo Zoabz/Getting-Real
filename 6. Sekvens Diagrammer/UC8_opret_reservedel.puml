@@ -2,15 +2,9 @@
 hide footbox
 title <U>SD UC8 - Create Spare Part In Inventory</U>
 
-<<<<<<< HEAD
-participant ":SparePartView" as View
-participant ":SparePartController" as Controller
-participant ":InventoryRepository" as Repository
-=======
 participant ":SparePartView" as View #White
 participant ":SparePartController" as Controller #White
-participant ":SparePartRepository" as Repository #White
->>>>>>> 8f685ebceb891159516ce700be6b86f2d0197447
+participant ":InventoryRepository" as Repository #White
 
 [-> View : openSparePartView()
 activate View
