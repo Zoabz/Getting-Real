@@ -9,10 +9,6 @@ namespace Vekto.Models
         public string Name { get; set; }
         public string Initials { get; set; }
         
-        public Employee()
-        {
-        }
-
     }
 
 }

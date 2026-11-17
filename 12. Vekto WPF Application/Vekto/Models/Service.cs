@@ -12,12 +12,8 @@ namespace Vekto.Models
         public string Model { get; set; }
         public string ErrorType { get; set; }
         public string Description { get; set; }
-        public string Status { get; set; }
+        public ServiceStatus Status { get; set; }
         public string Customer { get; set; }
 
-        public Service()
-        {
-
-        }
     }
 }

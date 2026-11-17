@@ -17,52 +17,37 @@ namespace Vekto.Models
 
         private void InitializeRepository()
         {
-            try
-            {   // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader("Costumer.csv"))
-                {
-                    // Read the stream to a string, and instantiate a Person object
-                    string line = sr.ReadLine();
-
-                    while (line != null)
-                    {
-                        string[] parts = line.Split(',');
-
-                        // parts[0] contains first name, parts[1] contains last name, parts[2] contains age as text, parts[3] contains phone
-
-                        this.Add(parts[0], parts[1]);
-
-                        //Read the next line
-                        line = sr.ReadLine();
-                    }
-                }
-            }
-            catch (IOException)
+            using (StreamReader sr = new StreamReader("Costumer.csv"))
             {
-                throw;
+                string line = sr.ReadLine();
+
+                while (line != null)
+                {
+                    string[] parts = line.Split(',');
+
+
+                    this.Add(parts[0], parts[1]);
+
+                    line = sr.ReadLine();
+                }
             }
         }
 
         public Costumer Add(string name, string phoneNumber)
         {
-            Costumer result = null;
-
             if (!string.IsNullOrEmpty(name) &&
                 !string.IsNullOrEmpty(phoneNumber))
-            {
-                result = new Costumer()
+            throw (new ArgumentException("Not all arguments are valid"));
+            
+                Costumer result = new Costumer()
                 {
                     Name = name,
                     PhoneNumber = phoneNumber
                 };
 
-                // Add to persons list
                 costumer.Add(result);
-            }
-            else
-                throw (new ArgumentException("Not all arguments are valid"));
-
-            return result;
+                return result;
+     
         }
 
         public Costumer Get(string phoneNumber)
@@ -89,36 +74,25 @@ namespace Vekto.Models
 
         public void Update(string name, string phoneNumber)
         {
-            // Find the person in the internal persons list with same Id as the 'id'-parameter
-            Costumer foundCostumer = this.Get(phoneNumber);
+            Costumer foundCustomer = Get(phoneNumber);
 
-            if (foundCostumer != null)
-            {
-                if (!string.IsNullOrEmpty(name) &&
-                    !string.IsNullOrEmpty(phoneNumber))
-                {
-                    // Update only changed properties for this person
-                    if (foundCostumer.Name != name)
-                        foundCostumer.Name = name;
-                    if (foundCostumer.PhoneNumber != phoneNumber)
-                        foundCostumer.PhoneNumber = phoneNumber;
-                }
-                else
-                    throw (new ArgumentException("Not all arguments for costumer are valid"));
-            }
-            else
-                throw (new ArgumentException("Costumer with phonenumber = " + phoneNumber + " not found"));
+            if (foundCustomer == null)
+                throw new ArgumentException("Customer with phonenumber = " + phoneNumber + " not found");
+
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Not all arguments for customer are valid");
+
+            foundCustomer.Name = name;
         }
 
         public void Remove(string phoneNumber)
         {
-            // Find the person in the internal persons list with same Id as the 'id'-parameter
-            Costumer foundCostumer = this.Get(phoneNumber);
+            Costumer foundCustomer = this.Get(phoneNumber);
 
-            if (foundCostumer != null)
-                costumer.Remove(foundCostumer);
-            else
-                throw (new ArgumentException("Costumer with phonenumber = " + phoneNumber + " not found"));
+            if (foundCustomer != null)
+                throw new ArgumentException("Customer with phonenumber = " + phoneNumber + " not found");
+
+            costumer.Remove(foundCustomer);
         }
     }
 }
