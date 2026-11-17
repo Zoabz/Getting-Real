@@ -6,7 +6,7 @@ namespace Vekto.Views
 {
     public partial class MainWindow : Window
     {
-        // Farverne på knapperne i sidebaren
+        // Det her er farverne på knapperne i sidebaren
         private SolidColorBrush normalColor = new SolidColorBrush(Color.FromRgb(0xEB, 0xEB, 0xEB));
         private SolidColorBrush activeColor = new SolidColorBrush(Color.FromRgb(0xC4, 0xA6, 0x9A));
 
@@ -14,8 +14,7 @@ namespace Vekto.Views
         {
             InitializeComponent();
 
-            // Programmet starter på Opret service
-            ShowPage(new OpretService(), btnOpretService);
+            ShowPage(new OpretService(), btnOpretService); // Her starter den på siden Opret service
         }
 
         // Viser en side i sideområdet og markerer knappen i sidebaren

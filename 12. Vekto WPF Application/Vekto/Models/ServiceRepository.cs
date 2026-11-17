@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Vekto.Models
 {
-    class ServiceRepository
+    public class ServiceRepository
     {
         private List<Service> services;
 

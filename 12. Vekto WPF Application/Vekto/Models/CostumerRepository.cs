@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Vekto.Models
 {
-    class CostumerRepository
+    public class CostumerRepository
     {
         private List<Costumer> costumer;
 

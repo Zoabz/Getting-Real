@@ -8,4 +8,11 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <!-- Csv-filerne kopieres til bin-mappen, så programmet kan finde dem, når det kører -->
+  <ItemGroup>
+    <None Update="*.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Vekto.Models
 {
-    internal class Service
+    public class Service
     {
         public int ServiceId { get; set; }
         public DateTime DropOffDate { get; set; }
@@ -14,6 +14,5 @@ namespace Vekto.Models
         public string Description { get; set; }
         public ServiceStatus Status { get; set; }
         public string Customer { get; set; }
-
     }
 }
