@@ -13,7 +13,7 @@
         <!-- Overskrift -->
         <StackPanel Grid.Row="0" Margin="20,20,20,0">
             <TextBlock Text="Opret medarbejder" FontSize="22" FontWeight="Bold"/>
-            <TextBlock Text="Tilføj en medarbejder med fulde navn og initialer (navn kort)." Foreground="Gray"/>
+            <TextBlock Text="Tilføj en medarbejder med fulde navn og initialer." Foreground="Gray"/>
         </StackPanel>
 
         
@@ -43,13 +43,9 @@
                     <Label Grid.Row="0" Grid.Column="0" Content="Navn"/>
                     <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbName" Height="25" Margin="0,0,0,5"/>
 
-                    <Label Grid.Row="1" Grid.Column="0" Content="Navn kort"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbInitials" Height="25" Margin="0,0,0,5"/>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Initialer"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbInitials" Height="25" Margin="0,0,0,5" Foreground="Gray" Text="Initialerne skal være unikke" GotFocus="tbInitials_GotFocus" LostFocus="tbInitials_LostFocus"/>
 
-                    <StackPanel Grid.Row="2" Grid.Column="1">
-                        <TextBlock Foreground="Gray" Text="Initialerne skal være unikke"/>
-                        <TextBlock Foreground="Gray" Text="og vises på kvitteringer."/>
-                    </StackPanel>
 
                     <Button Grid.Row="3" Grid.Column="1" x:Name="btnCreate" Content="Opret"
                             Width="80" Height="30" HorizontalAlignment="Left" Margin="0,10,0,0"
