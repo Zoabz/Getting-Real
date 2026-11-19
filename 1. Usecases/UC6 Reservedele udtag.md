@@ -28,7 +28,7 @@
 - **4a. Reservedel eller antal mangler, eller der er ikke nok på lager:** Systemet tilføjer ikke reservedelen og viser en fejlbesked, fx hvor mange der er på lager. Mekanikeren kan rette reservedel eller antal og trykke **Tilføj** igen.
 - **5a. En reservedel skal fjernes fra udtagslisten:** Mekanikeren trykker **Fjern** på linjen, og systemet fjerner den fra listen. Fortsætter ved trin 5.
 - **6a. Service, medarbejder eller reservedele på listen mangler:** Systemet viser en fejlbesked og gemmer ikke. Mekanikeren vælger det, der mangler, og trykker **Gem** igen.
-- **7a. Beholdningen er utilstrækkelig:** Systemet afviser registreringen, giver mekanikeren besked om den aktuelle beholdning og gemmer intet. Mekanikeren kan rette antallet eller afbryde. \[Antagelse: sker kun, hvis beholdningen er ændret siden Tilføj\]
+- **7a. Beholdningen er utilstrækkelig:** Systemet afviser registreringen, giver mekanikeren besked om den aktuelle beholdning og gemmer intet. Mekanikeren kan rette antallet eller afbryde. 
 
 ## Specielle krav
 
