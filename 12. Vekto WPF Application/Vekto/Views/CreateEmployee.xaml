@@ -41,23 +41,22 @@
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0" Grid.Column="0" Content="Navn"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbName" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Height="25" Margin="0,0,0,5"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbName" Height="25" Margin="0,0,0,5"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Initialer"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbInitials" Height="25" Margin="0,0,0,5" Foreground="Gray" Text="{Binding Initials, UpdateSourceTrigger=PropertyChanged}" GotFocus="tbInitials_GotFocus" LostFocus="tbInitials_LostFocus"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbInitials" Height="25" Margin="0,0,0,5"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Initialerne skal være unikke." Foreground="Gray"/>
 
-
-                    <Button Command="{Binding NewEmployee}" CommandParameter="{Binding}"
-                            Grid.Row="3" Grid.Column="1" x:Name="btnCreate" Content="Opret"
+                    <Button Grid.Row="3" Grid.Column="1" x:Name="btnCreate" Content="Opret"
                             Width="80" Height="30" HorizontalAlignment="Left" Margin="0,10,0,0"
-                            Background="#FFEBEBEB" Foreground="Black"/>
+                            Background="#FFEBEBEB" Foreground="Black" Click="btnCreate_Click"/>
                 </Grid>
             </StackPanel>
 
             <!-- ===== Medarbejderliste ===== -->
             <StackPanel Grid.Column="2" Background="White">
-                <Label x:Name="lblEmployeeCount" Content="{Binding Employees.Count}" FontSize="15" FontWeight="Bold" Margin="10"/>
-                <ListBox x:Name="lbEmployees" ItemsSource="{Binding Employees}" Height="250" Margin="10,0,10,10"/>
+                <Label x:Name="lblEmployeeCount" Content="Medarbejdere (0)" FontSize="15" FontWeight="Bold" Margin="10"/>
+                <ListBox x:Name="lbEmployees" Height="250" Margin="10,0,10,10"/>
             </StackPanel>
         </Grid>
     </Grid>

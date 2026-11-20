@@ -1,46 +1,45 @@
-﻿using System.Security.Cryptography.X509Certificates;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using Vekto.Models;
 using Vekto.ViewModels;
-using System.Windows.Media;
+
 namespace Vekto.Views
 {
     // Side: vises i MainWindow's sideområde
     public partial class CreateCostumer : UserControl
     {
+        private CreateCostumerController controller = new CreateCostumerController();
+
         public CreateCostumer()
         {
             InitializeComponent();
+            ShowCostumers();
         }
 
-        // UC2: opret kunden
+        // Opretter Kunden
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            CreateCostumerController createCostumer = new CreateCostumerController();
-
-            createCostumer.CreateCostumer(tbName.ToString(), tbPhone.ToString());
-
-
-        }
-    
-      private void tbPhone_GotFocus(object sender, RoutedEventArgs e)
-        {
-            // Gray betyder, at det stadig er pladsholderteksten
-            if (tbPhone.Foreground == Brushes.Gray)
+            try
             {
+                Costumer costumer = controller.CreateCostumer(tbName.Text, tbPhone.Text);
+
+                tbName.Text = "";
                 tbPhone.Text = "";
-                tbPhone.Foreground = Brushes.Black;
+                ShowCostumers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
-        private void tbPhone_LostFocus(object sender, RoutedEventArgs e)
+
+        private void ShowCostumers()
         {
-            if (string.IsNullOrWhiteSpace(tbPhone.Text))
-            {
-                tbPhone.Text = "Initialerne skal være unikke";
-                tbPhone.Foreground = Brushes.Gray;
-            }
+            lbCustomers.Items.Clear();
+            foreach (Costumer c in controller.GetAllCostumers())
+                lbCustomers.Items.Add(c);
+
+            lblCustomerCount.Content = "Kunder (" + lbCustomers.Items.Count + ")";
         }
     }
 }
-

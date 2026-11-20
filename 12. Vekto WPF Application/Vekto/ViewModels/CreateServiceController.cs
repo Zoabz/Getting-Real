@@ -16,7 +16,7 @@ namespace Vekto.ViewModels
             serviceRepository = new ServiceRepository();
         }
 
-        public Costumer SearchCustomer(string phoneNumber)
+        public Costumer? SearchCustomer(string phoneNumber)
         {
             return costumerRepository.Get(phoneNumber);
         }
@@ -27,7 +27,7 @@ namespace Vekto.ViewModels
             if (brand == "" || model == "" || errorType == "" || description == "")
                 throw new Exception("Udfyld mærke, model, fejltype og fejlbeskrivelse.");
 
-            Costumer costumer = SearchCustomer(phoneNumber);
+            Costumer? costumer = SearchCustomer(phoneNumber);
             if (costumer == null)
                 throw new Exception("Find kunden på telefonnummer. Findes kunden ikke, så opret den først under Opret kunde.");
             

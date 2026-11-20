@@ -2,38 +2,45 @@
 using System.Windows.Controls;
 using Vekto.Models;
 using Vekto.ViewModels;
-using System.Windows.Media;
 
 namespace Vekto.Views
 {
     // Side: vises i MainWindow's sideområde
     public partial class CreateEmployee : UserControl
     {
-        CreateEmployeeController cec = new CreateEmployeeController();
-
+        private CreateEmployeeController controller = new CreateEmployeeController();
 
         public CreateEmployee()
         {
             InitializeComponent();
-            DataContext = cec;
+            ShowEmployees();
         }
 
-        private void tbInitials_GotFocus(object sender, RoutedEventArgs e)
+        // UC1: opret medarbejderen
+        private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            // Gray betyder, at det stadig er pladsholderteksten
-            if (tbInitials.Foreground == Brushes.Gray)
+            try
             {
+                Employee employee = controller.CreateEmployee(tbName.Text, tbInitials.Text);
+
+                tbName.Text = "";
                 tbInitials.Text = "";
-                tbInitials.Foreground = Brushes.Black;
+                ShowEmployees();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
-        private void tbInitials_LostFocus(object sender, RoutedEventArgs e)
+
+        // Fylder medarbejderlisten og tæller medarbejderne
+        private void ShowEmployees()
         {
-            if (string.IsNullOrWhiteSpace(tbInitials.Text))
-            {
-                tbInitials.Text = "Initialerne skal være unikke";
-                tbInitials.Foreground = Brushes.Gray;
-            }
+            lbEmployees.Items.Clear();
+            foreach (Employee em in controller.GetAllEmployees())
+                lbEmployees.Items.Add(em);
+
+            lblEmployeeCount.Content = "Medarbejdere (" + lbEmployees.Items.Count + ")";
         }
     }
 }

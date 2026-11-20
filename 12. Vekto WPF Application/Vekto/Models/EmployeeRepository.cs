@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace Vekto.Models
 {
     public class EmployeeRepository
     {
-        private List<Employee> employees;
+        private string fileName = "Employee.csv";
+        private List<Employee> employees = new List<Employee>();
 
         public EmployeeRepository()
         {
-            employees = new List<Employee>();
-            InitializeRepository();
+            Load();
         }
 
-        private void InitializeRepository()
+        private void Load()
         {
-            using (StreamReader sr = new StreamReader("Employee.csv"))
+            if (!File.Exists(fileName))
+                return;
+
+            foreach (string line in File.ReadAllLines(fileName))
             {
-                string? line = sr.ReadLine();
-
-                while (line != null)
-                {
-                    string[] parts = line.Split(',');
+                string[] parts = line.Split(',');
+                if (parts.Length == 2)
                     employees.Add(new Employee(parts[0], parts[1]));
-
-                    line = sr.ReadLine();
-                }
             }
         }
 
@@ -35,68 +29,30 @@ namespace Vekto.Models
         {
             List<string> lines = new List<string>();
             foreach (Employee e in employees)
-            {
                 lines.Add(e.Name + "," + e.Initials);
-            }
-            File.WriteAllLines("Employee.csv", lines);
+
+            File.WriteAllLines(fileName, lines);
         }
 
-        public Employee Add(string name, string initials)
+        public void Add(Employee employee)
         {
-            if (name == "" || initials == "")
-                throw (new ArgumentException("Not all arguments are valid"));
-
-            Employee result = new Employee(name, initials);
-
-            employees.Add(result);
+            employees.Add(employee);
             Save();
-            return result;
         }
 
         public Employee? Get(string initials)
         {
-            Employee? result = null;
-
             foreach (Employee e in employees)
             {
                 if (e.Initials == initials)
-                {
-                    result = e;
-                    break;
-                }
+                    return e;
             }
-
-            return result;
+            return null;
         }
 
         public List<Employee> GetAll()
         {
             return employees;
-        }
-
-        public void Update(string name, string initials)
-        {
-            Employee? foundEmployee = this.Get(initials);
-
-            if (foundEmployee == null)
-                throw (new ArgumentException("Employee with initials = " + initials + " not found"));
-
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("Not all arguments for employee are valid");
-
-            foundEmployee.Name = name;
-            Save();
-        }
-
-        public void Remove(string initials)
-        {
-            Employee? foundEmployee = this.Get(initials);
-
-            if (foundEmployee == null)
-                throw (new ArgumentException("Employee with initials = " + initials + " not found"));
-
-            employees.Remove(foundEmployee);
-            Save();
         }
     }
 }

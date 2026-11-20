@@ -1,68 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text;
-using System.Windows.Input;
-using Vekto.Commands;
-using Vekto.Models;
+﻿using Vekto.Models;
 
 namespace Vekto.ViewModels
 {
-    public class CreateEmployeeController : INotifyPropertyChanged
+    public class CreateEmployeeController
     {
-        private EmployeeRepository employeeRepository;
+        private EmployeeRepository employeeRepository = new EmployeeRepository();
 
-        public ObservableCollection<Employee> Employees { get; }
-        public Employee? SelectedEmployee { get; set; }
-
-        private string name = "";
-        public string Name
+        // UC1: opret medarbejderen (følger SD UC1)
+        public Employee CreateEmployee(string name, string initials)
         {
-            get { return name; }
-            set { name = value; OnPropertyChanged(nameof(Name)); }
-        }
+            name = name.Trim();
+            initials = initials.Trim();
 
-        private string initials = "";
-        public string Initials
-        {
-            get { return initials; }
-            set { initials = value; OnPropertyChanged(nameof(Initials)); }
-        }
-
-        public ICommand NewEmployee { get; }
-
-        public CreateEmployeeController()
-        {
-            employeeRepository = new EmployeeRepository();
-            Employees = new ObservableCollection<Employee>(employeeRepository.GetAll());
-            NewEmployee = new NewEmployee();
-        }
-
-        public Employee CreateEmployee()
-        {
-            string newName = Name.Trim();
-            string newInitials = Initials.Trim();
-
-            if (newName == "" || newInitials == "")
+            if (name == "" || initials == "")
                 throw new Exception("Udfyld navn og initialer.");
 
-            if (employeeRepository.Get(newInitials) != null)
-                throw new Exception($"Initialerne {newInitials} eksisterer allerede. Vælg nogen andre initialer.");
+            // Komma bruges til at adskille felterne i csv-filen
+            if (name.Contains(',') || initials.Contains(','))
+                throw new Exception("Navn og initialer må ikke indeholde komma.");
 
-            Employee employee = employeeRepository.Add(newName, newInitials);
-            Employees.Add(employee);
+            if (employeeRepository.Get(initials) != null)
+                throw new Exception("Initialerne " + initials + " findes allerede. Vælg nogle andre initialer.");
 
-            Name = "";
-            Initials = "";
+            Employee employee = new Employee(name, initials);
+            employeeRepository.Add(employee);
             return employee;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
+        public List<Employee> GetAllEmployees()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            return employeeRepository.GetAll();
         }
     }
 }
