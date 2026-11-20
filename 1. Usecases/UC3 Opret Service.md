@@ -10,7 +10,7 @@
 | **Mål** | At få en indleveret cykel registreret som en reparationsordre, der er knyttet til den rette kunde og cykel, så reparationen kan følges fra indlevering til afhentning. |
 | **Interessenter** | **Mekanikerne:** Vil kunne se, hvilke cykler der skal repareres, uden at gå efter håndskrevne mærker. **Peter:** Vil have overblik over alle reparationer og deres status. **Kunderne:** Vil have, at cyklen er registreret korrekt, så den bliver færdig til den aftalte tid. |
 | **Før-tilstand** | Programmet er startet, og en cykel med fejl er afleveret til reparation. |
-| **Efter-tilstand** | Der er gemt en reparationsordre (service) med ordrenummer og status *Åben*, knyttet til kunden og cyklen, og en servicekvittering er vist for medarbejderen. Indleveringsdatoen er sat automatisk til dags dato. \[Antagelse\] |
+| **Efter-tilstand** | Der er gemt en reparationsordre (service) med ordrenummer og status *Åben*, knyttet til kunden og cyklen, og en servicekvittering er vist for medarbejderen. Indleveringsdatoen er sat automatisk til dags dato.
 
 ## Hovedscenarie
 

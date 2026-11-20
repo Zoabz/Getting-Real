@@ -1,99 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 
 namespace Vekto.Models
 {
     public class CostumerRepository
     {
-        private List<Costumer> costumer;
+        private string fileName = "Costumer.csv";
+        private List<Costumer> costumers = new List<Costumer>();
 
         public CostumerRepository()
         {
-            costumer = new List<Costumer>();
-            InitializeRepository();
+            Load();
         }
 
-        private void InitializeRepository()
+        private void Load()
         {
-            using (StreamReader sr = new StreamReader("Costumer.csv"))
+            if (!File.Exists(fileName))
+                return;
+
+            foreach (string line in File.ReadAllLines(fileName))
             {
-                string line = sr.ReadLine();
-
-                while (line != null)
-                {
-                    string[] parts = line.Split(',');
-
-
-                    this.Add(parts[0], parts[1]);
-
-                    line = sr.ReadLine();
-                }
+                string[] parts = line.Split(',');
+                if (parts.Length == 2)
+                    costumers.Add(new Costumer(parts[0], parts[1]));
             }
         }
-
-        public Costumer Add(string name, string phoneNumber)
+        private void Save()
         {
-            if (!string.IsNullOrEmpty(name) &&
-                !string.IsNullOrEmpty(phoneNumber))
-            throw (new ArgumentException("Not all arguments are valid"));
-            
-                Costumer result = new Costumer()
-                {
-                    Name = name,
-                    PhoneNumber = phoneNumber
-                };
+            List<string> lines = new List<string>();
+            foreach (Costumer c in costumers)
+                lines.Add(c.Name + "," + c.PhoneNumber);
 
-                costumer.Add(result);
-                return result;
-     
+            File.WriteAllLines(fileName, lines);
         }
 
-        public Costumer Get(string phoneNumber)
+        public void Add(Costumer costumer)
         {
-            Costumer result = null;
+            costumers.Add(costumer);
+            Save();
+        }
 
-            foreach (Costumer c in costumer)
+        public Costumer? Get(string phoneNumber)
+        {
+            foreach (Costumer c in costumers)
             {
                 if (c.PhoneNumber == phoneNumber)
-                {
-                    result = c;
-                    break;
-                }
+                    return c;
             }
-
-            return result;
+            return null;
         }
-
 
         public List<Costumer> GetAll()
         {
-            return costumer;
-        }
-
-        public void Update(string name, string phoneNumber)
-        {
-            Costumer foundCustomer = Get(phoneNumber);
-
-            if (foundCustomer == null)
-                throw new ArgumentException("Customer with phonenumber = " + phoneNumber + " not found");
-
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("Not all arguments for customer are valid");
-
-            foundCustomer.Name = name;
-        }
-
-        public void Remove(string phoneNumber)
-        {
-            Costumer foundCustomer = this.Get(phoneNumber);
-
-            if (foundCustomer != null)
-                throw new ArgumentException("Customer with phonenumber = " + phoneNumber + " not found");
-
-            costumer.Remove(foundCustomer);
+            return costumers;
         }
     }
 }
-

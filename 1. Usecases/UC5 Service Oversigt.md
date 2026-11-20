@@ -23,7 +23,7 @@
 
 ## Udvidelser
 
-- **3a. Servicen findes ikke eller er lukket:** Systemet viser en besked og gemmer ikke. \[Antagelse\]
+- **3a. Servicen findes ikke eller er lukket:** Systemet viser en besked og gemmer ikke.
 - **5a. Beskrivelsen mangler:** Systemet markerer feltet og gemmer ikke, før den er udfyldt.
 
 ## Specielle krav

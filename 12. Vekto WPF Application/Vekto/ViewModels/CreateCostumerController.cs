@@ -1,29 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Vekto.Models;
+﻿using Vekto.Models;
 
 namespace Vekto.ViewModels
 {
     public class CreateCostumerController
     {
-        private CostumerRepository costumerRepository;
+        private CostumerRepository costumerRepository = new CostumerRepository();
 
-        public CreateCostumerController()
-        {
-            costumerRepository = new CostumerRepository();
-        }
-
+        // UC2: opret kunden (følger SD UC2)
         public Costumer CreateCostumer(string name, string phoneNumber)
         {
+            name = name.Trim();
+            phoneNumber = phoneNumber.Trim();
+
             if (name == "" || phoneNumber == "")
                 throw new Exception("Udfyld navn og telefonnummer.");
 
-            Costumer existing = costumerRepository.Get(phoneNumber);
-            if (existing != null)
-                throw new Exception($"Telefonnummer {phoneNumber} eksisterer allerede. Indtast et andet telefonnummer.");
+            // Komma bruges til at adskille felterne i csv-filen
+            if (name.Contains(',') || phoneNumber.Contains(','))
+                throw new Exception("Navn og telefonnummer må ikke indeholde komma.");
 
-            Costumer costumer = costumerRepository.Add(name, phoneNumber);
+            if (costumerRepository.Get(phoneNumber) != null)
+                throw new Exception("Telefonnummer " + phoneNumber + " findes allerede. Indtast et andet telefonnummer.");
+
+            Costumer costumer = new Costumer(name, phoneNumber);
+            costumerRepository.Add(costumer);
             return costumer;
         }
 

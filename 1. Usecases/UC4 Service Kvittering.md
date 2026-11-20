@@ -16,15 +16,15 @@
 
 1. Brugeren vælger *Service Kvittering*.
 2. Systemet viser en tabel med alle reparationsordrer og kolonnerne *Service-id*, *Kundenavn*, *Kunde tlf*, *Model/mærke* (fx Hyundai i30), *Fejltype*, *Beskrivelse*, *Udført* (det udførte arbejde, UC5) og *Status*.
-3. Brugeren sorterer eller filtrerer listen på status. \[Antagelse\]
+3. Brugeren sorterer eller filtrerer listen på status. 
 4. Brugeren vælger en reparationsordre.
-5. Systemet viser ordrens detaljer, herunder de reservedele der er brugt på den (UC6). \[Antagelse\]
+5. Systemet viser ordrens detaljer, herunder de reservedele der er brugt på den (UC6).
 6. Brugeren lukker detaljerne og vender tilbage til oversigten.
 
 ## Udvidelser
 
 - **2a. Der findes ingen reparationsordrer:** Systemet viser en tom oversigt med en besked om, at der ikke er oprettet nogen ordrer endnu.
-- **3a. Ingen ordrer passer til filteret:** Systemet viser en besked og tilbyder at nulstille filteret. \[Antagelse\]
+- **3a. Ingen ordrer passer til filteret:** Systemet viser en besked og tilbyder at nulstille filteret.
 
 ## Specielle krav
 

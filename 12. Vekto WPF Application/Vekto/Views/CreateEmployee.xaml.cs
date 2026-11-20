@@ -8,29 +8,39 @@ namespace Vekto.Views
     // Side: vises i MainWindow's sideområde
     public partial class CreateEmployee : UserControl
     {
-        CreateEmployeeController createEmployee = new CreateEmployeeController();
+        private CreateEmployeeController controller = new CreateEmployeeController();
+
         public CreateEmployee()
         {
             InitializeComponent();
-            ShowEmployee();
+            ShowEmployees();
         }
 
         // UC1: opret medarbejderen
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            createEmployee.CreateEmployee(tbName.ToString(), tbInitials.ToString());
+            try
+            {
+                Employee employee = controller.CreateEmployee(tbName.Text, tbInitials.Text);
 
+                tbName.Text = "";
+                tbInitials.Text = "";
+                ShowEmployees();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-        private void ShowEmployee()
+        // Fylder medarbejderlisten og tæller medarbejderne
+        private void ShowEmployees()
         {
-            List<Employee> employees = createEmployee.GetAllEmployees();
-            foreach (Employee employee in employees)
-            {
-                lbEmployees.Items.Add(employee.Name + " (" + employee.Initials + ")");
-            }
-            lblEmployeeCount.Content = "Medarbejdere (" + employees.Count + ")";
+            lbEmployees.Items.Clear();
+            foreach (Employee em in controller.GetAllEmployees())
+                lbEmployees.Items.Add(em);
 
+            lblEmployeeCount.Content = "Medarbejdere (" + lbEmployees.Items.Count + ")";
         }
     }
 }
