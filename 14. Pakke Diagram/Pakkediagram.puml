@@ -1,0 +1,120 @@
+@startuml
+' Pakkediagram (PD) – Vekto WPF Application, logisk arkitektur
+' Samme format som undervisningens eksempel (Pr23 «Opbygning af pakkediagram»):
+'  - Tre pakker side om side: UI, Application, Domain.
+'  - Underpakker pr. use case i Application og pr. domæneområde i Domain.
+'  - Kun klassenavne. Stiplede, lige pile med «uses» fra den, der bruger, mod den, der bliver brugt.
+'  - Umærkede pile mellem pakkerne viser afhængigheden mellem lagene.
+' Lagene svarer til MVVM (Pr27/Pr29) og namespaces i koden:
+'  UI = View (Vekto.Views), Application = ViewModel (Vekto.ViewModels), Domain = Model (Vekto.Models).
+'  Repositories ligger i Vekto.Models i koden (som PersonRepository i Pr27) og står derfor i Domain.
+' Ingen database/CSV som nederste lag (Larman kap. 13).
+
+left to right direction
+skinparam linetype polyline
+skinparam packageStyle folder
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam defaultFontSize 11
+skinparam ranksep 110
+skinparam nodesep 35
+skinparam package {
+  BorderColor black
+  BackgroundColor white
+  FontStyle plain
+  FontSize 12
+}
+skinparam class {
+  BackgroundColor white
+  BorderColor black
+  ArrowColor black
+}
+skinparam ArrowColor black
+hide circle
+hide members
+hide stereotype
+
+' =====================================================================
+package "UI" as UI {
+  class MainWindow
+  class CreateEmployee
+  class CreateCostumer
+  class CreateService
+  class CreateReceipt
+}
+
+' =====================================================================
+package "Application" as Application {
+  package "UC1 Opret medarbejder" as UC1 {
+    class CreateEmployeeController
+  }
+  package "UC2 Opret kunde" as UC2 {
+    class CreateCostumerController
+  }
+  package "UC3 Opret service" as UC3 {
+    class CreateServiceController
+  }
+  package "UC4 Service kvittering" as UC4 {
+    class CreateReceiptController
+  }
+  class MainViewModel
+}
+
+' =====================================================================
+package "Domain" as Domain {
+  package "Employee-related" as EmpRel {
+    class EmployeeRepository
+    class Employee
+  }
+  package "Costumer-related" as CosRel {
+    class CostumerRepository
+    class Costumer
+  }
+  package "Service-related" as SerRel {
+    class ServiceRepository
+    class Service
+    enum ServiceStatus
+  }
+}
+
+' ---------- Skjulte hjælpelinjer: holder rækkerne på linje ----------
+CreateEmployee -[hidden]right- CreateCostumer
+CreateCostumer -[hidden]right- CreateService
+CreateService -[hidden]right- CreateReceipt
+CreateEmployeeController -[hidden]right- CreateCostumerController
+CreateCostumerController -[hidden]right- CreateServiceController
+CreateServiceController -[hidden]right- CreateReceiptController
+CreateReceiptController -[hidden]right- MainViewModel
+EmployeeRepository -[hidden]right- CostumerRepository
+CostumerRepository -[hidden]right- ServiceRepository
+
+' ---------- Afhængigheder mellem lagene ----------
+UI ..> Application
+Application ..> Domain
+
+' ---------- UI ----------
+MainWindow ..> CreateEmployee : <<uses>>
+MainWindow ..> CreateCostumer : <<uses>>
+MainWindow ..> CreateService : <<uses>>
+CreateService ..> CreateReceipt : <<uses>>
+
+' ---------- UI -> Application ----------
+CreateEmployee ..> CreateEmployeeController : <<uses>>
+CreateCostumer ..> CreateCostumerController : <<uses>>
+CreateService ..> CreateServiceController : <<uses>>
+CreateReceipt ..> CreateReceiptController : <<uses>>
+
+' ---------- Application -> Domain ----------
+CreateEmployeeController ..> EmployeeRepository : <<uses>>
+CreateCostumerController ..> CostumerRepository : <<uses>>
+CreateServiceController ..> CostumerRepository : <<uses>>
+CreateServiceController ..> ServiceRepository : <<uses>>
+CreateReceiptController ..> ServiceRepository : <<uses>>
+
+' ---------- Domain ----------
+EmployeeRepository ..> Employee : <<uses>>
+CostumerRepository ..> Costumer : <<uses>>
+ServiceRepository ..> Service : <<uses>>
+Service ..> ServiceStatus : <<uses>>
+@enduml

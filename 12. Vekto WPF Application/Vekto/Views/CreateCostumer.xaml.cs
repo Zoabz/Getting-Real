@@ -19,8 +19,21 @@ namespace Vekto.Views
             CreateCostumerController createCostumer = new CreateCostumerController();
 
             createCostumer.CreateCostumer(tbName.ToString(),tbPhone.ToString());
-            
 
+
+        }
+
+        // Når man klikker i telefonfeltet, skjules den grå tekst
+        private void tbPhone_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tbPhoneHint.Visibility = Visibility.Hidden;
+        }
+
+        // Når man forlader feltet, og det er tomt, vises den grå tekst igen
+        private void tbPhone_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (tbPhone.Text == "")
+                tbPhoneHint.Visibility = Visibility.Visible;
         }
     }
 }
