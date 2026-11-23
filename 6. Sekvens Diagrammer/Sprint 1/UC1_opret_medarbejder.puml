@@ -21,47 +21,9 @@ skinparam defaultFontName Arial
 hide footbox
 title SD UC1 - Opret medarbejder (CreateEmployee)
 
-participant ":MainWindow" as MW
-
-== Åbn siden Opret medarbejder ==
-[-> MW : btnOpretMedarbejder_Click()
-activate MW
-
-create participant ":CreateEmployee" as V
-MW -->> V : «create»
-activate V
-
-create participant ":CreateEmployeeController" as C
-V -->> C : «create»
-activate C
-
-create participant ":EmployeeRepository" as R
-C -->> R : «create»
-activate R
-R -> R : Load()
-note right of R : læser Employee.csv
-deactivate R
-
-C -> R : employees = GetAll()
-activate R
-deactivate R
-note right of C : Employees = employees
-deactivate C
-
-note right of V
-  DataContext = controller
-  ListBox er bundet til Employees
-end note
-V -> V : ShowCount()
-activate V
-V -> C : count = Employees.Count
-activate C
-deactivate C
-deactivate V
-deactivate V
-
-MW -> MW : PageArea.Content = siden
-deactivate MW
+participant ":CreateEmployee" as V
+participant ":CreateEmployeeController" as C
+participant ":EmployeeRepository" as R
 
 == Opret medarbejder ==
 [-> V : btnCreate_Click()

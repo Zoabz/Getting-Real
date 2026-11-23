@@ -22,41 +22,16 @@ hide footbox
 title SD UC4 - Service kvittering (CreateReceipt)
 
 participant ":CreateService" as V
-
-== Åbn kvitteringen ==
-activate V
-note left of V : kvitteringen åbnes, når\nservicen er oprettet (SD UC3)
-
-create participant ":CreateReceipt" as D
-V -->> D : «create»
-activate D
-
-create participant ":CreateReceiptController" as C
-D -->> C : «create»
-activate C
-
-create participant ":ServiceRepository" as SR
-C -->> SR : «create»
-activate SR
-SR -> SR : InitializeRepository()
-deactivate SR
-
-create participant ":CostumerRepository" as KR
-C -->> KR : «create»
-activate KR
-KR -> KR : Load()
-deactivate KR
-
-create participant ":EmployeeRepository" as ER
-C -->> ER : «create»
-activate ER
-ER -> ER : Load()
-deactivate ER
-
-deactivate C
-deactivate D
+participant ":CreateReceipt" as D
+participant ":CreateReceiptController" as C
+participant ":ServiceRepository" as SR
+participant ":CostumerRepository" as KR
+participant ":EmployeeRepository" as ER
 
 == Vis servicen ==
+activate V
+note left of V : kaldes, når servicen\ner oprettet (SD UC3)
+
 V -> D : ShowService(serviceId)
 activate D
 

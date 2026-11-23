@@ -21,46 +21,10 @@ skinparam defaultFontName Arial
 hide footbox
 title SD UC3 - Opret service (CreateService)
 
-participant ":MainWindow" as MW
-
-== Åbn siden Opret service ==
-[-> MW : btnOpretService_Click()
-activate MW
-note left of MW : MainWindow() åbner også\nOpret service som startside
-
-create participant ":CreateService" as V
-MW -->> V : «create»
-activate V
-
-create participant ":CreateServiceController" as C
-V -->> C : «create»
-activate C
-
-create participant ":CostumerRepository" as KR
-C -->> KR : «create»
-activate KR
-KR -> KR : Load()
-note right of KR : læser Costumer.csv
-deactivate KR
-
-create participant ":ServiceRepository" as SR
-C -->> SR : «create»
-activate SR
-SR -> SR : InitializeRepository()
-note right of SR : læser Service.csv
-deactivate SR
-
-note right of C : ErrorTypes = Bremser, Gear, Dæk/slange,\nKæde, Lys, Motor, Elektronik, Andet
-deactivate C
-
-note right of V
-  DataContext = controller
-  lbErrorType er bundet til ErrorTypes
-end note
-deactivate V
-
-MW -> MW : PageArea.Content = siden
-deactivate MW
+participant ":CreateService" as V
+participant ":CreateServiceController" as C
+participant ":CostumerRepository" as KR
+participant ":ServiceRepository" as SR
 
 == Søg kunde (hver gang Tlf. nr. ændres) ==
 [-> V : tbPhone_TextChanged()

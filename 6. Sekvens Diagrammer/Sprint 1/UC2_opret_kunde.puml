@@ -21,47 +21,9 @@ skinparam defaultFontName Arial
 hide footbox
 title SD UC2 - Opret kunde (CreateCostumer)
 
-participant ":MainWindow" as MW
-
-== Åbn siden Opret kunde ==
-[-> MW : btnOpretKunde_Click()
-activate MW
-
-create participant ":CreateCostumer" as V
-MW -->> V : «create»
-activate V
-
-create participant ":CreateCostumerController" as C
-V -->> C : «create»
-activate C
-
-create participant ":CostumerRepository" as R
-C -->> R : «create»
-activate R
-R -> R : Load()
-note right of R : læser Costumer.csv
-deactivate R
-
-C -> R : costumers = GetAll()
-activate R
-deactivate R
-note right of C : Costumers = costumers
-deactivate C
-
-note right of V
-  DataContext = controller
-  ListBox er bundet til Costumers
-end note
-V -> V : ShowCount()
-activate V
-V -> C : count = Costumers.Count
-activate C
-deactivate C
-deactivate V
-deactivate V
-
-MW -> MW : PageArea.Content = siden
-deactivate MW
+participant ":CreateCostumer" as V
+participant ":CreateCostumerController" as C
+participant ":CostumerRepository" as R
 
 == Opret kunde ==
 [-> V : btnCreate_Click()

@@ -2,14 +2,14 @@
 
 > **Status:** Diagrammet er opdateret ud fra WPF-programmet i [12. Vekto WPF Application](../12.%20Vekto%20WPF%20Application/Vekto/). Det dækker alle sider undtagen Service oversigt: **Hovedvindue**, **Opret medarbejder (UC1)**, **Opret kunde (UC2)**, **Opret service (UC3)** og dialogen **Service kvittering (UC4)**. Service oversigt (UC5) og UC6–UC9 er ikke med.
 
-![Designklassediagram](designklassediagram.png)
+![Designklassediagram](designklassediagram%20Sprint%201.png)
 
-- [designklassediagram.puml](designklassediagram.puml) er kilden i PlantUML.
-- [designklassediagram.png](designklassediagram.png) er billedet til rapporten, lavet ud fra `.puml`-filen.
+- [designklassediagram Sprint 1.puml](designklassediagram%20Sprint%201.puml) er kilden i PlantUML.
+- [designklassediagram Sprint 1.png](designklassediagram%20Sprint%201.png) er billedet til rapporten, lavet ud fra `.puml`-filen.
 
 Layoutet ligger fast i `.puml`-filen med `left to right direction` og `linetype ortho`. Lagene står fra venstre mod højre (View → Controller → Repository → domæneklasse) i stiplede rammer som i Disaheim-eksemplet. Renderes med Graphviz (standard i PlantUML-udvidelsen til VS Code).
 
-DCD'et passer sammen med [sekvensdiagrammerne](../6.%20Sekvens%20Diagrammer/) for UC1–UC4, som også er opdateret ud fra programmet.
+DCD'et passer sammen med [sekvensdiagrammerne](../6.%20Sekvens%20Diagrammer/Sprint%201/) for UC1–UC4, som også er opdateret ud fra programmet.
 
 ## Opbygning
 
@@ -27,7 +27,7 @@ DCD'et passer sammen med [sekvensdiagrammerne](../6.%20Sekvens%20Diagrammer/) fo
 - **`«get»`** er en property, der kun kan læses. Den bruges til listerne på controllerne (`Employees`, `Costumers`, `ErrorTypes`), som siderne binder til.
 - **Constructors** står med klassens navn, fx `+ Employee(name : string, initials : string)`. Controllernes og repositoriernes constructors er med, fordi de gør noget: controlleren opretter sine repositories, og repositoriet læser csv-filen.
 - **Event handlers** på siderne står uden parametre, fx `- btnCreate_Click()`. I koden har de `(sender : object, e : RoutedEventArgs)`.
-- **Kun brugte metoder:** Der er kun taget de metoder med, som siderne bruger (og som står i SD'erne).
+- **Kun brugte metoder:** Der er kun taget de metoder med, som siderne bruger.
 - **Linjer:**
   - MainWindow — side, side — controller — repository er tegnet uden pile som i Disaheim.
   - Repository — domæneklasse har `0..*` i domæneenden.
@@ -51,16 +51,14 @@ Service gemmer kun kundens telefonnummer og medarbejderens initialer (som `strin
 
 | UC | Side og hændelse | Controller-operation | Repository- og domæneoperationer i SD'et |
 | :---- | :---- | :---- | :---- |
-| – | MainWindow: menuknap | – | `«create»` af siden, som vises i `PageArea` |
-| UC1 | CreateEmployee: åbn siden | `CreateEmployeeController()`, `Employees` | `«create» EmployeeRepository` → `Load()`, `GetAll()` |
 | UC1 | CreateEmployee: `btnCreate_Click` | `CreateEmployee(name, initials)` | `Get(initials)`, `«create» Employee(name, initials)`, `Add(employee)` → `Save()` |
-| UC2 | CreateCostumer: åbn siden | `CreateCostumerController()`, `Costumers` | `«create» CostumerRepository` → `Load()`, `GetAll()` |
 | UC2 | CreateCostumer: `btnCreate_Click` | `CreateCostumer(name, phoneNumber)` | `Get(phoneNumber)`, `«create» Costumer(name, phoneNumber)`, `Add(costumer)` → `Save()` |
-| UC3 | CreateService: åbn siden | `CreateServiceController()`, `ErrorTypes` | `«create» CostumerRepository` og `ServiceRepository` |
 | UC3 | CreateService: `tbPhone_TextChanged` | `SearchCustomer(phoneNumber)` | `CostumerRepository.Get(phoneNumber)` |
 | UC3 | CreateService: `btnCreate_Click` | `CreateService(phoneNumber, brand, model, errorType, description)` | `SearchCustomer`, `ServiceRepository.GetNextId()`, `ServiceRepository.Add(...)` → `«create» Service(...)` og `Save()`. Åbner derefter CreateReceipt. |
 | UC4 | CreateReceipt: `ShowService(serviceId)` | `GetService(serviceId)`, `GetCostumer(phoneNumber)`, `GetEmployee(initials)` | `ServiceRepository.Get`, `CostumerRepository.Get`, `EmployeeRepository.Get` |
 | UC4 | CreateReceipt: `btnClose_Click` | – | `DialogResult = true` lukker dialogen |
+
+SD'erne viser ikke, at en side åbnes. Når man vælger en side i menuen, opretter MainWindow siden, siden opretter sin controller, og controlleren opretter sine repositories, som læser csv-filen. Derfor står constructors, `Load()`/`InitializeRepository()`, `GetAll()` og listerne `Employees`, `Costumers` og `ErrorTypes` i DCD'et, selvom de ikke er i SD'erne.
 
 ## Ændringer i forhold til den forrige version
 
