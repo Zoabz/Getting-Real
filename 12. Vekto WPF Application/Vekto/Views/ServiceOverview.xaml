@@ -1,0 +1,120 @@
+<UserControl x:Class="Vekto.Views.ServiceOverview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ================= SERVICE OVERSIGT (UC5 - wireframe 07) ================= -->
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Overskrift -->
+        <StackPanel Grid.Row="0" Margin="20,20,20,0">
+            <TextBlock Text="Service oversigt" FontSize="22" FontWeight="Bold"/>
+            <TextBlock Text="Beskriv det udførte arbejde. Når du gemmer, ændres servicens status til Lukket." Foreground="Gray"/>
+        </StackPanel>
+
+        <Grid Grid.Row="2" Margin="20,10,20,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- ===== Udført arbejde ===== -->
+            <StackPanel Grid.Column="0" Background="White">
+                <Label Content="Udført arbejde" FontSize="15" FontWeight="Bold" Margin="10"/>
+
+                <Grid Margin="10,0,10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- 1. Vælg service -->
+                    <Label Grid.Row="0" Grid.Column="0" Content="Vælg service"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbService" Height="25" Margin="0,0,0,5"
+                              SelectionChanged="cbService_SelectionChanged"/>
+
+                    <!-- 2. Vælg medarbejder -->
+                    <Label Grid.Row="1" Grid.Column="0" Content="Vælg medarbejder"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbEmployee" Height="25" Margin="0,0,0,5"/>
+
+                    <!-- Servicedetaljer: så man kan se, at det er den rigtige cykel -->
+                    <Grid Grid.Row="2" Grid.Column="1" Background="#FFF7F2EF" Margin="0,5,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0" Grid.Column="0" Content="Kunde" Foreground="Gray"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbDetailCustomer" Margin="5" TextWrapping="Wrap"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Content="Cykel" Foreground="Gray"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="tbDetailBike" Margin="5" TextWrapping="Wrap"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Content="Fejltype" Foreground="Gray"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="tbDetailErrorType" Margin="5" TextWrapping="Wrap"/>
+
+                        <Label Grid.Row="3" Grid.Column="0" Content="Beskrivelse" Foreground="Gray"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="tbDetailDescription" Margin="5" TextWrapping="Wrap"/>
+                    </Grid>
+
+                    <!-- 5. Beskrivelse for udført arbejde -->
+                    <Label Grid.Row="3" Grid.Column="0" Content="Beskrivelse for&#10;udført arbejde"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbCompletedWork" Height="70" Margin="0,0,0,5"
+                             TextWrapping="Wrap"/>
+
+                    <!-- 6. Gem -->
+                    <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="0,10,0,0">
+                        <Button x:Name="btnSave" Content="Gem" Width="80" Height="30"
+                                Background="#FFEBEBEB" Foreground="Black" Click="btnSave_Click"/>
+                        <TextBlock Text="Når du gemmer, ændres status til Lukket." Foreground="Gray"
+                                   VerticalAlignment="Center" Margin="10,0,0,0"/>
+                    </StackPanel>
+
+                    <!-- Besked under knappen: bekræftelse i grøn, fejl i rød (sættes i koden) -->
+                    <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbMessage"
+                               TextWrapping="Wrap" Margin="0,10,0,0"/>
+                </Grid>
+            </StackPanel>
+
+            <!-- ===== 3. Alle services (tabel) ===== -->
+            <StackPanel Grid.Column="2" Background="White">
+                <Label x:Name="lblServiceCount" Content="Alle services (0)" FontSize="15" FontWeight="Bold" Margin="10,10,10,0"/>
+                <TextBlock Text="Klik på en service for at vælge den. Dobbeltklik for at se kvitteringen."
+                           Foreground="Gray" Margin="15,0,10,10" TextWrapping="Wrap"/>
+
+                <DataGrid x:Name="dgServices" Height="300" Margin="10,0,10,10"
+                          AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                          SelectionMode="Single" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          Background="White" BorderBrush="LightGray"
+                          SelectionChanged="dgServices_SelectionChanged"
+                          MouseDoubleClick="dgServices_MouseDoubleClick">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nr." Binding="{Binding Nr}" Width="60"/>
+                        <DataGridTextColumn Header="Kunde" Binding="{Binding Kunde}" Width="*"/>
+                        <DataGridTextColumn Header="Cykel" Binding="{Binding Cykel}" Width="*"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

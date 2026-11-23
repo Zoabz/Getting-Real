@@ -8,7 +8,7 @@
             <RowDefinition Height="Auto"/>
             <!-- Service nr. og status -->
             <RowDefinition Height="Auto"/>
-            <!-- Kunde og bil -->
+            <!-- Kunde og cykel -->
             <RowDefinition Height="Auto"/>
             <!-- Udført arbejde -->
             <RowDefinition Height="Auto"/>
@@ -34,7 +34,7 @@
                    Background="#FFE5CCC2" VerticalAlignment="Top"/>
         </Grid>
 
-        <!-- Kunde og bil -->
+        <!-- Kunde og cykel -->
         <Grid Grid.Row="1" Background="White" Margin="20,0,20,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="110"/>
@@ -64,10 +64,12 @@
             <Label Grid.Row="4" Grid.Column="1" x:Name="lblDescription"/>
         </Grid>
 
-        <!-- Udført arbejde (UC5 - laves senere) -->
+        <!-- Udført arbejde (UC5): vises, når servicen er lukket -->
         <StackPanel Grid.Row="2" Background="White" Margin="20,0,20,10">
             <Label Content="Udført arbejde" FontWeight="Bold"/>
-            <Label Content="Vises, når servicen er lukket (UC5)." Foreground="Gray"/>
+            <TextBlock x:Name="tbCompletedWork" Text="Vises, når servicen er lukket." Foreground="Gray"
+                       TextWrapping="Wrap" Margin="5,0,5,5"/>
+            <TextBlock x:Name="tbCompletedBy" Foreground="Gray" Margin="5,0,5,5"/>
         </StackPanel>
 
         <!-- Reservedele (UC6 - laves senere) -->

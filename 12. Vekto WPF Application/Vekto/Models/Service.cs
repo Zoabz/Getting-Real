@@ -14,5 +14,10 @@ namespace Vekto.Models
         public string Description { get; set; } = "";
         public ServiceStatus Status { get; set; }
         public string Customer { get; set; } = ""; // Kundens telefonnummer
+
+        // UC5: udfyldes, når det udførte arbejde gemmes og servicen lukkes
+        public string CompletedWork { get; set; } = "";
+        public string Employee { get; set; } = ""; // Medarbejderens initialer
+        public DateTime? ClosedDate { get; set; }
     }
 }

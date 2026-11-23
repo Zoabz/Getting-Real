@@ -30,7 +30,8 @@ namespace Vekto.Views
                 lblCustomer.Content = "Ingen kunde fundet";
         }
 
-        // UC3: opret servicen. Bekræftelsen og fejl vises som tekst under Opret-knappen
+        // UC3: opret servicen. Lykkes det, vises kvitteringen i en dialogboks.
+        // Fejl vises som rød tekst under Opret-knappen (ingen dialogboks)
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -38,9 +39,14 @@ namespace Vekto.Views
                 Service service = controller.CreateService(tbPhone.Text, tbBrand.Text, tbModel.Text,
                                                            (string?)lbErrorType.SelectedItem, tbDescription.Text);
 
-                string customerText = lblCustomer.Content?.ToString() ?? "";
-                ShowMessage("Service nr. " + service.ServiceId + " er oprettet for " + customerText + ": " +
-                            service.Brand + " " + service.Model + ", " + service.ErrorType + ". Status: Åben.", Brushes.Green);
+                ShowMessage("", Brushes.Black);
+
+                // Vis servicekvitteringen i en dialogboks (Pr25)
+                CreateReceipt receipt = new CreateReceipt(service.ServiceId);
+                receipt.Owner = Window.GetWindow(this);
+                receipt.ShowDialog();
+
+                ShowMessage("Service nr. " + service.ServiceId + " er oprettet.", Brushes.Green);
 
                 // Tøm felterne, så den næste service kan oprettes
                 tbPhone.Text = "";

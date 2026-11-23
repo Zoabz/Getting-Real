@@ -51,5 +51,10 @@ namespace Vekto.Views
         {
             ShowPage(new CreateService(), btnOpretService);
         }
+
+        private void btnServiceOversigt_Click(object sender, RoutedEventArgs e)
+        {
+            ShowPage(new ServiceOverview(), btnServiceOversigt);
+        }
     }
 }

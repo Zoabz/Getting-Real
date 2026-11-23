@@ -32,7 +32,7 @@
                 <Label Content="Service" Foreground="Black" Margin="0,10,0,0"/>
                 <Button x:Name="btnOpretService" Content="Opret service" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnOpretService_Click"/>
                 <Button x:Name="btnReservedeleUdtag" Content="Reservedele udtag" Height="30" Background="#FFEBEBEB" Foreground="Black"/>
-                <Button x:Name="btnServiceOversigt" Content="Service oversigt" Height="30" Background="#FFEBEBEB" Foreground="Black"/>
+                <Button x:Name="btnServiceOversigt" Content="Service oversigt" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnServiceOversigt_Click"/>
 
                 <Label Content="Lager" Foreground="Black" Margin="0,10,0,0"/>
                 <Button x:Name="btnLagerOgBestilling" Content="Lager og bestilling" Height="30" Background="#FFEBEBEB" Foreground="Black"/>

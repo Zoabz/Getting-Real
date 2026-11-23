@@ -9,11 +9,13 @@ namespace Vekto.ViewModels
     {
         private ServiceRepository servicerepository;
         private CostumerRepository costumerRepository;
+        private EmployeeRepository employeeRepository;
 
         public CreateReceiptController()
         {
             servicerepository = new ServiceRepository();
             costumerRepository = new CostumerRepository();
+            employeeRepository = new EmployeeRepository();
         }
 
         public List<Service> SearchServices(string searchText, ServiceStatus status)
@@ -39,6 +41,12 @@ namespace Vekto.ViewModels
         public Costumer? GetCostumer(string phoneNumber)
         {
             return costumerRepository.Get(phoneNumber);
+        }
+
+        // Servicen gemmer kun medarbejderens initialer, så medarbejderen slås op her
+        public Employee? GetEmployee(string initials)
+        {
+            return employeeRepository.Get(initials);
         }
     }
 }
