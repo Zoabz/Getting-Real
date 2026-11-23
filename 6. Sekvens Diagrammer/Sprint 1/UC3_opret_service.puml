@@ -1,0 +1,146 @@
+@startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+' Opdateret ud fra siden Opret service i WPF-programmet (Views/CreateService)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam SequenceReferenceBackgroundColor white
+skinparam SequenceReferenceBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
+hide footbox
+title SD UC3 - Opret service (CreateService)
+
+participant ":MainWindow" as MW
+
+== Åbn siden Opret service ==
+[-> MW : btnOpretService_Click()
+activate MW
+note left of MW : MainWindow() åbner også\nOpret service som startside
+
+create participant ":CreateService" as V
+MW -->> V : «create»
+activate V
+
+create participant ":CreateServiceController" as C
+V -->> C : «create»
+activate C
+
+create participant ":CostumerRepository" as KR
+C -->> KR : «create»
+activate KR
+KR -> KR : Load()
+note right of KR : læser Costumer.csv
+deactivate KR
+
+create participant ":ServiceRepository" as SR
+C -->> SR : «create»
+activate SR
+SR -> SR : InitializeRepository()
+note right of SR : læser Service.csv
+deactivate SR
+
+note right of C : ErrorTypes = Bremser, Gear, Dæk/slange,\nKæde, Lys, Motor, Elektronik, Andet
+deactivate C
+
+note right of V
+  DataContext = controller
+  lbErrorType er bundet til ErrorTypes
+end note
+deactivate V
+
+MW -> MW : PageArea.Content = siden
+deactivate MW
+
+== Søg kunde (hver gang Tlf. nr. ændres) ==
+[-> V : tbPhone_TextChanged()
+activate V
+V -> C : costumer = SearchCustomer(tbPhone.Text)
+activate C
+C -> KR : costumer = Get(phoneNumber.Trim())
+activate KR
+deactivate KR
+V <-- C : costumer
+deactivate C
+
+alt costumer != null
+    note left of V : lblCustomer = costumer.ToString()
+else costumer == null
+    note left of V : lblCustomer = "Ingen kunde fundet"
+end
+deactivate V
+
+== Opret service ==
+[-> V : btnCreate_Click()
+activate V
+note left of V : en Exception fanges i try/catch\nog vises som rød tekst i tbError
+
+V -> C : service = CreateService(tbPhone.Text, tbBrand.Text,\ntbModel.Text, errorType, tbDescription.Text)
+activate C
+note right of C : brand, model og description trimmes
+
+alt brand, model, errorType eller description mangler
+    V <-- C : Exception("Udfyld mærke, model, fejltype og fejlbeskrivelse.")
+
+else brand, model eller description indeholder komma
+    V <-- C : Exception("Mærke, model og fejlbeskrivelse må ikke indeholde komma.")
+
+else alle felter er udfyldt
+    C -> C : costumer = SearchCustomer(phoneNumber)
+    activate C
+    C -> KR : costumer = Get(phoneNumber.Trim())
+    activate KR
+    deactivate KR
+    deactivate C
+
+    alt costumer == null
+        V <-- C : Exception("Find kunden på telefonnummer ...")
+
+    else costumer != null
+        C -> SR : serviceId = GetNextId()
+        activate SR
+        deactivate SR
+
+        C -> SR : service = Add(serviceId, DateTime.Now, brand, model, errorType,\ndescription, ServiceStatus.Open, costumer.PhoneNumber)
+        activate SR
+        create participant ":Service" as S
+        SR -->> S : service = «create»(serviceId, dropOffDate, brand,\nmodel, errorType, description, costumer)
+        note right of S : Status = Open
+        SR -> SR : Save()
+        note right of SR : skriver Service.csv
+        deactivate SR
+
+        V <-- C : service
+
+        create participant ":CreateReceipt" as D
+        V -->> D : «create»
+        V -> D : ShowService(service.ServiceId)
+        activate D
+        ref over D : SD UC4 - Service kvittering
+        deactivate D
+
+        V -> D : ShowDialog()
+        activate D
+        V <-- D : true (btnClose_Click)
+        deactivate D
+
+        note left of V
+          tbSuccess = "Service nr. ... er oprettet."
+          felterne tømmes
+        end note
+    end
+end
+deactivate C
+deactivate V
+
+@enduml

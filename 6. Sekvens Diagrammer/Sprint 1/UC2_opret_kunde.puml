@@ -1,0 +1,116 @@
+@startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+' Opdateret ud fra siden Opret kunde i WPF-programmet (Views/CreateCostumer)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam SequenceReferenceBackgroundColor white
+skinparam SequenceReferenceBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
+hide footbox
+title SD UC2 - Opret kunde (CreateCostumer)
+
+participant ":MainWindow" as MW
+
+== Åbn siden Opret kunde ==
+[-> MW : btnOpretKunde_Click()
+activate MW
+
+create participant ":CreateCostumer" as V
+MW -->> V : «create»
+activate V
+
+create participant ":CreateCostumerController" as C
+V -->> C : «create»
+activate C
+
+create participant ":CostumerRepository" as R
+C -->> R : «create»
+activate R
+R -> R : Load()
+note right of R : læser Costumer.csv
+deactivate R
+
+C -> R : costumers = GetAll()
+activate R
+deactivate R
+note right of C : Costumers = costumers
+deactivate C
+
+note right of V
+  DataContext = controller
+  ListBox er bundet til Costumers
+end note
+V -> V : ShowCount()
+activate V
+V -> C : count = Costumers.Count
+activate C
+deactivate C
+deactivate V
+deactivate V
+
+MW -> MW : PageArea.Content = siden
+deactivate MW
+
+== Opret kunde ==
+[-> V : btnCreate_Click()
+activate V
+note left of V : en Exception fanges i try/catch\nog vises som rød tekst i tbError
+
+V -> C : costumer = CreateCostumer(tbName.Text, tbPhone.Text)
+activate C
+note right of C : name og phoneNumber trimmes
+
+alt name eller phoneNumber er tom
+    V <-- C : Exception("Udfyld navn og telefonnummer.")
+
+else name eller phoneNumber indeholder komma
+    V <-- C : Exception("Navn og telefonnummer må ikke indeholde komma.")
+
+else navn og telefonnummer er udfyldt
+    C -> R : found = Get(phoneNumber)
+    activate R
+    deactivate R
+
+    alt found != null
+        V <-- C : Exception("Telefonnummer ... findes allerede.")
+
+    else found == null
+        create participant ":Costumer" as K
+        C -->> K : costumer = «create»(name, phoneNumber)
+
+        C -> R : Add(costumer)
+        activate R
+        R -> R : Save()
+        note right of R : skriver Costumer.csv
+        deactivate R
+
+        C -> C : Costumers.Add(costumer)
+        note right of C : ListBox'en opdateres selv
+
+        V <-- C : costumer
+        note left of V : tbName og tbPhone tømmes
+
+        V -> V : ShowCount()
+        activate V
+        V -> C : count = Costumers.Count
+        activate C
+        deactivate C
+        deactivate V
+    end
+end
+deactivate C
+deactivate V
+
+@enduml

@@ -1,0 +1,119 @@
+@startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+' Opdateret ud fra dialogen Service kvittering i WPF-programmet (Views/CreateReceipt)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam SequenceReferenceBackgroundColor white
+skinparam SequenceReferenceBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
+hide footbox
+title SD UC4 - Service kvittering (CreateReceipt)
+
+participant ":CreateService" as V
+
+== Åbn kvitteringen ==
+activate V
+note left of V : kvitteringen åbnes, når\nservicen er oprettet (SD UC3)
+
+create participant ":CreateReceipt" as D
+V -->> D : «create»
+activate D
+
+create participant ":CreateReceiptController" as C
+D -->> C : «create»
+activate C
+
+create participant ":ServiceRepository" as SR
+C -->> SR : «create»
+activate SR
+SR -> SR : InitializeRepository()
+deactivate SR
+
+create participant ":CostumerRepository" as KR
+C -->> KR : «create»
+activate KR
+KR -> KR : Load()
+deactivate KR
+
+create participant ":EmployeeRepository" as ER
+C -->> ER : «create»
+activate ER
+ER -> ER : Load()
+deactivate ER
+
+deactivate C
+deactivate D
+
+== Vis servicen ==
+V -> D : ShowService(serviceId)
+activate D
+
+D -> C : service = GetService(serviceId)
+activate C
+C -> SR : service = Get(serviceId)
+activate SR
+deactivate SR
+D <-- C : service
+deactivate C
+
+alt service == null
+    note right of D : tbServiceId = "Service nr. ... blev ikke fundet"
+
+else service != null
+    note right of D
+      viser ServiceId, DropOffDate, Status (Åben/Lukket),
+      Customer (tlf. nr.), Brand - Model, ErrorType og Description
+    end note
+
+    D -> C : costumer = GetCostumer(service.Customer)
+    activate C
+    C -> KR : costumer = Get(phoneNumber)
+    activate KR
+    deactivate KR
+    D <-- C : costumer
+    deactivate C
+
+    opt costumer != null
+        note right of D : lblCustomerName = costumer.Name
+    end
+
+    opt service.Status == Closed
+        D -> C : employee = GetEmployee(service.Employee)
+        activate C
+        C -> ER : employee = Get(initials)
+        activate ER
+        deactivate ER
+        D <-- C : employee
+        deactivate C
+
+        note right of D
+          tbCompletedWork = service.CompletedWork
+          tbCompletedBy = "Udført af " + employee.ToString() + " · " + service.ClosedDate
+          (findes medarbejderen ikke, vises initialerne)
+        end note
+    end
+end
+deactivate D
+
+== Vis dialogen ==
+V -> D : ShowDialog()
+activate D
+[-> D : btnClose_Click()
+D -> D : DialogResult = true
+V <-- D : true
+deactivate D
+deactivate V
+
+@enduml

@@ -1,0 +1,116 @@
+@startuml
+' SD i samme stil som undervisningens SD for RegisterGuest (Pr20)
+' Opdateret ud fra siden Opret medarbejder i WPF-programmet (Views/CreateEmployee)
+skinparam style strictuml
+skinparam ParticipantBackgroundColor white
+skinparam ParticipantBorderColor black
+skinparam ArrowColor black
+skinparam SequenceLifeLineBorderColor black
+skinparam SequenceGroupBackgroundColor white
+skinparam SequenceGroupBorderColor black
+skinparam SequenceDividerBackgroundColor white
+skinparam SequenceDividerBorderColor black
+skinparam SequenceReferenceBackgroundColor white
+skinparam SequenceReferenceBorderColor black
+skinparam NoteBackgroundColor white
+skinparam NoteBorderColor black
+skinparam ActivationBackgroundColor white
+skinparam shadowing false
+skinparam sequenceParticipant underline
+skinparam defaultFontName Arial
+hide footbox
+title SD UC1 - Opret medarbejder (CreateEmployee)
+
+participant ":MainWindow" as MW
+
+== Åbn siden Opret medarbejder ==
+[-> MW : btnOpretMedarbejder_Click()
+activate MW
+
+create participant ":CreateEmployee" as V
+MW -->> V : «create»
+activate V
+
+create participant ":CreateEmployeeController" as C
+V -->> C : «create»
+activate C
+
+create participant ":EmployeeRepository" as R
+C -->> R : «create»
+activate R
+R -> R : Load()
+note right of R : læser Employee.csv
+deactivate R
+
+C -> R : employees = GetAll()
+activate R
+deactivate R
+note right of C : Employees = employees
+deactivate C
+
+note right of V
+  DataContext = controller
+  ListBox er bundet til Employees
+end note
+V -> V : ShowCount()
+activate V
+V -> C : count = Employees.Count
+activate C
+deactivate C
+deactivate V
+deactivate V
+
+MW -> MW : PageArea.Content = siden
+deactivate MW
+
+== Opret medarbejder ==
+[-> V : btnCreate_Click()
+activate V
+note left of V : en Exception fanges i try/catch\nog vises som rød tekst i tbError
+
+V -> C : employee = CreateEmployee(tbName.Text, tbInitials.Text)
+activate C
+note right of C : name og initials trimmes
+
+alt name eller initials er tom
+    V <-- C : Exception("Udfyld navn og initialer.")
+
+else name eller initials indeholder komma
+    V <-- C : Exception("Navn og initialer må ikke indeholde komma.")
+
+else navn og initialer er udfyldt
+    C -> R : found = Get(initials)
+    activate R
+    deactivate R
+
+    alt found != null
+        V <-- C : Exception("Initialerne ... findes allerede.")
+
+    else found == null
+        create participant ":Employee" as E
+        C -->> E : employee = «create»(name, initials)
+
+        C -> R : Add(employee)
+        activate R
+        R -> R : Save()
+        note right of R : skriver Employee.csv
+        deactivate R
+
+        C -> C : Employees.Add(employee)
+        note right of C : ListBox'en opdateres selv
+
+        V <-- C : employee
+        note left of V : tbName og tbInitials tømmes
+
+        V -> V : ShowCount()
+        activate V
+        V -> C : count = Employees.Count
+        activate C
+        deactivate C
+        deactivate V
+    end
+end
+deactivate C
+deactivate V
+
+@enduml
