@@ -4,7 +4,7 @@
 ' Dækker siderne Hovedvindue, Opret medarbejder, Opret kunde, Opret service og Service kvittering.
 ' Service oversigt (UC5) er ikke med.
 ' Stil som undervisningens lagdelte DCD'er (Pr19 Disaheim og Pr20 BookMeeting):
-' UI Layer -> Application Layer (use case controllers + repositories) -> Domain Layer.
+' UI Layer -> Application Layer (use case controllers) -> Domain Layer (repositories + domæneklasser).
 ' Hver besked i sekvensdiagrammerne ("6. Sekvens Diagrammer") er en operation i modtagerens klasse.
 ' Klasse- og metodenavne er de samme som i koden (fx Costumer og CostumerRepository).
 
@@ -127,6 +127,10 @@ package "Application Layer" {
     + GetCostumer(phoneNumber : string) : Costumer
     + GetEmployee(initials : string) : Employee
   }
+}
+
+' =====================================================================
+package "Domain Layer" {
 
   class EmployeeRepository {
     - fileName : string = "Employee.csv"
@@ -166,10 +170,6 @@ package "Application Layer" {
     <U+2003><U+2003>status : ServiceStatus, costumer : string) : Service
     + Get(serviceId : int) : Service
   }
-}
-
-' =====================================================================
-package "Domain Layer" {
 
   class Employee {
     + Name : string
