@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -10,10 +9,6 @@ namespace Vekto.Models
     {
         private string fileName = "Service.csv";
         private List<Service> services;
-
-        // Sådan står datoen i csv-filen. Ældre linjer har kun dato uden klokkeslæt
-        private string dateFormat = "dd-MM-yyyy HH:mm";
-        private string[] readDateFormats = { "dd-MM-yyyy HH:mm", "dd-MM-yyyy" };
 
         public ServiceRepository()
         {
@@ -29,63 +24,52 @@ namespace Vekto.Models
             if (!File.Exists(fileName))
                 return;
 
-            foreach (string line in File.ReadAllLines(fileName))
+            using (StreamReader sr = new StreamReader(fileName))
             {
-                string[] parts = line.Split(',');
-                if (parts.Length != 8 && parts.Length != 11)
-                    continue;
+                string? line = sr.ReadLine();
 
-                // Status står som tekst i filen ("Open" eller "Closed")
-                ServiceStatus status = ServiceStatus.Open;
-                if (parts[6] == "Closed")
-                    status = ServiceStatus.Closed;
-
-                Service service = new Service()
+                while (line != null)
                 {
-                    ServiceId = int.Parse(parts[0]),
-                    DropOffDate = ParseDate(parts[1]),
-                    Brand = parts[2],
-                    Model = parts[3],
-                    ErrorType = parts[4],
-                    Description = parts[5],
-                    Status = status,
-                    Customer = parts[7]
-                };
+                    string[] parts = line.Split(',');
 
-                if (parts.Length == 11)
-                {
-                    service.CompletedWork = parts[8];
-                    service.Employee = parts[9];
-                    if (parts[10] != "")
-                        service.ClosedDate = ParseDate(parts[10]);
+                    if (parts.Length == 8 || parts.Length == 11)
+                    {
+                        Service service = new Service(int.Parse(parts[0]), DateTime.Parse(parts[1]),
+                            parts[2], parts[3], parts[4], parts[5], parts[7]);
+
+                        // Status står som tekst i filen ("Open" eller "Closed")
+                        if (parts[6] == "Closed")
+                            service.Status = ServiceStatus.Closed;
+
+                        if (parts.Length == 11)
+                        {
+                            service.CompletedWork = parts[8];
+                            service.Employee = parts[9];
+                            if (parts[10] != "")
+                                service.ClosedDate = DateTime.Parse(parts[10]);
+                        }
+
+                        services.Add(service);
+                    }
+
+                    line = sr.ReadLine();
                 }
-
-                services.Add(service);
             }
         }
 
-        private DateTime ParseDate(string text)
-        {
-            return DateTime.ParseExact(text, readDateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None);
-        }
-
-        // Gemmer alle services i csv-filen
+        // Gemmer alle services i csv-filen.
+        // ClosedDate er tom tekst, så længe servicen ikke er lukket (null)
         private void Save()
         {
-            List<string> lines = new List<string>();
-            foreach (Service s in services)
+            using (StreamWriter sw = new StreamWriter(fileName))
             {
-                string closedDate = "";
-                if (s.ClosedDate != null)
-                    closedDate = s.ClosedDate.Value.ToString(dateFormat, CultureInfo.InvariantCulture);
-
-                lines.Add(s.ServiceId + "," + s.DropOffDate.ToString(dateFormat, CultureInfo.InvariantCulture) + "," +
-                          s.Brand + "," + s.Model + "," + s.ErrorType + "," + s.Description + "," +
-                          s.Status + "," + s.Customer + "," +
-                          s.CompletedWork + "," + s.Employee + "," + closedDate);
+                foreach (Service s in services)
+                {
+                    sw.WriteLine(s.ServiceId + "," + s.DropOffDate + "," + s.Brand + "," + s.Model + "," +
+                                 s.ErrorType + "," + s.Description + "," + s.Status + "," + s.Customer + "," +
+                                 s.CompletedWork + "," + s.Employee + "," + s.ClosedDate);
+                }
             }
-
-            File.WriteAllLines(fileName, lines);
         }
 
         // Det næste servicenummer er det højeste nummer + 1. Den første service får nr. 1001
@@ -108,17 +92,8 @@ namespace Vekto.Models
                 string.IsNullOrEmpty(errorType))
                 throw (new ArgumentException("Not all arguments are valid"));
 
-            Service result = new Service()
-            {
-                ServiceId = serviceId,
-                DropOffDate = dropOffDate,
-                Brand = brand,
-                Model = model,
-                ErrorType = errorType,
-                Description = description,
-                Status = status,
-                Customer = costumer
-            };
+            Service result = new Service(serviceId, dropOffDate, brand, model, errorType, description, costumer);
+            result.Status = status;
 
             services.Add(result);
             Save();

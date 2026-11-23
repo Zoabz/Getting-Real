@@ -1,10 +1,19 @@
-﻿using Vekto.Models;
+﻿using System.Collections.ObjectModel;
+using Vekto.Models;
 
 namespace Vekto.ViewModels
 {
     public class CreateCostumerController
     {
         private CostumerRepository costumerRepository = new CostumerRepository();
+
+        // Listen, som ListBox'en er bundet til (ItemsSource="{Binding Costumers}")
+        public ObservableCollection<Costumer> Costumers { get; }
+
+        public CreateCostumerController()
+        {
+            Costumers = new ObservableCollection<Costumer>(costumerRepository.GetAll());
+        }
 
         // UC2: opret kunden (følger SD UC2)
         public Costumer CreateCostumer(string name, string phoneNumber)
@@ -24,12 +33,8 @@ namespace Vekto.ViewModels
 
             Costumer costumer = new Costumer(name, phoneNumber);
             costumerRepository.Add(costumer);
+            Costumers.Add(costumer); // ListBox'en opdateres selv
             return costumer;
-        }
-
-        public List<Costumer> GetAllCostumers()
-        {
-            return costumerRepository.GetAll();
         }
     }
 }

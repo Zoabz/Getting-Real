@@ -1,6 +1,5 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using Vekto.Models;
 using Vekto.ViewModels;
 
@@ -14,9 +13,7 @@ namespace Vekto.Views
         public CreateService()
         {
             InitializeComponent();
-
-            foreach (string errorType in controller.GetErrorTypes())
-                lbErrorType.Items.Add(errorType);
+            DataContext = controller;
         }
 
         // UC3: søg efter kunden, hver gang teksten i Tlf. nr. ændres
@@ -34,19 +31,23 @@ namespace Vekto.Views
         // Fejl vises som rød tekst under Opret-knappen (ingen dialogboks)
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
+            tbError.Text = "";
+            tbSuccess.Text = "";
+
             try
             {
-                Service service = controller.CreateService(tbPhone.Text, tbBrand.Text, tbModel.Text,
-                                                           (string?)lbErrorType.SelectedItem, tbDescription.Text);
+                // SelectedItem er null, hvis der ikke er valgt en fejltype
+                string? errorType = lbErrorType.SelectedItem?.ToString();
 
-                ShowMessage("", Brushes.Black);
+                Service service = controller.CreateService(tbPhone.Text, tbBrand.Text, tbModel.Text,
+                                                           errorType, tbDescription.Text);
 
                 // Vis servicekvitteringen i en dialogboks (Pr25)
-                CreateReceipt receipt = new CreateReceipt(service.ServiceId);
-                receipt.Owner = Window.GetWindow(this);
+                CreateReceipt receipt = new CreateReceipt();
+                receipt.ShowService(service.ServiceId);
                 receipt.ShowDialog();
 
-                ShowMessage("Service nr. " + service.ServiceId + " er oprettet.", Brushes.Green);
+                tbSuccess.Text = "Service nr. " + service.ServiceId + " er oprettet.";
 
                 // Tøm felterne, så den næste service kan oprettes
                 tbPhone.Text = "";
@@ -57,14 +58,8 @@ namespace Vekto.Views
             }
             catch (Exception ex)
             {
-                ShowMessage(ex.Message, Brushes.Red);
+                tbError.Text = ex.Message;
             }
-        }
-
-        private void ShowMessage(string text, Brush color)
-        {
-            tbMessage.Text = text;
-            tbMessage.Foreground = color;
         }
     }
 }

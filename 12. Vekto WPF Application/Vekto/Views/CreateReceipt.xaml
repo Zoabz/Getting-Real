@@ -67,7 +67,7 @@
         <!-- Udført arbejde (UC5): vises, når servicen er lukket -->
         <StackPanel Grid.Row="2" Background="White" Margin="20,0,20,10">
             <Label Content="Udført arbejde" FontWeight="Bold"/>
-            <TextBlock x:Name="tbCompletedWork" Text="Vises, når servicen er lukket." Foreground="Gray"
+            <TextBlock x:Name="tbCompletedWork" Text="Vises, når servicen er lukket."
                        TextWrapping="Wrap" Margin="5,0,5,5"/>
             <TextBlock x:Name="tbCompletedBy" Foreground="Gray" Margin="5,0,5,5"/>
         </StackPanel>

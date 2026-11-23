@@ -1,6 +1,5 @@
-﻿using System.Windows;
+using System.Windows;
 using System.Windows.Controls;
-using Vekto.Models;
 using Vekto.ViewModels;
 
 namespace Vekto.Views
@@ -13,34 +12,33 @@ namespace Vekto.Views
         public CreateEmployee()
         {
             InitializeComponent();
-            ShowEmployees();
+            DataContext = controller;
+            ShowCount();
         }
 
         // UC1: opret medarbejderen
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
+            tbError.Text = "";
+
             try
             {
-                Employee employee = controller.CreateEmployee(tbName.Text, tbInitials.Text);
+                controller.CreateEmployee(tbName.Text, tbInitials.Text);
 
                 tbName.Text = "";
                 tbInitials.Text = "";
-                ShowEmployees();
+                ShowCount();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                tbError.Text = ex.Message;
             }
         }
 
-        // Fylder medarbejderlisten og tæller medarbejderne
-        private void ShowEmployees()
+        // Tæller medarbejderne i listen
+        private void ShowCount()
         {
-            lbEmployees.Items.Clear();
-            foreach (Employee em in controller.GetAllEmployees())
-                lbEmployees.Items.Add(em);
-
-            lblEmployeeCount.Content = "Medarbejdere (" + lbEmployees.Items.Count + ")";
+            lblEmployeeCount.Content = "Medarbejdere (" + controller.Employees.Count + ")";
         }
     }
 }

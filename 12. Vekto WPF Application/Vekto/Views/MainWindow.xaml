@@ -23,7 +23,7 @@
                 <TextBlock Text="Service - Lager - Kunder" Foreground="Black"/>
             </StackPanel>
 
-            <!-- Menu: knappen for den side, der vises, får mørkere baggrund og fed skrift (sættes i koden) -->
+            <!-- Menu: hver knap viser en side i sideområdet til højre -->
             <StackPanel Grid.Row="1" Margin="10,0,10,0">
                 <Label Content="Kunder og medarbejdere" Foreground="Black"/>
                 <Button x:Name="btnOpretMedarbejder" Content="Opret medarbejder" Height="30" Background="#FFEBEBEB" Foreground="Black" Click="btnOpretMedarbejder_Click"/>

@@ -17,21 +17,28 @@ namespace Vekto.Models
             if (!File.Exists(fileName))
                 return;
 
-            foreach (string line in File.ReadAllLines(fileName))
+            using (StreamReader sr = new StreamReader(fileName))
             {
-                string[] parts = line.Split(',');
-                if (parts.Length == 2)
-                    employees.Add(new Employee(parts[0], parts[1]));
+                string? line = sr.ReadLine();
+
+                while (line != null)
+                {
+                    string[] parts = line.Split(',');
+                    if (parts.Length == 2)
+                        employees.Add(new Employee(parts[0], parts[1]));
+
+                    line = sr.ReadLine();
+                }
             }
         }
 
         private void Save()
         {
-            List<string> lines = new List<string>();
-            foreach (Employee e in employees)
-                lines.Add(e.Name + "," + e.Initials);
-
-            File.WriteAllLines(fileName, lines);
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                foreach (Employee e in employees)
+                    sw.WriteLine(e.Name + "," + e.Initials);
+            }
         }
 
         public void Add(Employee employee)

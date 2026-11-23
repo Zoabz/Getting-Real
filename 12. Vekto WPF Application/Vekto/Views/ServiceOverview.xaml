@@ -41,14 +41,15 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!-- 1. Vælg service -->
+                    <!-- Vælg service: bundet til den samme valgte service som tabellen -->
                     <Label Grid.Row="0" Grid.Column="0" Content="Vælg service"/>
                     <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbService" Height="25" Margin="0,0,0,5"
-                              SelectionChanged="cbService_SelectionChanged"/>
+                              ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}"/>
 
-                    <!-- 2. Vælg medarbejder -->
+                    <!-- Vælg medarbejder -->
                     <Label Grid.Row="1" Grid.Column="0" Content="Vælg medarbejder"/>
-                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbEmployee" Height="25" Margin="0,0,0,5"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbEmployee" Height="25" Margin="0,0,0,5"
+                              ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}"/>
 
                     <!-- Servicedetaljer: så man kan se, at det er den rigtige cykel -->
                     <Grid Grid.Row="2" Grid.Column="1" Background="#FFF7F2EF" Margin="0,5,0,5">
@@ -61,27 +62,37 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <Label Grid.Row="0" Grid.Column="0" Content="Kunde" Foreground="Gray"/>
-                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbDetailCustomer" Margin="5" TextWrapping="Wrap"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbDetailCustomer" Margin="5" TextWrapping="Wrap"
+                                   Text="{Binding SelectedService.Kunde}"/>
 
-                        <Label Grid.Row="1" Grid.Column="0" Content="Cykel" Foreground="Gray"/>
-                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="tbDetailBike" Margin="5" TextWrapping="Wrap"/>
+                        <Label Grid.Row="1" Grid.Column="0" Content="Tlf." Foreground="Gray"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="tbDetailPhone" Margin="5" TextWrapping="Wrap"
+                                   Text="{Binding SelectedService.Telefon}"/>
 
-                        <Label Grid.Row="2" Grid.Column="0" Content="Fejltype" Foreground="Gray"/>
-                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="tbDetailErrorType" Margin="5" TextWrapping="Wrap"/>
+                        <Label Grid.Row="2" Grid.Column="0" Content="Cykel" Foreground="Gray"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="tbDetailBike" Margin="5" TextWrapping="Wrap"
+                                   Text="{Binding SelectedService.Cykel}"/>
 
-                        <Label Grid.Row="3" Grid.Column="0" Content="Beskrivelse" Foreground="Gray"/>
-                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="tbDetailDescription" Margin="5" TextWrapping="Wrap"/>
+                        <Label Grid.Row="3" Grid.Column="0" Content="Fejltype" Foreground="Gray"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="tbDetailErrorType" Margin="5" TextWrapping="Wrap"
+                                   Text="{Binding SelectedService.Fejltype}"/>
+
+                        <Label Grid.Row="4" Grid.Column="0" Content="Beskrivelse" Foreground="Gray"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="tbDetailDescription" Margin="5" TextWrapping="Wrap"
+                                   Text="{Binding SelectedService.Beskrivelse}"/>
                     </Grid>
 
-                    <!-- 5. Beskrivelse for udført arbejde -->
-                    <Label Grid.Row="3" Grid.Column="0" Content="Beskrivelse for&#10;udført arbejde"/>
+                    <!-- Beskrivelse for udført arbejde -->
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Beskrivelse for udført arbejde"
+                               TextWrapping="Wrap" Margin="5,5,10,0"/>
                     <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbCompletedWork" Height="70" Margin="0,0,0,5"
                              TextWrapping="Wrap"/>
 
-                    <!-- 6. Gem -->
+                    <!-- Gem -->
                     <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="0,10,0,0">
                         <Button x:Name="btnSave" Content="Gem" Width="80" Height="30"
                                 Background="#FFEBEBEB" Foreground="Black" Click="btnSave_Click"/>
@@ -89,24 +100,24 @@
                                    VerticalAlignment="Center" Margin="10,0,0,0"/>
                     </StackPanel>
 
-                    <!-- Besked under knappen: bekræftelse i grøn, fejl i rød (sættes i koden) -->
-                    <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" x:Name="tbMessage"
-                               TextWrapping="Wrap" Margin="0,10,0,0"/>
+                    <!-- Besked under knappen: fejl i rød, bekræftelse i grøn (teksten sættes i koden) -->
+                    <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0">
+                        <TextBlock x:Name="tbError" Foreground="Red" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="tbSuccess" Foreground="Green" TextWrapping="Wrap"/>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
 
-            <!-- ===== 3. Alle services (tabel) ===== -->
+            <!-- ===== Alle services (tabel) ===== -->
             <StackPanel Grid.Column="2" Background="White">
                 <Label x:Name="lblServiceCount" Content="Alle services (0)" FontSize="15" FontWeight="Bold" Margin="10,10,10,0"/>
-                <TextBlock Text="Klik på en service for at vælge den. Dobbeltklik for at se kvitteringen."
-                           Foreground="Gray" Margin="15,0,10,10" TextWrapping="Wrap"/>
+                <TextBlock Text="Klik på en service for at vælge den." Foreground="Gray" Margin="15,0,10,10"/>
 
                 <DataGrid x:Name="dgServices" Height="300" Margin="10,0,10,10"
+                          ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}"
                           AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
                           SelectionMode="Single" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
-                          Background="White" BorderBrush="LightGray"
-                          SelectionChanged="dgServices_SelectionChanged"
-                          MouseDoubleClick="dgServices_MouseDoubleClick">
+                          Background="White" BorderBrush="LightGray">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Nr." Binding="{Binding Nr}" Width="60"/>
                         <DataGridTextColumn Header="Kunde" Binding="{Binding Kunde}" Width="*"/>
@@ -114,6 +125,10 @@
                         <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70"/>
                     </DataGrid.Columns>
                 </DataGrid>
+
+                <Button x:Name="btnShowReceipt" Content="Vis kvittering" Width="110" Height="30"
+                        HorizontalAlignment="Left" Margin="10,0,10,10"
+                        Background="#FFEBEBEB" Foreground="Black" Click="btnShowReceipt_Click"/>
             </StackPanel>
         </Grid>
     </Grid>

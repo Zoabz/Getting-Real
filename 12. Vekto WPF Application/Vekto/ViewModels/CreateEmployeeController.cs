@@ -1,10 +1,19 @@
-﻿using Vekto.Models;
+﻿using System.Collections.ObjectModel;
+using Vekto.Models;
 
 namespace Vekto.ViewModels
 {
     public class CreateEmployeeController
     {
         private EmployeeRepository employeeRepository = new EmployeeRepository();
+
+        // Listen, som ListBox'en er bundet til (ItemsSource="{Binding Employees}")
+        public ObservableCollection<Employee> Employees { get; }
+
+        public CreateEmployeeController()
+        {
+            Employees = new ObservableCollection<Employee>(employeeRepository.GetAll());
+        }
 
         // UC1: opret medarbejderen (følger SD UC1)
         public Employee CreateEmployee(string name, string initials)
@@ -24,12 +33,8 @@ namespace Vekto.ViewModels
 
             Employee employee = new Employee(name, initials);
             employeeRepository.Add(employee);
+            Employees.Add(employee); // ListBox'en opdateres selv
             return employee;
-        }
-
-        public List<Employee> GetAllEmployees()
-        {
-            return employeeRepository.GetAll();
         }
     }
 }

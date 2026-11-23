@@ -1,8 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using Vekto.Models;
 using Vekto.ViewModels;
 
 namespace Vekto.Views
@@ -15,89 +12,47 @@ namespace Vekto.Views
         public ServiceOverview()
         {
             InitializeComponent();
-
-            foreach (Employee em in controller.GetAllEmployees())
-                cbEmployee.Items.Add(em);
-
-            ShowServices();
-        }
-
-        // Fylder tabellen og "Vælg service" med alle services
-        private void ShowServices()
-        {
-            List<ServiceRow> rows = controller.GetAllServices();
-
-            dgServices.ItemsSource = rows;
-            cbService.ItemsSource = rows;
-            lblServiceCount.Content = "Alle services (" + rows.Count + ")";
-        }
-
-        // Klik på en række i tabellen vælger servicen i "Vælg service"
-        private void dgServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            cbService.SelectedItem = dgServices.SelectedItem;
-        }
-
-        // Når en service vælges, vises dens oplysninger
-        private void cbService_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            dgServices.SelectedItem = cbService.SelectedItem;
-
-            tbDetailCustomer.Text = "";
-            tbDetailBike.Text = "";
-            tbDetailErrorType.Text = "";
-            tbDetailDescription.Text = "";
-
-            ServiceRow? row = cbService.SelectedItem as ServiceRow;
-            if (row == null)
-                return;
-
-            Service? service = controller.GetService(row.Nr);
-            if (service == null)
-                return;
-
-            tbDetailCustomer.Text = row.Kunde + " (" + service.Customer + ")";
-            tbDetailBike.Text = row.Cykel;
-            tbDetailErrorType.Text = service.ErrorType;
-            tbDetailDescription.Text = service.Description;
-        }
-
-        // Dobbeltklik på en række åbner kvitteringen (Pr25)
-        private void dgServices_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ServiceRow? row = dgServices.SelectedItem as ServiceRow;
-            if (row == null)
-                return;
-
-            CreateReceipt receipt = new CreateReceipt(row.Nr);
-            receipt.Owner = Window.GetWindow(this);
-            receipt.ShowDialog();
+            DataContext = controller;
+            lblServiceCount.Content = "Alle services (" + controller.Services.Count + ")";
         }
 
         // UC5: gem det udførte arbejde og luk servicen
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            tbError.Text = "";
+            tbSuccess.Text = "";
+
             try
             {
-                ServiceRow? row = cbService.SelectedItem as ServiceRow;
-                controller.RegisterCompletedWork(row, cbEmployee.SelectedItem as Employee, tbCompletedWork.Text);
+                int serviceNr = controller.RegisterCompletedWork(tbCompletedWork.Text);
 
-                ShowMessage("Service " + row!.Nr + " er gemt, og status er ændret til Lukket.", Brushes.Green);
-
+                tbSuccess.Text = "Service " + serviceNr + " er gemt, og status er ændret til Lukket.";
                 tbCompletedWork.Text = "";
-                cbEmployee.SelectedItem = null;
-                ShowServices(); // Opdaterer status i tabellen
             }
             catch (Exception ex)
             {
-                ShowMessage(ex.Message, Brushes.Red);
+                tbError.Text = ex.Message;
             }
         }
 
-        private void ShowMessage(string text, Brush color)
+        // Viser kvitteringen for den valgte service i en dialogboks (Pr25)
+        private void btnShowReceipt_Click(object sender, RoutedEventArgs e)
         {
-            tbMessage.Text = text;
-            tbMessage.Foreground = color;
+            tbError.Text = "";
+            tbSuccess.Text = "";
+
+            try
+            {
+                int serviceNr = controller.GetSelectedServiceNr();
+
+                CreateReceipt receipt = new CreateReceipt();
+                receipt.ShowService(serviceNr);
+                receipt.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                tbError.Text = ex.Message;
+            }
         }
     }
 }

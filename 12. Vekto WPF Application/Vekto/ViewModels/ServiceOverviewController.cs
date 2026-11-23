@@ -1,40 +1,68 @@
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Vekto.Models;
 
 namespace Vekto.ViewModels
 {
     // UC5: Service oversigt. Registrér det udførte arbejde og luk servicen (følger SD UC5)
-    public class ServiceOverviewController
+    public class ServiceOverviewController : INotifyPropertyChanged
     {
         private ServiceRepository serviceRepository = new ServiceRepository();
         private CostumerRepository costumerRepository = new CostumerRepository();
         private EmployeeRepository employeeRepository = new EmployeeRepository();
 
-        // Alle services, til tabellen "Alle services"
-        public List<ServiceRow> GetAllServices()
+        // Tabellen og "Vælg service" er bundet til Services
+        public ObservableCollection<ServiceRow> Services { get; }
+
+        // "Vælg medarbejder" er bundet til Employees
+        public List<Employee> Employees { get; }
+
+        // Den valgte service. Både tabellen og "Vælg service" er bundet til den,
+        // så vælger man i den ene, bliver den også valgt i den anden
+        private ServiceRow? selectedService;
+        public ServiceRow? SelectedService
         {
-            List<ServiceRow> rows = new List<ServiceRow>();
+            get { return selectedService; }
+            set { selectedService = value; OnPropertyChanged(nameof(SelectedService)); }
+        }
+
+        private Employee? selectedEmployee;
+        public Employee? SelectedEmployee
+        {
+            get { return selectedEmployee; }
+            set { selectedEmployee = value; OnPropertyChanged(nameof(SelectedEmployee)); }
+        }
+
+        public ServiceOverviewController()
+        {
+            Services = new ObservableCollection<ServiceRow>();
+            Employees = employeeRepository.GetAll();
+            LoadServices();
+        }
+
+        // Fylder Services med alle services fra repository
+        private void LoadServices()
+        {
+            Services.Clear();
             foreach (Service s in serviceRepository.GetAll())
             {
                 ServiceRow row = new ServiceRow();
                 row.Nr = s.ServiceId;
                 row.Kunde = GetCostumerName(s.Customer);
+                row.Telefon = s.Customer;
                 row.Cykel = s.Brand + " - " + s.Model;
+                row.Fejltype = s.ErrorType;
+                row.Beskrivelse = s.Description;
                 row.Status = "Åben";
                 if (s.Status == ServiceStatus.Closed)
                     row.Status = "Lukket";
 
-                rows.Add(row);
+                Services.Add(row);
             }
-            return rows;
-        }
-
-        public Service? GetService(int serviceId)
-        {
-            return serviceRepository.Get(serviceId);
         }
 
         // Servicen gemmer kun kundens telefonnummer, så navnet slås op her
-        public string GetCostumerName(string phoneNumber)
+        private string GetCostumerName(string phoneNumber)
         {
             Costumer? costumer = costumerRepository.Get(phoneNumber);
             if (costumer == null)
@@ -42,24 +70,28 @@ namespace Vekto.ViewModels
             return costumer.Name;
         }
 
-        public List<Employee> GetAllEmployees()
+        // Nummeret på den valgte service, fx til kvitteringen
+        public int GetSelectedServiceNr()
         {
-            return employeeRepository.GetAll();
+            if (SelectedService == null)
+                throw new Exception("Vælg en service.");
+
+            return SelectedService.Nr;
         }
 
-        // UC5: gem det udførte arbejde. Status ændres til Lukket
-        public void RegisterCompletedWork(ServiceRow? row, Employee? employee, string completedWork)
+        // UC5: gem det udførte arbejde. Status ændres til Lukket.
+        // Returnerer nummeret på den service, der blev lukket
+        public int RegisterCompletedWork(string completedWork)
         {
             completedWork = completedWork.Trim();
 
-            if (row == null)
-                throw new Exception("Vælg en service.");
+            int serviceNr = GetSelectedServiceNr();
 
-            Service? service = serviceRepository.Get(row.Nr);
+            Service? service = serviceRepository.Get(serviceNr);
             if (service == null || service.Status == ServiceStatus.Closed)
-                throw new Exception("Service " + row.Nr + " findes ikke eller er allerede lukket.");
+                throw new Exception("Service " + serviceNr + " findes ikke eller er allerede lukket.");
 
-            if (employee == null)
+            if (SelectedEmployee == null)
                 throw new Exception("Vælg en medarbejder.");
 
             if (completedWork == "")
@@ -69,7 +101,21 @@ namespace Vekto.ViewModels
             if (completedWork.Contains(','))
                 throw new Exception("Beskrivelsen må ikke indeholde komma.");
 
-            serviceRepository.RegisterCompletedWork(service.ServiceId, employee.Initials, completedWork);
+            serviceRepository.RegisterCompletedWork(serviceNr, SelectedEmployee.Initials, completedWork);
+
+            // Hent listen igen, så den nye status vises i tabellen
+            LoadServices();
+            SelectedService = null;
+            SelectedEmployee = null;
+
+            return serviceNr;
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
