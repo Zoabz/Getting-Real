@@ -23,10 +23,25 @@ namespace Vekto.Views
             {
                 Costumer costumer = controller.CreateCostumer(tbName.Text, tbPhone.Text);
 
-<<<<<<< HEAD
-            createCostumer.CreateCostumer(tbName.ToString(),tbPhone.ToString());
+                tbName.Text = "";
+                tbPhone.Text = "";
+                tbPhoneHint.Visibility = Visibility.Visible; // Feltet er tomt igen, så den grå tekst vises
+                ShowCostumers();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        // Fylder kundelisten og tæller kunderne
+        private void ShowCostumers()
+        {
+            lbCustomers.Items.Clear();
+            foreach (Costumer c in controller.GetAllCostumers())
+                lbCustomers.Items.Add(c);
 
+            lblCustomerCount.Content = "Kunder (" + lbCustomers.Items.Count + ")";
         }
 
         // Når man klikker i telefonfeltet, skjules den grå tekst
@@ -40,25 +55,6 @@ namespace Vekto.Views
         {
             if (tbPhone.Text == "")
                 tbPhoneHint.Visibility = Visibility.Visible;
-=======
-                tbName.Text = "";
-                tbPhone.Text = "";
-                ShowCostumers();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void ShowCostumers()
-        {
-            lbCustomers.Items.Clear();
-            foreach (Costumer c in controller.GetAllCostumers())
-                lbCustomers.Items.Add(c);
-
-            lblCustomerCount.Content = "Kunder (" + lbCustomers.Items.Count + ")";
->>>>>>> 2ed63ba6de0299f5d432a8c65888ed61d4066ed5
         }
     }
 }

@@ -43,18 +43,11 @@
                     <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbName" Height="25" Margin="0,0,0,5"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="Tlf. nr."/>
-<<<<<<< HEAD
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbPhone" Height="25" Margin="0,0,0,5"
                              GotFocus="tbPhone_GotFocus" LostFocus="tbPhone_LostFocus"/>
                     <!-- Grå hjælpetekst, der ligger oven på feltet. Den skjules, når man klikker i feltet -->
-                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="tbPhoneHint" Text="Nummer bruges til at finde kunden"
+                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="tbPhoneHint" Text="Nummeret bruges til at finde kunden"
                                Foreground="Gray" Margin="4,4,0,5" IsHitTestVisible="False"/>
-
-                    
-=======
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbPhone" Height="25" Margin="0,0,0,5"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="Nummeret bruges til at finde kunden." Foreground="Gray"/>
->>>>>>> 2ed63ba6de0299f5d432a8c65888ed61d4066ed5
 
                     <Button Grid.Row="3" Grid.Column="1" x:Name="btnCreate" Content="Opret"
                             Width="80" Height="30" HorizontalAlignment="Left" Margin="0,10,0,0"

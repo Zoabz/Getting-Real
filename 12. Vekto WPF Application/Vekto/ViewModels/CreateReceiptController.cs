@@ -8,10 +8,12 @@ namespace Vekto.ViewModels
     public class CreateReceiptController
     {
         private ServiceRepository servicerepository;
+        private CostumerRepository costumerRepository;
 
         public CreateReceiptController()
         {
             servicerepository = new ServiceRepository();
+            costumerRepository = new CostumerRepository();
         }
 
         public List<Service> SearchServices(string searchText, ServiceStatus status)
@@ -28,9 +30,15 @@ namespace Vekto.ViewModels
             return result;
         }
 
-        public Service GetService(int serviceId)
+        public Service? GetService(int serviceId)
         {
             return servicerepository.Get(serviceId);
+        }
+
+        // Servicen gemmer kun kundens telefonnummer, så kunden slås op her
+        public Costumer? GetCostumer(string phoneNumber)
+        {
+            return costumerRepository.Get(phoneNumber);
         }
     }
 }

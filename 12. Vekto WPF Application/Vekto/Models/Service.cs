@@ -8,11 +8,11 @@ namespace Vekto.Models
     {
         public int ServiceId { get; set; }
         public DateTime DropOffDate { get; set; }
-        public string Brand { get; set; }
-        public string Model { get; set; }
-        public string ErrorType { get; set; }
-        public string Description { get; set; }
+        public string Brand { get; set; } = "";
+        public string Model { get; set; } = "";
+        public string ErrorType { get; set; } = "";
+        public string Description { get; set; } = "";
         public ServiceStatus Status { get; set; }
-        public string Customer { get; set; }
+        public string Customer { get; set; } = ""; // Kundens telefonnummer
     }
 }
