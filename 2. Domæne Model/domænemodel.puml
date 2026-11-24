@@ -68,4 +68,5 @@ Udtag "0..*" -down- "1" Reservedel
 Leverandør "1" -right- "1..*" Reservedel
 Reservedel "1" -right- "0..*" Modtagelse
 Medarbejder "1" -right- "1" "Service Oversigt"
+"Service Oversigt" "1" -up- "1" Service
 @enduml
