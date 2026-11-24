@@ -122,6 +122,7 @@ package "Application Layer" {
     - costumerRepository : CostumerRepository
     - employeeRepository : EmployeeRepository
     --
+    + SearchServices(searchText : string, status ServiceStatus) : Service[0..*]
     + CreateReceiptController()
     + GetService(serviceId : int) : Service
     + GetCostumer(phoneNumber : string) : Costumer
@@ -169,6 +170,10 @@ package "Domain Layer" {
     <U+2003><U+2003>errorType : string, description : string,
     <U+2003><U+2003>status : ServiceStatus, costumer : string) : Service
     + Get(serviceId : int) : Service
+    + GetAll() : Service[0..*]
+    + Update(serviceId : int, status : ServiceStatus, description : string)
+    + RegisterCompletedWork(serviceId : int, employeeInititals : string, completedWork : string)
+    + Remove(serviceId : int)
   }
 
   class Employee {
