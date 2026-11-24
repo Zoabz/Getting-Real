@@ -14,7 +14,7 @@ skinparam participant {
 actor ":Mekaniker"
 participant ":System" as System
 
-":Mekaniker" -> System : soegKunde(tlfNr)
+":Mekaniker" -> System : søgKunde(tlfNr)
 
 System --> ":Mekaniker" : kundenavn, tlfNr
 

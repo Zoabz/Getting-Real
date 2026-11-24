@@ -14,11 +14,11 @@ skinparam participant {
 actor ":Mekaniker"
 participant ":System" as System
 
-":Mekaniker" -> System : vaelgService(serviceId)
+":Mekaniker" -> System : vælgService(serviceId)
 
 System --> ":Mekaniker" : kundenavn, kundeTlf, mærke - model, fejltype, beskrivelse,\nregistrerede reservedele
 
-":Mekaniker" -> System : registrerUdfoertArbejde(serviceId, medarbejder, beskrivelse)
+":Mekaniker" -> System : registrerArbejde(serviceId, medarbejder, beskrivelse)
 
 alt service, medarbejder eller beskrivelse mangler
   System --> ":Mekaniker" : fejlbesked
