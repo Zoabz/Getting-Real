@@ -7,7 +7,8 @@ digraph objektmodel {
   // Klasser (overskrifter)
   node [shape=plaintext, fixedsize=true, width=1.8, height=0.3, fontname="Arial", fontsize=12, fontcolor=black]
   hK [label="Kunde"]
-  hR [label="Reparation"]
+  hR [label="Service"]
+  hSO [label="Service Oversigt"]
   hM [label="Medarbejder"]
   hU [label="Udtag"]
   hS [label="Reservedel"]
@@ -19,6 +20,8 @@ digraph objektmodel {
   frederik [label="Frederik Eriksen\n+4523129428"]
   r1001 [label="1001\n03-11-2026\nTrek\nFX 2\nBremser\nBremser hviner\nSkiftet klodser\nLukket"]
   r1002 [label="1002\n04-11-2026\nKildemoes\nCity\nBremser\nSlap bremse\n-\nÅben"]
+  soJohn [label="John Pedersen\n1001\nSkiftet klodser"]
+  soLise [label="Lise Madsen\n-\n-"]
   john [label="John Pedersen\nJP"]
   lise [label="Lise Madsen\nLM"]
   u1 [label="03-11-2026\n2"]
@@ -29,30 +32,37 @@ digraph objektmodel {
   mod1 [label="02-11-2026\n7"]
 
   // Rækker: overskrifter, række 1 og række 2
-  { rank=same; hK; hR; hM; hU; hS; hL; hMo }
-  { rank=same; frederik; r1001; john; u1; klodser; nordic; mod1 }
-  { rank=same; r1002; lise; u2; kabel }
+  { rank=same; hK; hR; hSO; hM; hU; hS; hL; hMo }
+  { rank=same; frederik; r1001; soJohn; john; u1; klodser; nordic; mod1 }
+  { rank=same; r1002; soLise; lise; u2; kabel }
 
   // Usynlige linjer, der holder rækkefølgen og kolonnerne
-  hK -> hR -> hM -> hU -> hS -> hL -> hMo [style=invis]
+  hK -> hR -> hSO -> hM -> hU -> hS -> hL -> hMo [style=invis]
   hK -> frederik [style=invis, weight=10]
   hR -> r1001 [style=invis, weight=10]
+  hSO -> soJohn [style=invis, weight=10]
   hM -> john [style=invis, weight=10]
   hU -> u1 [style=invis, weight=10]
   hS -> klodser [style=invis, weight=10]
   hL -> nordic [style=invis, weight=10]
   hMo -> mod1 [style=invis, weight=10]
   r1001 -> r1002 [style=invis, weight=10]
+  soJohn -> soLise [style=invis, weight=10]
   john -> lise [style=invis, weight=10]
   u1 -> u2 [style=invis, weight=10]
   klodser -> kabel [style=invis, weight=10]
-  r1002 -> lise [style=invis]
+  r1001 -> soJohn [style=invis]
+  r1002 -> soLise [style=invis]
   nordic -> mod1 [style=invis]
 
   // Relationer (samme linjer som i objektmodel.png)
   frederik -> r1001
   frederik -> r1002
-  r1001 -> john
+  // Service - Medarbejder går over Service Oversigt
+  r1001:n -> john:n
+  // Medarbejder 1 - 1 Service Oversigt
+  soJohn -> john
+  soLise -> lise
   john -> u1
   r1001:s -> u1:s
   lise -> u2

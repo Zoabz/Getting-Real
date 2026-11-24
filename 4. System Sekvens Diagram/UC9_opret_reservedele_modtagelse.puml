@@ -22,13 +22,13 @@ skinparam participant {
 actor ":Mekaniker"
 participant ":System" as System
 
-":Mekaniker" -> System : vaelgReservedel(reservedel)
+":Mekaniker" -> System : vælgReservedel(reservedel)
 
 System --> ":Mekaniker" : leverandør, antal på lager, minimum, mangler
 
 ":Mekaniker" -> System : modtagReservedel(reservedel, antal, dato)
 
-alt oplysninger mangler, eller datoen ligger i fremtiden
+alt oplysninger mangler, eller ugyldig dato
   System --> ":Mekaniker" : fejlbesked
 else else
   System --> ":Mekaniker" : antal på lager, Status = "OK" eller "Skal bestilles"

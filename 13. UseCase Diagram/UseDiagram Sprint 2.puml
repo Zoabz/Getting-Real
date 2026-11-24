@@ -1,3 +1,10 @@
+' Use case diagram – Sprint 2
+' Alle use cases i systemet (UC1–UC9) og de aktører, der bruger dem. Samme opsætning som Sprint 1.
+'   - Peter (ejer) er uddannet cykelmekaniker og kan alt i systemet: UC1–UC9.
+'   - Mekaniker: UC2–UC4 (som i Sprint 1) og UC5–UC6, hvor mekanikeren er primær aktør.
+'   - Kasper: lagerdelen UC7–UC9. Han er primær aktør i UC9 (modtager varer).
+'   - Kunde og Leverandør er interessenter, ikke aktører: de bruger ikke selv systemet.
+' Rækkefølgen af linjerne nedenfor styrer layoutet, så ændr den helst ikke.
 @startuml
 left to right direction
 
@@ -6,8 +13,8 @@ skinparam usecaseBorderColor black
 skinparam actorStyle stickman
 skinparam shadowing false
 skinparam ArrowColor black
-skinparam linetype polyline
-skinparam ranksep 200
+skinparam ranksep 120
+skinparam nodesep 40
 
 actor "Mekaniker" as me
 actor "Kasper" as ka
@@ -18,13 +25,32 @@ rectangle "Vekto Flow" {
   usecase "Opret Kunde" as UC2
   usecase "Opret Service" as UC3
   usecase "Service Kvittering" as UC4
-  usecase "Udført Arbejde" as UC5
-  usecase "Reservedele udtag" as UC6
-  usecase "Lager og bestilling" as UC7
+  usecase "Service Oversigt" as UC5
+  usecase "Reservedele Udtag" as UC6
+  usecase "Lager og Bestilling" as UC7
   usecase "Opret Reservedele" as UC8
   usecase "Opret Reservedele Modtagelse" as UC9
-
 }
+
+' Relationer mellem use cases
+' UC3 udvidelse 3a: kunden findes ikke, så medarbejderen opretter kunden (UC2)
+UC2 .> UC3 : <<extend>>
+' UC3 trin 7: systemet viser altid servicekvitteringen, når servicen er oprettet
+UC3 .> UC4 : <<include>>
+
+' Mekaniker
+me -- UC2
+me -- UC3
+me -- UC4
+me -- UC5
+me -- UC6
+
+' Kasper
+ka -- UC7
+ka -- UC8
+ka -- UC9
+
+' Peter (til højre) kan alle use cases
 UC1 -- me2
 UC2 -- me2
 UC3 -- me2
@@ -34,15 +60,5 @@ UC6 -- me2
 UC7 -- me2
 UC8 -- me2
 UC9 -- me2
-
-me -- UC2
-me -- UC3
-me -- UC4
-me -- UC5
-me -- UC6
-
-ka -- UC7
-ka -- UC8
-ka -- UC9
 
 @enduml

@@ -24,7 +24,7 @@ participant ":System" as System
 
 ":Mekaniker" -> System : opretKunde(navn, tlfNr)
 
-alt navn mangler, eller tlfNr er ugyldigt eller allerede oprettet
+alt navn mangler, eller tlfNr allerede oprettet
   System --> ":Mekaniker" : fejlbesked
 else else
   System --> ":Mekaniker" : kundeId, kundeliste

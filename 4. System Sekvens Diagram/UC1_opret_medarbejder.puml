@@ -22,9 +22,9 @@ skinparam participant {
 actor ":Mekaniker"
 participant ":System" as System
 
-":Mekaniker" -> System : opretMedarbejder(navn, navnKort)
+":Mekaniker" -> System : opretMedarbejder(navn, initialerne)
 
-alt navn eller navnKort mangler, eller initialerne er optaget
+alt navn eller  initialerne er optaget
   System --> ":Mekaniker" : fejlbesked
 else else
   System --> ":Mekaniker" : medarbejderId, medarbejderliste

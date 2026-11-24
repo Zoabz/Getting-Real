@@ -22,12 +22,12 @@ skinparam participant {
 actor ":Mekaniker"
 participant ":System" as System
 
-":Mekaniker" -> System : vaelgService(serviceId)
+":Mekaniker" -> System : vælgService(serviceId)
 
 System --> ":Mekaniker" : allerede registrerede reservedele
 
 loop flere reservedele skal tilføjes
-  ":Mekaniker" -> System : tilfoejReservedel(reservedel, antal)
+  ":Mekaniker" -> System : tilføjReservedel(reservedel, antal)
   
   alt reservedel eller antal mangler, eller ikke nok på lager
     System --> ":Mekaniker" : fejlbesked
