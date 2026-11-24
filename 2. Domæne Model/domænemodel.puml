@@ -54,6 +54,12 @@ class Modtagelse {
   antalModtaget
 }
 
+class "Service Oversigt" {
+  medarbejder
+  servicenummer
+  beskrivelse
+}
+
 Kunde "1" -right- "0..*" Service
 Service "0..*" -right- "0..1" Medarbejder
 Service "1" -down- "0..*" Udtag
@@ -61,4 +67,5 @@ Udtag "0..*" -right- "1" Medarbejder
 Udtag "0..*" -down- "1" Reservedel
 Leverandør "1" -right- "1..*" Reservedel
 Reservedel "1" -right- "0..*" Modtagelse
+Medarbejder "1" -right- "1" "Service Oversigt"
 @enduml
