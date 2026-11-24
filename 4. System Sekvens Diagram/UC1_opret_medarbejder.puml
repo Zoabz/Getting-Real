@@ -1,5 +1,13 @@
 @startuml
-title <u>UC1 - Opret Medarbejder</u>
+' Understregningen er en sprite i stedet for <u>, fordi <u> bliver stiplet i SVG.
+' Bredden (176) er titlens bredde. Ændres titlen, skal bredden og antal F'er rettes med.
+sprite $ul [176x1/16] {
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+}
+title
+<b>UC1 - Opret Medarbejder</b>
+<$ul>
+end title
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

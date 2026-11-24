@@ -1,0 +1,7 @@
+@startuml
+skinparam defaultFontName Tahoma
+skinparam TitleFontName Tahoma
+skinparam TitleFontStyle plain
+title <u><b>UC5 - Service oversigt over reparationer</b></u>
+A->B
+@enduml

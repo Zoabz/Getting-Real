@@ -1,0 +1,30 @@
+@startuml
+skinparam defaultFontName Arial
+title <u>UC5 - Service oversigt over reparationer</u>
+hide footbox
+skinparam monochrome true
+skinparam shadowing false
+skinparam backgroundColor white
+skinparam actor {
+  BackgroundColor white
+}
+skinparam participant {
+  BackgroundColor white
+}
+
+actor ":Mekaniker"
+participant ":System" as System
+
+":Mekaniker" -> System : vaelgService(serviceId)
+
+System --> ":Mekaniker" : kundenavn, kundeTlf, mærke - model, fejltype, beskrivelse,\nregistrerede reservedele
+
+":Mekaniker" -> System : registrerUdfoertArbejde(serviceId, medarbejder, beskrivelse)
+
+alt service, medarbejder eller beskrivelse mangler
+  System --> ":Mekaniker" : fejlbesked
+else else
+  System --> ":Mekaniker" : Status = "Lukket", lukketidspunkt
+end
+
+@enduml

@@ -1,5 +1,13 @@
 @startuml
-title <u>UC4 - Service Kvittering</u>
+' Understregningen er en sprite i stedet for <u>, fordi <u> bliver stiplet i SVG.
+' Bredden (169) er titlens bredde. Ændres titlen, skal bredden og antal F'er rettes med.
+sprite $ul [169x1/16] {
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+}
+title
+<b>UC4 - Service Kvittering</b>
+<$ul>
+end title
 hide footbox
 skinparam monochrome true
 skinparam shadowing false

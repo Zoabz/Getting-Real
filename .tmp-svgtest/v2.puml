@@ -1,0 +1,7 @@
+@startuml
+skinparam defaultFontName Arial
+skinparam TitleFontName Arial
+skinparam TitleFontStyle plain
+title <u>UC5 - Service oversigt over reparationer</u>
+A->B
+@enduml

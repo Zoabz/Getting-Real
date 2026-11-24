@@ -1,0 +1,7 @@
+@startuml
+skinparam defaultFontName Segoe UI
+skinparam TitleFontName Segoe UI
+skinparam TitleFontStyle plain
+title <u><b>UC5 - Service oversigt over reparationer</b></u>
+A->B
+@enduml
