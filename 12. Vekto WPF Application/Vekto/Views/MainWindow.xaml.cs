@@ -40,5 +40,15 @@ namespace Vekto.Views
         {
             PageArea.Content = new CreatePart();
         }
+
+        private void btnLagerOgBestilling_Click(object sender, RoutedEventArgs e)
+        {
+            PageArea.Content = new StockOverview();
+        }
+
+        private void btnReservedeleModtagelse_Click(object sender, RoutedEventArgs e)
+        {
+            PageArea.Content = new PartsReceive();
+        }
     }
 }

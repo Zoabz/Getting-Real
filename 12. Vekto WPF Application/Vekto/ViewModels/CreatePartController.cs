@@ -7,15 +7,18 @@ namespace Vekto.ViewModels
     {
         private PartRepository partRepository = new PartRepository();
 
+<<<<<<< HEAD
         // Listen, som DataGrid'en er bundet til (ItemsSource="{Binding Parts}")
         public ObservableCollection<Part> parts { get; }
+=======
+        public ObservableCollection<Part> Parts { get; }
+>>>>>>> 3a906def2ec59b06df0522a196eb16893ed1f8b7
 
         public CreatePartController()
         {
             parts = new ObservableCollection<Part>(partRepository.GetAll());
         }
 
-        // UC8: opret reservedelen med 0 på lager
         public Part CreatePart(string name, string supplier, string minQuantityText)
         {
             name = name.Trim();
@@ -24,7 +27,6 @@ namespace Vekto.ViewModels
             if (name == "" || supplier == "" || minQuantityText.Trim() == "")
                 throw new Exception("Udfyld navn, leverandør og minimum antal.");
 
-            // Komma bruges til at adskille felterne i csv-filen
             if (name.Contains(',') || supplier.Contains(','))
                 throw new Exception("Navn og leverandør må ikke indeholde komma.");
 
@@ -36,7 +38,11 @@ namespace Vekto.ViewModels
 
             Part part = new Part(name, supplier, 0, minQuantity);
             partRepository.Add(part);
+<<<<<<< HEAD
             parts.Add(part); // DataGrid'en opdateres selv
+=======
+            Parts.Add(part);
+>>>>>>> 3a906def2ec59b06df0522a196eb16893ed1f8b7
             return part;
         }
     }

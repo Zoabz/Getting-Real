@@ -37,13 +37,11 @@ namespace Vekto.ViewModels
             return servicerepository.Get(serviceId);
         }
 
-        // Servicen gemmer kun kundens telefonnummer, så kunden slås op her
         public Costumer? GetCostumer(string phoneNumber)
         {
             return costumerRepository.Get(phoneNumber);
         }
 
-        // Servicen gemmer kun medarbejderens initialer, så medarbejderen slås op her
         public Employee? GetEmployee(string initials)
         {
             return employeeRepository.Get(initials);

@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using Vekto.Models;
 using Vekto.ViewModels;
 using static Vekto.ViewModels.PartsGrabController;
 

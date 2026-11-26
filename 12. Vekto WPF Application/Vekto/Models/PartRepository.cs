@@ -70,6 +70,16 @@ namespace Vekto.Models
             Save();
         }
 
+        public void Receive(string name, int amount)
+        {
+            Part? part = Get(name);
+            if (part == null)
+                throw new Exception("Reservedelen " + name + " findes ikke.");
+
+            part.Quantity += amount;
+            Save();
+        }
+
         public List<Part> GetAll()
         {
             return parts;
