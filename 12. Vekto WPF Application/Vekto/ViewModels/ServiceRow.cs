@@ -4,18 +4,18 @@ namespace Vekto.ViewModels
     // Indeholder også de oplysninger, der vises under "Vælg service"
     public class ServiceRow
     {
-        public int Nr { get; set; }
-        public string Kunde { get; set; } = "";
-        public string Telefon { get; set; } = "";
-        public string Cykel { get; set; } = "";
-        public string Fejltype { get; set; } = "";
-        public string Beskrivelse { get; set; } = "";
+        public int Number { get; set; }
+        public string Customer { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Bike { get; set; } = "";
+        public string ErrorType { get; set; } = "";
+        public string Description { get; set; } = "";
         public string Status { get; set; } = "";
 
         // Det er den tekst, der vises i "Vælg service"
         public override string ToString()
         {
-            return Nr + " · " + Kunde + " · " + Cykel;
+            return Number + " · " + Customer + " · " + Bike;
         }
     }
 }

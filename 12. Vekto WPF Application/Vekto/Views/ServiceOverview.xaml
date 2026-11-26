@@ -67,23 +67,23 @@
 
                         <Label Grid.Row="0" Grid.Column="0" Content="Kunde" Foreground="Gray"/>
                         <TextBlock Grid.Row="0" Grid.Column="1" x:Name="tbDetailCustomer" Margin="5" TextWrapping="Wrap"
-                                   Text="{Binding SelectedService.Kunde}"/>
+                                   Text="{Binding SelectedService.Customer}"/>
 
                         <Label Grid.Row="1" Grid.Column="0" Content="Tlf." Foreground="Gray"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" x:Name="tbDetailPhone" Margin="5" TextWrapping="Wrap"
-                                   Text="{Binding SelectedService.Telefon}"/>
+                                   Text="{Binding SelectedService.Phone}"/>
 
                         <Label Grid.Row="2" Grid.Column="0" Content="Cykel" Foreground="Gray"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" x:Name="tbDetailBike" Margin="5" TextWrapping="Wrap"
-                                   Text="{Binding SelectedService.Cykel}"/>
+                                   Text="{Binding SelectedService.Bike}"/>
 
                         <Label Grid.Row="3" Grid.Column="0" Content="Fejltype" Foreground="Gray"/>
                         <TextBlock Grid.Row="3" Grid.Column="1" x:Name="tbDetailErrorType" Margin="5" TextWrapping="Wrap"
-                                   Text="{Binding SelectedService.Fejltype}"/>
+                                   Text="{Binding SelectedService.ErrorType}"/>
 
                         <Label Grid.Row="4" Grid.Column="0" Content="Beskrivelse" Foreground="Gray"/>
                         <TextBlock Grid.Row="4" Grid.Column="1" x:Name="tbDetailDescription" Margin="5" TextWrapping="Wrap"
-                                   Text="{Binding SelectedService.Beskrivelse}"/>
+                                   Text="{Binding SelectedService.Description}"/>
                     </Grid>
 
                     <!-- Beskrivelse for udført arbejde -->
@@ -110,7 +110,7 @@
 
             <!-- ===== Alle services (tabel) ===== -->
             <StackPanel Grid.Column="2" Background="White">
-                <Label x:Name="lblServiceCount" Content="Alle services (0)" FontSize="15" FontWeight="Bold" Margin="10,10,10,0"/>
+                <Label x:Name="lblServiceCount" Content="Alle services" FontSize="15" FontWeight="Bold" Margin="10,10,10,0"/>
                 <TextBlock Text="Klik på en service for at vælge den." Foreground="Gray" Margin="15,0,10,10"/>
 
                 <DataGrid x:Name="dgServices" Height="300" Margin="10,0,10,10"
@@ -119,9 +119,9 @@
                           SelectionMode="Single" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
                           Background="White" BorderBrush="LightGray">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Nr." Binding="{Binding Nr}" Width="60"/>
-                        <DataGridTextColumn Header="Kunde" Binding="{Binding Kunde}" Width="*"/>
-                        <DataGridTextColumn Header="Cykel" Binding="{Binding Cykel}" Width="*"/>
+                        <DataGridTextColumn Header="Nr." Binding="{Binding Number}" Width="60"/>
+                        <DataGridTextColumn Header="Kunde" Binding="{Binding Customer}" Width="*"/>
+                        <DataGridTextColumn Header="Cykel" Binding="{Binding Bike}" Width="*"/>
                         <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="70"/>
                     </DataGrid.Columns>
                 </DataGrid>

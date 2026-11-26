@@ -4,7 +4,6 @@ using Vekto.ViewModels;
 
 namespace Vekto.Views
 {
-    // Side: vises i MainWindow's sideområde
     public partial class CreateEmployee : UserControl
     {
         private CreateEmployeeController controller = new CreateEmployeeController();
@@ -16,7 +15,6 @@ namespace Vekto.Views
             ShowCount();
         }
 
-        // UC1: opret medarbejderen
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             tbError.Text = "";
@@ -35,7 +33,6 @@ namespace Vekto.Views
             }
         }
 
-        // Tæller medarbejderne i listen
         private void ShowCount()
         {
             lblEmployeeCount.Content = "Medarbejdere (" + controller.Employees.Count + ")";

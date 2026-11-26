@@ -4,7 +4,6 @@ using Vekto.ViewModels;
 
 namespace Vekto.Views
 {
-    // Side: vises i MainWindow's sideområde
     public partial class CreateCostumer : UserControl
     {
         private CreateCostumerController controller = new CreateCostumerController();
@@ -16,7 +15,6 @@ namespace Vekto.Views
             ShowCount();
         }
 
-        // UC2: opret kunden
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             tbError.Text = "";
@@ -35,7 +33,6 @@ namespace Vekto.Views
             }
         }
 
-        // Tæller kunderne i listen
         private void ShowCount()
         {
             lblCustomerCount.Content = "Kunder (" + controller.Costumers.Count + ")";

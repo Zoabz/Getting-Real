@@ -30,5 +30,10 @@ namespace Vekto.Views
         {
             PageArea.Content = new ServiceOverview();
         }
+
+        private void btnReservedeleUdtag_Click(object sender, RoutedEventArgs e)
+        {
+            PageArea.Content = new PartsGrab();
+        }
     }
 }

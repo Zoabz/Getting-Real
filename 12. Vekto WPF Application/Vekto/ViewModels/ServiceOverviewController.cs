@@ -4,21 +4,16 @@ using Vekto.Models;
 
 namespace Vekto.ViewModels
 {
-    // UC5: Service oversigt. Registrér det udførte arbejde og luk servicen (følger SD UC5)
     public class ServiceOverviewController : INotifyPropertyChanged
     {
         private ServiceRepository serviceRepository = new ServiceRepository();
         private CostumerRepository costumerRepository = new CostumerRepository();
         private EmployeeRepository employeeRepository = new EmployeeRepository();
 
-        // Tabellen og "Vælg service" er bundet til Services
         public ObservableCollection<ServiceRow> Services { get; }
 
-        // "Vælg medarbejder" er bundet til Employees
         public List<Employee> Employees { get; }
 
-        // Den valgte service. Både tabellen og "Vælg service" er bundet til den,
-        // så vælger man i den ene, bliver den også valgt i den anden
         private ServiceRow? selectedService;
         public ServiceRow? SelectedService
         {
@@ -40,19 +35,18 @@ namespace Vekto.ViewModels
             LoadServices();
         }
 
-        // Fylder Services med alle services fra repository
         private void LoadServices()
         {
             Services.Clear();
             foreach (Service s in serviceRepository.GetAll())
             {
                 ServiceRow row = new ServiceRow();
-                row.Nr = s.ServiceId;
-                row.Kunde = GetCostumerName(s.Customer);
-                row.Telefon = s.Customer;
-                row.Cykel = s.Brand + " - " + s.Model;
-                row.Fejltype = s.ErrorType;
-                row.Beskrivelse = s.Description;
+                row.Number = s.ServiceId;
+                row.Customer = GetCostumerName(s.Customer);
+                row.Phone = s.Customer;
+                row.Bike = s.Brand + " - " + s.Model;
+                row.ErrorType = s.ErrorType;
+                row.Description = s.Description;
                 row.Status = "Åben";
                 if (s.Status == ServiceStatus.Closed)
                     row.Status = "Lukket";
@@ -61,7 +55,6 @@ namespace Vekto.ViewModels
             }
         }
 
-        // Servicen gemmer kun kundens telefonnummer, så navnet slås op her
         private string GetCostumerName(string phoneNumber)
         {
             Costumer? costumer = costumerRepository.Get(phoneNumber);
@@ -70,17 +63,14 @@ namespace Vekto.ViewModels
             return costumer.Name;
         }
 
-        // Nummeret på den valgte service, fx til kvitteringen
         public int GetSelectedServiceNr()
         {
             if (SelectedService == null)
                 throw new Exception("Vælg en service.");
 
-            return SelectedService.Nr;
+            return SelectedService.Number;
         }
 
-        // UC5: gem det udførte arbejde. Status ændres til Lukket.
-        // Returnerer nummeret på den service, der blev lukket
         public int RegisterCompletedWork(string completedWork)
         {
             completedWork = completedWork.Trim();
@@ -110,6 +100,8 @@ namespace Vekto.ViewModels
 
             return serviceNr;
         }
+
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

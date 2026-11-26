@@ -1,0 +1,121 @@
+<UserControl x:Class="Vekto.Views.PartsGrab"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ================= RESERVEDELE UDTAG (UC6 - wireframe 06) ================= -->
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="WhiteSmoke">
+        <StackPanel Margin="20">
+
+            <!-- Overskrift -->
+            <TextBlock Text="Reservedele udtag" FontSize="22" FontWeight="Bold"/>
+            <TextBlock Text="Vælg service og medarbejder, tilføj reservedele til listen og gem for at opdatere lageret."
+                       Foreground="Gray" TextWrapping="Wrap"/>
+
+            <!-- ===== Service, medarbejder og reservedele ===== -->
+            <StackPanel Background="White" Margin="0,10,0,0">
+                <Label Content="Service og medarbejder" FontSize="15" FontWeight="Bold" Margin="10"/>
+
+                <Grid Margin="10,0,10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- (1) Vælg service: kun åbne services, skriv reparationsnummer for at søge -->
+                    <Label Grid.Row="0" Grid.Column="0" Content="Vælg service"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" x:Name="cbService" Height="25" Margin="0,0,0,5"
+                              ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}"/>
+
+                    <!-- (2) Vælg medarbejder: hvem tager delene fra lageret -->
+                    <Label Grid.Row="1" Grid.Column="0" Content="Vælg medarbejder"/>
+                    <ComboBox Grid.Row="1" Grid.Column="1" x:Name="cbEmployee" Height="25" Margin="0,0,0,5"
+                              ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}"/>
+                </Grid>
+
+                <Separator Margin="10,0"/>
+
+                <Label Content="Vælg reservedele" FontSize="15" FontWeight="Bold" Margin="10"/>
+
+                <Grid Margin="10,0,10,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- (3) Vælg reservedel: skriv for at søge, "Navn (x på lager)" -->
+                    <Label Grid.Column="0" Content="Vælg reservedel"/>
+                    <ComboBox Grid.Column="1" x:Name="cbPart" Height="25"
+                              ItemsSource="{Binding Parts}" SelectedItem="{Binding SelectedPart}"/>
+
+                    <!-- (4) Antal + Tilføj: lægger delen på listen (intet gemt endnu) -->
+                    <Label Grid.Column="2" Content="Antal" Margin="15,0,0,0"/>
+                    <TextBox Grid.Column="3" x:Name="tbAmount" Text="1" Height="25" VerticalContentAlignment="Center"/>
+                    <Button Grid.Column="4" x:Name="btnAdd" Content="Tilføj" Width="80" Height="25" Margin="10,0,0,0"
+                            Background="#FFEBEBEB" Foreground="Black" Click="btnAdd_Click"/>
+                </Grid>
+
+                <!-- (5) Reservedele på listen: venter på at blive gemt -->
+                <Label x:Name="lblPartsListCount" Content="Reservedele på listen" FontWeight="Bold" Margin="10,0,10,0"/>
+
+                <DataGrid x:Name="dgPartsList" MinHeight="120" Margin="10,0,10,10"
+                          ItemsSource="{Binding PartsList}"
+                          AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                          SelectionMode="Single" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          Background="White" BorderBrush="LightGray">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Reservedel" Binding="{Binding Name}" Width="*"/>
+                        <DataGridTextColumn Header="Leverandør" Binding="{Binding Supplier}" Width="*"/>
+                        <DataGridTextColumn Header="På lager" Binding="{Binding InStock}" Width="80"/>
+                        <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="60"/>
+                        <!-- (6) Fjern: fjerner linjen fra listen -->
+                        <DataGridTemplateColumn Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Fjern" Margin="2" Background="#FFEBEBEB" Foreground="Black"
+                                            Click="btnRemove_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <!-- (7) Gem / Opdater lager -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10,0,10,10">
+                    <Button x:Name="btnSave" Content="Gem / Opdater lager" Width="150" Height="30"
+                            Background="#FF222222" Foreground="White" FontWeight="Bold" Click="btnSave_Click"/>
+                </StackPanel>
+
+                <!-- Besked: fejl i rød, bekræftelse i grøn (teksten sættes i koden) -->
+                <StackPanel Margin="10,0,10,10">
+                    <TextBlock x:Name="tbError" Foreground="Red" TextWrapping="Wrap"/>
+                    <TextBlock x:Name="tbSuccess" Foreground="Green" TextWrapping="Wrap"/>
+                </StackPanel>
+            </StackPanel>
+
+            <!-- ===== (8) Allerede registreret på servicen ===== -->
+            <StackPanel Background="White" Margin="0,20,0,0">
+                <Label x:Name="lblRegistered" Content="Allerede registreret på service"
+                       FontSize="15" FontWeight="Bold" Margin="10"/>
+
+                <DataGrid x:Name="dgRegistered" MinHeight="100" Margin="10,0,10,10"
+                          AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                          SelectionMode="Single" HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                          Background="White" BorderBrush="LightGray">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Dato" Binding="{Binding Date}" Width="100"/>
+                        <DataGridTextColumn Header="Reservedel" Binding="{Binding PartName}" Width="*"/>
+                        <DataGridTextColumn Header="Antal" Binding="{Binding Amount}" Width="60"/>
+                        <DataGridTextColumn Header="Medarbejder" Binding="{Binding Employee}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

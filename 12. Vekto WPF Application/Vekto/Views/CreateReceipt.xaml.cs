@@ -4,8 +4,6 @@ using Vekto.ViewModels;
 
 namespace Vekto.Views
 {
-    // Dialog: åbnes med ShowDialog() fra Opret service og Service oversigt (Pr25).
-    // Kald ShowService(...) før ShowDialog(), så kvitteringen viser den rigtige service
     public partial class CreateReceipt : Window
     {
         private CreateReceiptController controller = new CreateReceiptController();
@@ -41,7 +39,6 @@ namespace Vekto.Views
             lblErrorType.Content = service.ErrorType;
             lblDescription.Content = service.Description;
 
-            // Udført arbejde (UC5): vises kun, når servicen er lukket
             if (service.Status == ServiceStatus.Closed)
             {
                 tbCompletedWork.Text = service.CompletedWork;
