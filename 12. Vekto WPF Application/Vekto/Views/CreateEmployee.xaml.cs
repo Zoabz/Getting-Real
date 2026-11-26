@@ -35,7 +35,7 @@ namespace Vekto.Views
 
         private void ShowCount()
         {
-            lblEmployeeCount.Content = "Medarbejdere (" + controller.Employees.Count + ")";
+            lblEmployeeCount.Content = "Medarbejdere (" + controller.employees.Count + ")";
         }
     }
 }

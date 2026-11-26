@@ -20,10 +20,10 @@ namespace Vekto.ViewModels
         private CostumerRepository costumerRepository = new CostumerRepository();
         private EmployeeRepository employeeRepository = new EmployeeRepository();
 
-        public List<ServiceRow> Services { get; } = new List<ServiceRow>();
-        public List<Employee> Employees { get; }
-        public List<Part> Parts { get; }
-        public ObservableCollection<PartRow> PartsList { get; } = new ObservableCollection<PartRow>();
+        public List<ServiceRow> services { get; } = new List<ServiceRow>();
+        public List<Employee> employees { get; }
+        public List<Part> parts { get; }
+        public ObservableCollection<PartRow> partsList { get; } = new ObservableCollection<PartRow>();
 
         private ServiceRow? selectedService;
         public ServiceRow? SelectedService
@@ -48,8 +48,8 @@ namespace Vekto.ViewModels
 
         public PartsGrabController()
         {
-            Employees = employeeRepository.GetAll();
-            Parts = partRepository.GetAll();
+            employees = employeeRepository.GetAll();
+            parts = partRepository.GetAll();
 
             foreach (Service s in serviceRepository.GetAll())
             {
@@ -60,7 +60,7 @@ namespace Vekto.ViewModels
                 row.Number = s.ServiceId;
                 row.Customer = GetCostumerName(s.Customer);
                 row.Bike = s.Brand + " - " + s.Model;
-                Services.Add(row);
+                services.Add(row);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Vekto.ViewModels
                 throw new Exception("Amount skal være et tal større end 0.");
 
             PartRow? existing = null;
-            foreach (PartRow r in PartsList)
+            foreach (PartRow r in partsList)
             {
                 if (r.Name == SelectedPart.Name)
                     existing = r;
@@ -100,14 +100,14 @@ namespace Vekto.ViewModels
             row.Amount = amount;
 
             if (existing == null)
-                PartsList.Add(row);
+                partsList.Add(row);
             else
-                PartsList[PartsList.IndexOf(existing)] = row;
+                partsList[partsList.IndexOf(existing)] = row;
         }
 
         public void RemovePart(PartRow row)
         {
-            PartsList.Remove(row);
+            partsList.Remove(row);
         }
 
         public int Save()
@@ -118,14 +118,14 @@ namespace Vekto.ViewModels
             if (SelectedEmployee == null)
                 throw new Exception("Vælg en medarbejder.");
 
-            if (PartsList.Count == 0)
+            if (partsList.Count == 0)
                 throw new Exception("Tilføj mindst én reservedel til listen.");
 
-            foreach (PartRow row in PartsList)
+            foreach (PartRow row in partsList)
                 partRepository.TakeOut(row.Name, row.Amount);
 
             int serviceNr = SelectedService.Number;
-            PartsList.Clear();
+            partsList.Clear();
             return serviceNr;
         }
 

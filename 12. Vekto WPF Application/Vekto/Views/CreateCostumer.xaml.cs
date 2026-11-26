@@ -35,7 +35,7 @@ namespace Vekto.Views
 
         private void ShowCount()
         {
-            lblCustomerCount.Content = "Kunder (" + controller.Costumers.Count + ")";
+            lblCustomerCount.Content = "Kunder (" + controller.costumers.Count + ")";
         }
     }
 }
