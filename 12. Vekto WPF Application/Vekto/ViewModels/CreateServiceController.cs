@@ -10,13 +10,17 @@ namespace Vekto.ViewModels
         private CostumerRepository costumerRepository;
         private ServiceRepository serviceRepository;
 
-        // Fejltyperne, som ListBox'en er bundet til (ItemsSource="{Binding ErrorTypes}")
         public List<string> ErrorTypes { get; }
+
+        public List<string> PhoneNumbers { get; } = new List<string>();
 
         public CreateServiceController()
         {
             costumerRepository = new CostumerRepository();
             serviceRepository = new ServiceRepository();
+
+            foreach (Costumer c in costumerRepository.GetAll())
+                PhoneNumbers.Add(c.PhoneNumber);
 
             ErrorTypes = new List<string>();
             ErrorTypes.Add("Bremser");
@@ -29,13 +33,11 @@ namespace Vekto.ViewModels
             ErrorTypes.Add("Andet");
         }
 
-        // UC3: søg efter kunden på telefonnummer. Returnerer null, hvis kunden ikke findes
         public Costumer? SearchCustomer(string phoneNumber)
         {
             return costumerRepository.Get(phoneNumber.Trim());
         }
 
-        // UC3: opret servicen (følger SD UC3)
         public Service CreateService(string phoneNumber, string brand, string model,
                                       string? errorType, string description)
         {
@@ -46,7 +48,6 @@ namespace Vekto.ViewModels
             if (brand == "" || model == "" || errorType == null || description == "")
                 throw new Exception("Udfyld mærke, model, fejltype og fejlbeskrivelse.");
 
-            // Komma bruges til at adskille felterne i csv-filen
             if (brand.Contains(',') || model.Contains(',') || description.Contains(','))
                 throw new Exception("Mærke, model og fejlbeskrivelse må ikke indeholde komma.");
 

@@ -7,7 +7,6 @@ namespace Vekto.ViewModels
     {
         private EmployeeRepository employeeRepository = new EmployeeRepository();
 
-        // Listen, som ListBox'en er bundet til (ItemsSource="{Binding Employees}")
         public ObservableCollection<Employee> Employees { get; }
 
         public CreateEmployeeController()
@@ -15,7 +14,6 @@ namespace Vekto.ViewModels
             Employees = new ObservableCollection<Employee>(employeeRepository.GetAll());
         }
 
-        // UC1: opret medarbejderen (følger SD UC1)
         public Employee CreateEmployee(string name, string initials)
         {
             name = name.Trim();
@@ -24,7 +22,6 @@ namespace Vekto.ViewModels
             if (name == "" || initials == "")
                 throw new Exception("Udfyld navn og initialer.");
 
-            // Komma bruges til at adskille felterne i csv-filen
             if (name.Contains(',') || initials.Contains(','))
                 throw new Exception("Navn og initialer må ikke indeholde komma.");
 
@@ -33,7 +30,7 @@ namespace Vekto.ViewModels
 
             Employee employee = new Employee(name, initials);
             employeeRepository.Add(employee);
-            Employees.Add(employee); // ListBox'en opdateres selv
+            Employees.Add(employee);
             return employee;
         }
     }

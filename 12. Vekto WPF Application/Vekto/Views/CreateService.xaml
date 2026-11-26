@@ -39,8 +39,10 @@
                 <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Vælg kunde" FontSize="15" FontWeight="Bold" Margin="0,0,0,5"/>
 
                 <Label Grid.Row="1" Grid.Column="0" Content="Tlf. nr."/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbPhone" Height="25" Margin="0,0,0,5"
-                         TextChanged="tbPhone_TextChanged"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" x:Name="tbPhone" Height="25" Margin="0,0,0,5"
+                          IsEditable="True" ItemsSource="{Binding PhoneNumbers}"
+                          TextBoxBase.TextChanged="tbPhone_TextChanged"/>
+
 
                 <Label Grid.Row="2" Grid.Column="0" Content="Kunde"/>
                 <Label Grid.Row="2" Grid.Column="1" x:Name="lblCustomer" Content="Ingen kunde fundet" Margin="0,0,0,5"/>

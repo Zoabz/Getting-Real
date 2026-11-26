@@ -7,7 +7,6 @@ namespace Vekto.ViewModels
     {
         private CostumerRepository costumerRepository = new CostumerRepository();
 
-        // Listen, som ListBox'en er bundet til (ItemsSource="{Binding Costumers}")
         public ObservableCollection<Costumer> Costumers { get; }
 
         public CreateCostumerController()
@@ -15,7 +14,6 @@ namespace Vekto.ViewModels
             Costumers = new ObservableCollection<Costumer>(costumerRepository.GetAll());
         }
 
-        // UC2: opret kunden (følger SD UC2)
         public Costumer CreateCostumer(string name, string phoneNumber)
         {
             name = name.Trim();
@@ -24,7 +22,6 @@ namespace Vekto.ViewModels
             if (name == "" || phoneNumber == "")
                 throw new Exception("Udfyld navn og telefonnummer.");
 
-            // Komma bruges til at adskille felterne i csv-filen
             if (name.Contains(',') || phoneNumber.Contains(','))
                 throw new Exception("Navn og telefonnummer må ikke indeholde komma.");
 
@@ -33,7 +30,7 @@ namespace Vekto.ViewModels
 
             Costumer costumer = new Costumer(name, phoneNumber);
             costumerRepository.Add(costumer);
-            Costumers.Add(costumer); // ListBox'en opdateres selv
+            Costumers.Add(costumer); 
             return costumer;
         }
     }

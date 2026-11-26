@@ -31,7 +31,7 @@
                 <TextBlock x:Name="tbCreated" Text="Oprettet" Foreground="Gray"/>
             </StackPanel>
             <Label Grid.Column="1" x:Name="lblStatus" Content="Åben" FontWeight="Bold"
-                   Background="#FFE5CCC2" VerticalAlignment="Top"/>
+                   Background="#FF099500" VerticalAlignment="Center" Width="100" HorizontalAlignment="Center" HorizontalContentAlignment="Center" />
         </Grid>
 
         <!-- Kunde og cykel -->
@@ -75,7 +75,6 @@
         <!-- Reservedele (UC6 - laves senere) -->
         <StackPanel Grid.Row="3" Background="White" Margin="20,0,20,10">
             <Label Content="Reservedele" FontWeight="Bold"/>
-            <Label Content="Delene, der er taget fra lageret til servicen (UC6)." Foreground="Gray"/>
         </StackPanel>
 
         <!-- Luk -->
