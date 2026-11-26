@@ -24,7 +24,7 @@ namespace Vekto.Views
             {
                 Part part = controller.CreatePart(tbName.Text, tbSupplier.Text, tbMinQuantity.Text);
 
-                tbSuccess.Text = part.Name + " er oprettet med 0 på lager.";
+                tbSuccess.Text = part.Name + " er oprettet!";
 
                 tbName.Text = "";
                 tbSupplier.Text = "";
