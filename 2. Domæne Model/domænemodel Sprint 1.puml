@@ -43,6 +43,6 @@ class Service {
 
 
 
-Kunde "1" -right- "*" Service
-Service "*" -right- "0..1" Medarbejder
+Kunde "1" -right- "0..*" Service
+Service "0..*" -right- "0..1" Medarbejder
 @enduml
