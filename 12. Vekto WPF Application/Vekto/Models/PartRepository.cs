@@ -8,7 +8,7 @@ namespace Vekto.Models
     public class PartRepository
     {
         private string fileName = "Parts.csv";
-        private List<Part> Parts = new List<Part>();
+        private List<Part> parts = new List<Part>();
 
         public PartRepository()
         {
@@ -28,7 +28,7 @@ namespace Vekto.Models
                 {
                     string[] Part = line.Split(',');
                     if (Part.Length == 4)
-                        Parts.Add(new Part(Part[0], Part[1], int.Parse(Part[2]), int.Parse(Part[3])));
+                        parts.Add(new Part(Part[0], Part[1], int.Parse(Part[2]), int.Parse(Part[3])));
 
                     line = sr.ReadLine();
                 }
@@ -39,20 +39,20 @@ namespace Vekto.Models
         {
             using (StreamWriter sw = new StreamWriter(fileName))
             {
-                foreach (Part p in Parts)
+                foreach (Part p in parts)
                     sw.WriteLine(p.Name + "," + p.Supplier + "," + p.Quantity + "," + p.MinQuantity);
             }
         }
 
         public void Add(Part Part)
         {
-            Parts.Add(Part);
+            parts.Add(Part);
             Save();
         }
 
         public Part? Get(string Name)
         {
-            foreach (Part p in Parts)
+            foreach (Part p in parts)
             {
                 if (p.Name == Name)
                     return p;
@@ -72,7 +72,7 @@ namespace Vekto.Models
 
         public List<Part> GetAll()
         {
-            return Parts;
+            return parts;
         }
     }
 }
