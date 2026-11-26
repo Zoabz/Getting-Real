@@ -44,17 +44,17 @@ namespace Vekto.Models
             }
         }
 
-        public void Add(Part Part)
+        public void Add(Part part)
         {
-            parts.Add(Part);
+            parts.Add(part);
             Save();
         }
 
-        public Part? Get(string Name)
+        public Part? Get(string name)
         {
             foreach (Part p in parts)
             {
-                if (p.Name == Name)
+                if (p.Name == name)
                     return p;
             }
             return null;
