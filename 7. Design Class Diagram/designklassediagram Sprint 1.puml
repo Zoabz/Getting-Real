@@ -91,7 +91,7 @@ package "Application Layer" {
 
   class CreateEmployeeController {
     - employeeRepository : EmployeeRepository
-    + «get» Employees : Employee[0..*]
+    + «get» employees : Employee[0..*]
     --
     + CreateEmployeeController()
     + CreateEmployee(name : string, initials : string) : Employee
@@ -99,7 +99,7 @@ package "Application Layer" {
 
   class CreateCostumerController {
     - costumerRepository : CostumerRepository
-    + «get» Costumers : Costumer[0..*]
+    + «get» costumers : Costumer[0..*]
     --
     + CreateCostumerController()
     + CreateCostumer(name : string, phoneNumber : string) : Costumer
@@ -127,6 +127,35 @@ package "Application Layer" {
     + GetService(serviceId : int) : Service
     + GetCostumer(phoneNumber : string) : Costumer
     + GetEmployee(initials : string) : Employee
+  }
+
+   class CreatePartController {
+  - partRepository : PartRepository
+  + «get» parts : Part[0..*]
+  --
+  +CreatePartController()
+  +CreatePart(name : string, supplier : string, minQuantityText : string)
+  }
+
+  class PartsGrabController {
+  - partRepository : PartRepository
+  - serviceRepository : ServiceRepository
+  - customerRepository : CustomerRepository
+  - employeeRepository : EmployeeRepository
+  + «get» services : ServiceRow [0..*]
+  + «get» employees : Employee [0..*] 
+  + «get» parts : Part [0..*] 
+  + «get» partsList : PartRow [0..*]
+  + SelectedService : ServiceRow
+  + SelectedEmployee : Employee
+  + SelectedPart : Part
+  --
+  + PartsGrabController()
+  - GetCustomerName(phoneNumber : string)
+  + AddPart(amountText : string)
+  + RemovePart(row : PartRow)
+  + Save() : int
+  + OnPropertyChanged()
   }
 }
 
@@ -176,12 +205,35 @@ package "Domain Layer" {
     + Remove(serviceId : int)
   }
 
+  class PartRepository {
+   - fileName : string = "Parts.csv"
+   - parts : Part [0..*]
+   --
+   + PartRepository()
+  - Load()
+  - Save()
+  + Add(part : Part)
+  + Get(name : string) : Part
+  + TakeOut(name : string, ammount : int)
+  + GetAll() : Part [0..*]
+  }
+
   class Employee {
     + Name : string
     + Initials : string
     --
     + Employee(name : string, initials : string)
     + ToString() : string
+  }
+
+    class Part {
+    + Name : string
+    + Supplier : string
+    + Quantity : int
+    + MinQuantity : int
+    --
+    + Part(name : string, supplier : string, quantity : int, minQuantity : int)
+    + <<overide>> ToString(): string
   }
 
   class Costumer {
@@ -237,11 +289,14 @@ CreateServiceController  -- ServiceRepository
 CreateReceiptController  -- ServiceRepository
 CreateReceiptController  -- CostumerRepository
 CreateReceiptController  -- EmployeeRepository
+CreatePartController -- PartRepository
+PartsGrabController -- PartRepository
 
 ' ---------- Repository -> domæneklasse ----------
 EmployeeRepository -- "0..*" Employee
 CostumerRepository -- "0..*" Costumer
 ServiceRepository  -- "0..*" Service
+PartRepository -- "0..*" Part
 
 ' ---------- Domænerelationer (gemt som nøgle i Service) ----------
 Costumer "1" - "*" Service
