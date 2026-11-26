@@ -35,5 +35,10 @@ namespace Vekto.Views
         {
             PageArea.Content = new PartsGrab();
         }
+
+        private void btnOpretReservedel_Click(object sender, RoutedEventArgs e)
+        {
+            PageArea.Content = new CreatePart();
+        }
     }
 }

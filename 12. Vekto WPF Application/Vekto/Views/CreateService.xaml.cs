@@ -32,7 +32,7 @@ namespace Vekto.Views
 
             try
             {
-                string? errorType = lbErrorType.SelectedItem?.ToString();
+                string? errorType = cbErrorType.SelectedItem?.ToString();
 
                 Service service = controller.CreateService(tbPhone.Text, tbBrand.Text, tbModel.Text,
                                                            errorType, tbDescription.Text);
@@ -46,7 +46,7 @@ namespace Vekto.Views
                 tbPhone.Text = "";
                 tbBrand.Text = "";
                 tbModel.Text = "";
-                lbErrorType.SelectedItem = null;
+                cbErrorType.SelectedItem = null;
                 tbDescription.Text = "";
             }
             catch (Exception ex)

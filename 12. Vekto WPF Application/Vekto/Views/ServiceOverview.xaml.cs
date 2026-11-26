@@ -13,7 +13,6 @@ namespace Vekto.Views
         {
             InitializeComponent();
             DataContext = controller;
-            lblServiceCount.Content = "Alle services (" + controller.Services.Count + ")";
         }
 
         // UC5: gem det udførte arbejde og luk servicen

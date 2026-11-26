@@ -1,11 +1,20 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Vekto.Models;
+using static Vekto.ViewModels.ServiceOverviewController;
 
 namespace Vekto.ViewModels
 {
     public class PartsGrabController : INotifyPropertyChanged
     {
+        public class PartRow
+        {
+            public string Name { get; set; } = "";
+            public string Supplier { get; set; } = "";
+            public int InStock { get; set; }
+            public int Amount { get; set; }
+        }
+
         private PartRepository partRepository = new PartRepository();
         private ServiceRepository serviceRepository = new ServiceRepository();
         private CostumerRepository costumerRepository = new CostumerRepository();

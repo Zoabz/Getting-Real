@@ -110,7 +110,7 @@
 
             <!-- ===== Alle services (tabel) ===== -->
             <StackPanel Grid.Column="2" Background="White">
-                <Label x:Name="lblServiceCount" Content="Alle services" FontSize="15" FontWeight="Bold" Margin="10,10,10,0"/>
+                <Label Content="Alle services" FontSize="15" FontWeight="Bold" Margin="10,10,10,0"/>
                 <TextBlock Text="Klik på en service for at vælge den." Foreground="Gray" Margin="15,0,10,10"/>
 
                 <DataGrid x:Name="dgServices" Height="300" Margin="10,0,10,10"
