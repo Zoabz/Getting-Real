@@ -233,7 +233,7 @@ package "Domain Layer" {
     + MinQuantity : int
     --
     + Part(name : string, supplier : string, quantity : int, minQuantity : int)
-    + <<overide>> ToString(): string
+    + <<overide>> ToString() : string
   }
 
   class Costumer {
@@ -267,7 +267,55 @@ package "Domain Layer" {
     Open
     Closed
   }
+
+  class PartRow {
+  + Name : string = ""
+  + Supplier : string = ""
+  + InStock : int
+  + Amount : int
+  }
+
+   class StockRow {
+  + Name : string = ""
+  + Supplier : string = ""
+  + Quantity : int
+  + MinQuantity : int
+  + Missing : int
+  + Status : string
+  <<override>> ToString() : string
+  }
+
+    class DeliveryRepository {
+  - fileName : string = "Deliveries.csv"
+  - deliveries : Delivery [0..*]
+  --
+  + DeliveryRepository()
+  - Load()
+  - Save()
+  + Add(delivery : Delivery)
+  + GetAll() : Delivery [0..*]
 }
+
+class Delivery {
+  + Date : DateTime
+  + PartName : string 
+  + Supplier : string
+  + Amount : int
+  --
+  + Delivery(date : DateTime, partName : string, supplier : string, amount : int)
+}
+
+ class ServiceRow {
+  + Number : string
+  + Costumer : string
+  + Phone : string
+  + Bike : string
+  + ErrorType : string
+  + Description : string
+  + Status : string
+
+  + <<override>> ToString() : string
+  }
 
 ' ---------- UI Layer: hovedvindue -> sider, side -> dialog ----------
 MainWindow -- CreateEmployee
