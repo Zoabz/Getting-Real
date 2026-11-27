@@ -9,14 +9,14 @@ namespace Vekto.ViewModels
 
 <<<<<<< HEAD
         // Listen, som ListBox'en er bundet til (ItemsSource="{Binding Costumers}")
-        public ObservableCollection<Costumer> costumers { get; }
+        public ObservableCollection<Costumer> Costumers { get; }
 =======
         public ObservableCollection<Costumer> Costumers { get; }
 >>>>>>> 3a906def2ec59b06df0522a196eb16893ed1f8b7
 
         public CreateCostumerController()
         {
-            costumers = new ObservableCollection<Costumer>(costumerRepository.GetAll());
+            Costumers = new ObservableCollection<Costumer>(costumerRepository.GetAll());
         }
 
         public Costumer CreateCostumer(string name, string phoneNumber)
@@ -36,7 +36,7 @@ namespace Vekto.ViewModels
             Costumer costumer = new Costumer(name, phoneNumber);
             costumerRepository.Add(costumer);
 <<<<<<< HEAD
-            costumers.Add(costumer); // ListBox'en opdateres selv
+            Costumers.Add(costumer); // ListBox'en opdateres selv
 =======
             Costumers.Add(costumer); 
 >>>>>>> 3a906def2ec59b06df0522a196eb16893ed1f8b7

@@ -9,14 +9,14 @@ namespace Vekto.ViewModels
 
 <<<<<<< HEAD
         // Listen, som DataGrid'en er bundet til (ItemsSource="{Binding Parts}")
-        public ObservableCollection<Part> parts { get; }
+        public ObservableCollection<Part> Parts { get; }
 =======
         public ObservableCollection<Part> Parts { get; }
 >>>>>>> 3a906def2ec59b06df0522a196eb16893ed1f8b7
 
         public CreatePartController()
         {
-            parts = new ObservableCollection<Part>(partRepository.GetAll());
+            Parts = new ObservableCollection<Part>(partRepository.GetAll());
         }
 
         public Part CreatePart(string name, string supplier, string minQuantityText)
@@ -39,7 +39,7 @@ namespace Vekto.ViewModels
             Part part = new Part(name, supplier, 0, minQuantity);
             partRepository.Add(part);
 <<<<<<< HEAD
-            parts.Add(part); // DataGrid'en opdateres selv
+            Parts.Add(part); // DataGrid'en opdateres selv
 =======
             Parts.Add(part);
 >>>>>>> 3a906def2ec59b06df0522a196eb16893ed1f8b7
