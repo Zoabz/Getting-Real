@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="Vekto.Tests/Vekto.Tests.csproj" />
   <Project Path="Vekto/Vekto.csproj" />
 </Solution>
